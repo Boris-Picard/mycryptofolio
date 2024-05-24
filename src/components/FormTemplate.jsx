@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import listData from "../data/list.json"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -13,19 +14,32 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 
 export default function FormTemplate() {
 
+    const list = listData;
+    const parsedlist = JSON.parse(JSON.stringify(list));
+
     const FormSchema = z.object({
-        coin: z.string().min(2, {
-            message: "Coin must be at least 2 characters.",
-        }),
+        coins: z
+            .string({
+                required_error: "Please select a coin.",
+            }).min(1, {
+                message: "Please select a coin"
+            })
     })
 
     const form = useForm({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            coin: "",
+            coins: "",
         }
     })
 
@@ -53,13 +67,27 @@ export default function FormTemplate() {
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
                         <FormField
                             control={form.control}
-                            name="coin"
+                            name="coins"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Coin</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Bitcoin" {...field} />
-                                    </FormControl>
+                                    <FormLabel>Coins</FormLabel>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select a coin" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {parsedlist.map((coin) => {
+                                                return (
+                                                    <SelectItem key={coin.symbol} value={coin.symbol}><div className="flex items-center"><img src={coin.logoURI} className="mr-2" width={24} height={24}></img>{coin.symbol}</div></SelectItem>
+                                                )
+                                            })}
+                                        </SelectContent>
+                                    </Select>
+                                    <FormDescription>
+                                        Select a coin and valid to go next step
+                                    </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}
