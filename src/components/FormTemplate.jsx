@@ -21,8 +21,11 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { useState } from "react"
 
 export default function FormTemplate() {
+
+    const [steps, setSteps] = useState(1)
 
     const list = listData;
     const parsedlist = JSON.parse(JSON.stringify(list));
@@ -46,12 +49,13 @@ export default function FormTemplate() {
     const onSubmit = (data) => {
         try {
             FormSchema.parse(data);
+            setSteps(steps + 1)
             console.log(data);
         } catch (error) {
             console.log("Form data is invalid", error.message);
         }
     }
-
+    
     return (
         <div className="flex min-h-screen items-center justify-center">
             <div className="flex w-1/2 flex-col justify-center items-center shadow-lg p-6 rounded-md bg-slate-200">
@@ -81,7 +85,7 @@ export default function FormTemplate() {
                         </li>
                     </ol>
                 </div>
-                <Form {...form}>
+                {steps === 1 && <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
                         <FormField
                             control={form.control}
@@ -112,7 +116,7 @@ export default function FormTemplate() {
                         />
                         <Button type="submit">Next Step</Button>
                     </form>
-                </Form >
+                </Form >}
             </div>
         </div>
     )
