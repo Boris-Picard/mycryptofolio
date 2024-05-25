@@ -37,21 +37,21 @@ This project aims to deepen understanding and practice using Zod and React Hook 
 
 2. **Install Dependencies:**
 
-```bash
-Copier le code
-cd form-template
-npm install
-```
+   ```bash
+   Copier le code
+   cd form-template
+   npm install
+   ```
 
 3. **Run the Development Server:**
 
-````bash
-Copier le code
-npm start```
+   ````bash
+   Copier le code
+   npm start```
+   ````
 
 Open in Browser:
 Open your browser and navigate to http://localhost:3000 to view the multi-step form in action.
 
 Conclusion
 This project is a comprehensive exercise to practice and improve skills in form validation and management in React. By implementing a multi-step form with Zod and React Hook Form, the project demonstrates the creation of structured, user-friendly, and well-validated forms.
-````
