@@ -36,7 +36,7 @@ import { cn } from "@/lib/utils"
 export default function FormTemplate() {
 
     const [steps, setSteps] = useState(1)
-    const [firstStep, setFirstStep] = useState([])
+    const [dataStep, setDataStep] = useState([])
 
 
     const list = listData;
@@ -53,13 +53,13 @@ export default function FormTemplate() {
             }).min(1, {
                 message: "Please select a coin"
             }),
-        quantity: z.number({
+        quantity: z.coerce.number({
             message: "Please enter a number"
         }).min(1, { message: "Please enter a least one number" }),
-        price: z.number({
+        price: z.coerce.number({
             message: "Please enter a number"
         }).min(1, { message: "Please enter a least one number" }),
-        spent: z.number({
+        spent: z.coerce.number({
             message: "Please enter a number"
         }).min(1, { message: "Please enter a least one number" }),
         date: z.date({ message: "Please enter a valid date" })
@@ -79,13 +79,13 @@ export default function FormTemplate() {
     const onSubmit = (data) => {
         try {
             const parsedData = FormSchema.parse(data);
-            setFirstStep({ select: parsedData })
+            setDataStep({ form: parsedData })
             console.log(data);
         } catch (error) {
             console.log("Form data is invalid", error.message);
         }
     }
-    console.log(firstStep);
+    console.log(dataStep);
     return (
         <div className="flex min-h-screen items-center justify-center">
             <div className="flex w-1/2 flex-col justify-center items-center shadow-lg p-6 rounded-md bg-slate-200">
