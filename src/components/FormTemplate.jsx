@@ -42,17 +42,16 @@ export default function FormTemplate() {
     const list = listData;
     const parsedlist = JSON.parse(JSON.stringify(list));
 
-    const handleFirstStep = () => {
-        setSteps(steps + 1)
-    }
-
-    const FormSchema = z.object({
+    const FormSchemaFirstStep = z.object({
         coins: z
             .string({
                 required_error: "Please select a valid coin.",
             }).min(1, {
                 message: "Please select a coin"
             }),
+    })
+
+    const FormSchemaSecondStep = z.object({
         quantity: z.coerce.number({
             message: "Please enter a number"
         }).min(1, { message: "Please enter a least one number" }),
@@ -65,10 +64,16 @@ export default function FormTemplate() {
         date: z.date({ message: "Please enter a valid date" })
     })
 
-    const form = useForm({
-        resolver: zodResolver(FormSchema),
+    const firstForm = useForm({
+        resolver: zodResolver(FormSchemaFirstStep),
         defaultValues: {
             coins: "",
+        }
+    })
+
+    const secondForm = useForm({
+        resolver: zodResolver(FormSchemaSecondStep),
+        defaultValues: {
             quantity: 0,
             price: 0,
             spent: 0,
@@ -76,15 +81,26 @@ export default function FormTemplate() {
         }
     })
 
-    const onSubmit = (data) => {
+
+    const handleFirstStepSubmit = (data) => {
         try {
-            const parsedData = FormSchema.parse(data);
-            setDataStep({ form: parsedData })
-            console.log(data);
+            const parsedData = FormSchemaFirstStep.parse(data);
+            setSteps(steps + 1)
+            setDataStep((prev) => ({ ...prev, step1: parsedData }))
         } catch (error) {
             console.log("Form data is invalid", error.message);
         }
-    }
+    };
+
+    const handleSecondStepSubmit = (data) => {
+        try {
+            const parsedData = FormSchemaSecondStep.parse(data);
+            setDataStep((prev) => ({ ...prev, step2: parsedData }))
+        } catch (error) {
+            console.log("Form data is invalid", error.message);
+        }
+    };
+
     console.log(dataStep);
     return (
         <div className="flex min-h-screen items-center justify-center">
@@ -119,12 +135,12 @@ export default function FormTemplate() {
                         </li>
                     </ol>
                 </div>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
+                <Form {...(steps === 1 ? firstForm : secondForm)} >
+                    <form onSubmit={steps === 1 ? firstForm.handleSubmit(handleFirstStepSubmit) : secondForm.handleSubmit(handleSecondStepSubmit)} className="space-y-4 w-full">
                         {steps === 1 &&
                             <>
                                 <FormField
-                                    control={form.control}
+                                    control={firstForm.control}
                                     name="coins"
                                     render={({ field }) => (
                                         <FormItem>
@@ -150,13 +166,13 @@ export default function FormTemplate() {
                                         </FormItem>
                                     )}
                                 />
-                                <Button type="button" onClick={handleFirstStep}>Next Step</Button>
+                                <Button type="submit">Next Step</Button>
                             </>}
                         {steps === 2 &&
                             <div className="grid grid-cols-2 gap-3">
                                 <div className="col-span-1">
                                     <FormField
-                                        control={form.control}
+                                        control={secondForm.control}
                                         name="quantity"
                                         render={({ field }) => (
                                             <FormItem>
@@ -171,7 +187,7 @@ export default function FormTemplate() {
                                 </div>
                                 <div className="col-span-1">
                                     <FormField
-                                        control={form.control}
+                                        control={secondForm.control}
                                         name="price"
                                         render={({ field }) => (
                                             <FormItem>
@@ -186,7 +202,7 @@ export default function FormTemplate() {
                                 </div>
                                 <div className="col-span-2">
                                     <FormField
-                                        control={form.control}
+                                        control={secondForm.control}
                                         name="spent"
                                         render={({ field }) => (
                                             <FormItem>
@@ -201,7 +217,7 @@ export default function FormTemplate() {
                                 </div>
                                 <div className="col-span-2">
                                     <FormField
-                                        control={form.control}
+                                        control={secondForm.control}
                                         name="date"
                                         render={({ field }) => (
                                             <FormItem className="flex flex-col">
@@ -248,7 +264,7 @@ export default function FormTemplate() {
                     </form>
                 </Form >
             </div>
-        </div>
+        </div >
     )
 }
 
