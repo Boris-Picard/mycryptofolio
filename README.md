@@ -44,9 +44,9 @@ This project aims to deepen understanding and practice using Zod and React Hook 
 
 3. **Run the Development Server:**
 
-   ````bash
-   npm start```
-   ````
+   ```bash
+   npm start
+   ```
 
 Open in Browser:
 Open your browser and navigate to http://localhost:3000 to view the multi-step form in action.
