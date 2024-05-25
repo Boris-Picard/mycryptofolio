@@ -9,7 +9,6 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  // connection entre le front (vite) et le back (express)
   server: {
     proxy: {
       "/api": {
