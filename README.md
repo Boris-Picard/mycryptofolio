@@ -38,7 +38,6 @@ This project aims to deepen understanding and practice using Zod and React Hook 
 2. **Install Dependencies:**
 
    ```bash
-   Copier le code
    cd form-template
    npm install
    ```
@@ -46,7 +45,6 @@ This project aims to deepen understanding and practice using Zod and React Hook 
 3. **Run the Development Server:**
 
    ````bash
-   Copier le code
    npm start```
    ````
 
