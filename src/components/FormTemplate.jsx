@@ -42,6 +42,7 @@ export default function FormTemplate() {
     const list = listData;
     const parsedlist = JSON.parse(JSON.stringify(list));
 
+    // Validation schema for the first form step
     const FormSchemaFirstStep = z.object({
         coins: z
             .string({
@@ -49,28 +50,31 @@ export default function FormTemplate() {
             }).min(1, {
                 message: "Please select a coin"
             }),
-    })
+    });
 
+    // Validation schema for the second form step
     const FormSchemaSecondStep = z.object({
         quantity: z.coerce.number({
             message: "Please enter a number"
-        }).min(1, { message: "Please enter a least one number" }),
+        }).min(1, { message: "Please enter at least one number" }),
         price: z.coerce.number({
             message: "Please enter a number"
-        }).min(1, { message: "Please enter a least one number" }),
+        }).min(1, { message: "Please enter at least one number" }),
         spent: z.coerce.number({
             message: "Please enter a number"
-        }).min(1, { message: "Please enter a least one number" }),
-        date: z.date({ message: "Please enter a valid date" })
-    })
+        }).min(1, { message: "Please enter at least one number" }),
+        date: z.date().refine(date => date <= new Date(), "Please enter a valid date")
+    });
 
+    // Hook form instance for the first step with validation resolver
     const firstForm = useForm({
         resolver: zodResolver(FormSchemaFirstStep),
         defaultValues: {
             coins: "",
         }
-    })
+    });
 
+    // Hook form instance for the second step with validation resolver
     const secondForm = useForm({
         resolver: zodResolver(FormSchemaSecondStep),
         defaultValues: {
@@ -79,27 +83,34 @@ export default function FormTemplate() {
             spent: 0,
             date: new Date()
         }
-    })
+    });
 
-
+    // Handle submission for the first step
     const handleFirstStepSubmit = (data) => {
         try {
+            // Validate the data according to the schema
             const parsedData = FormSchemaFirstStep.parse(data);
-            setSteps(steps + 1)
-            setDataStep((prev) => ({ ...prev, step1: parsedData }))
+            // Proceed to the next step
+            setSteps(steps + 1);
+            // Store the parsed data
+            setDataStep((prev) => ({ ...prev, step1: parsedData }));
         } catch (error) {
             console.log("Form data is invalid", error.message);
         }
     };
 
+    // Handle submission for the second step
     const handleSecondStepSubmit = (data) => {
         try {
+            // Validate the data according to the schema
             const parsedData = FormSchemaSecondStep.parse(data);
-            setDataStep((prev) => ({ ...prev, step2: parsedData }))
+            // Store the parsed data
+            setDataStep((prev) => ({ ...prev, step2: parsedData }));
         } catch (error) {
             console.log("Form data is invalid", error.message);
         }
     };
+
 
     console.log(dataStep);
     return (
@@ -258,6 +269,7 @@ export default function FormTemplate() {
                                         )}
                                     />
                                 </div>
+                                <Button variant="outline" type="button" onClick={() => setSteps(steps - 1)}>Revenir en arrière</Button>
                                 <Button type="submit">Ajouter une transaction</Button>
                             </div>
                         }
