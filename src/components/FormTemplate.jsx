@@ -120,7 +120,7 @@ export default function FormTemplate() {
             <div className="flex w-1/2 flex-col justify-center items-center shadow-lg p-6 rounded-md bg-slate-200">
                 <div className="flex flex-col space-y-3 items-center">
                     <h1 className="font-bold text-5xl">
-                        Welcome
+                        Welcome.
                     </h1>
                     <h2 className="font-bold text-3xl">
                         Add a coin
