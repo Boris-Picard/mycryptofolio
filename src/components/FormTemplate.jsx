@@ -108,6 +108,7 @@ export default function FormTemplate() {
             const parsedData = FormSchemaSecondStep.parse(data);
             // Store the parsed data
             setDataStep((prev) => ({ ...prev, step2: parsedData }));
+            setSteps(steps + 1)
         } catch (error) {
             console.log("Form data is invalid", error.message);
         }
@@ -160,7 +161,7 @@ export default function FormTemplate() {
                                 />
                                 <Button type="submit">Next Step</Button>
                             </>}
-                        {steps === 2 &&
+                        {steps >= 2 &&
                             <div className="grid grid-cols-2 gap-3">
                                 <div className="col-span-1">
                                     <FormField
@@ -250,8 +251,16 @@ export default function FormTemplate() {
                                         )}
                                     />
                                 </div>
-                                <Button variant="outline" type="button" onClick={() => setSteps(steps - 1)}>Revenir en arrière</Button>
-                                <Button type="submit">Ajouter une transaction</Button>
+                                <Button variant="outline" type="button" onClick={() => setSteps(steps - 1)} disabled={steps === 3}>Revenir en arrière</Button>
+                                {steps === 2 &&
+                                    <Button type="submit">
+                                        Ajouter une transaction
+                                    </Button>}
+                                {steps === 3 && <Button type="submit" disabled="true">
+                                    <svg className="animate-spin h-5 w-5 mr-3 border-gray-200 border-2 border-t-blue-600 rounded-full" viewBox="0 0 24 24">
+                                    </svg>
+                                    Loading...
+                                </Button>}
                             </div>
                         }
                     </form>
