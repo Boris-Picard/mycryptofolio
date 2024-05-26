@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import listData from "../data/list.json"
 
-import ProgressBar from "./ui/progressbar"
+import { Progress } from "./ui/progress"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -127,7 +127,9 @@ export default function FormTemplate() {
                         Add a coin
                     </h2>
                 </div>
-                <ProgressBar steps={steps} />
+                <div className="my-5 w-full">
+                    <Progress value={steps === 1 ? 0 : steps === 2 ? 50 : steps === 3 ? 100 : 100} />
+                </div>
                 <Form {...(steps === 1 ? firstForm : secondForm)} >
                     <form onSubmit={steps === 1 ? firstForm.handleSubmit(handleFirstStepSubmit) : secondForm.handleSubmit(handleSecondStepSubmit)} className="space-y-4 w-full">
                         {steps === 1 &&
