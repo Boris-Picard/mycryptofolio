@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import listData from "../data/list.json"
 
-import Steps from "./ui/steps"
+import ProgressBar from "./ui/progressbar"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -58,7 +58,7 @@ export default function FormTemplate() {
     const FormSchemaSecondStep = z.object({
         quantity: z.coerce.number({
             message: "Please enter a number"
-        }).min(1, { message: "Please enter at least one number" }),
+        }).min(0.0000000001, { message: "Please enter at least one number" }),
         price: z.coerce.number({
             message: "Please enter a number"
         }).min(1, { message: "Please enter at least one number" }),
@@ -126,7 +126,7 @@ export default function FormTemplate() {
                         Add a coin
                     </h2>
                 </div>
-                <Steps steps={steps} />
+                <ProgressBar steps={steps} />
                 <Form {...(steps === 1 ? firstForm : secondForm)} >
                     <form onSubmit={steps === 1 ? firstForm.handleSubmit(handleFirstStepSubmit) : secondForm.handleSubmit(handleSecondStepSubmit)} className="space-y-4 w-full">
                         {steps === 1 &&

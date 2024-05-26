@@ -51,5 +51,5 @@ This project aims to deepen understanding and practice using Zod and React Hook 
 Open in Browser:
 Open your browser and navigate to http://localhost:3000 to view the multi-step form in action.
 
-Conclusion
+**Conclusion**
 This project is a comprehensive exercise to practice and improve skills in form validation and management in React. By implementing a multi-step form with Zod and React Hook Form, the project demonstrates the creation of structured, user-friendly, and well-validated forms.
