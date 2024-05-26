@@ -117,7 +117,7 @@ export default function FormTemplate() {
 
     console.log(dataStep);
     return (
-        <div className="flex min-h-screen items-center justify-center">
+        <div className="flex h-full items-center justify-center">
             <div className="flex w-1/2 flex-col justify-center items-center shadow-lg p-6 rounded-md bg-slate-200">
                 <div className="flex flex-col space-y-3 items-center">
                     <h1 className="font-bold text-5xl">

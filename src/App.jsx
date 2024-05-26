@@ -1,10 +1,10 @@
-import FormTemplate from "./components/FormTemplate"
+import HomePage from "./Pages/HomePage"
 
 function App() {
 
   return (
     <div className="container h-screen">
-      <FormTemplate />
+      <HomePage />
     </div>
   )
 }
