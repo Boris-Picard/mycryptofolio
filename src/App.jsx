@@ -1,12 +1,18 @@
-import HomePage from "./Pages/HomePage"
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import HomePage from './Pages/HomePage';
 
 function App() {
-
   return (
-    <div className="container h-screen">
-      <HomePage />
-    </div>
-  )
+    <BrowserRouter>
+      <div className="h-screen bg-black">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
