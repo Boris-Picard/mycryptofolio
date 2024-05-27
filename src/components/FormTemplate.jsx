@@ -34,6 +34,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
+import { useNavigate } from "react-router-dom"
 
 export default function FormTemplate() {
 
@@ -43,6 +44,8 @@ export default function FormTemplate() {
 
     const list = listData;
     const parsedlist = JSON.parse(JSON.stringify(list));
+
+    const navigate = useNavigate()
 
     // Validation schema for the first form step
     const FormSchemaFirstStep = z.object({
@@ -109,6 +112,9 @@ export default function FormTemplate() {
             // Store the parsed data
             setDataStep((prev) => ({ ...prev, step2: parsedData }));
             setSteps(steps + 1)
+            setTimeout(() => {
+                navigate('/seecoins');
+            }, 4000)
         } catch (error) {
             console.log("Form data is invalid", error.message);
         }
