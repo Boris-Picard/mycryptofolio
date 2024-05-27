@@ -118,7 +118,7 @@ export default function FormTemplate() {
     console.log(dataStep);
     return (
         <div className="flex h-full items-center justify-center">
-            <div className="flex w-1/2 flex-col justify-center items-center shadow-lg p-6 rounded-md bg-slate-200">
+            <div className="flex w-full md:w-1/2 flex-col justify-center items-center shadow-lg p-6 rounded-md bg-slate-200">
                 <div className="flex flex-col space-y-3 items-center">
                     <h1 className="font-bold text-5xl">
                         Welcome.
@@ -128,7 +128,7 @@ export default function FormTemplate() {
                     </h2>
                 </div>
                 <div className="my-5 w-full">
-                    <Progress value={steps === 1 ? 0 : steps === 2 ? 50 : steps === 3 ? 100 : 100} />
+                    <Progress value={steps === 1 ? 0 : steps === 2 ? 50 : steps === 3 ? 100 : ""} />
                 </div>
                 <Form {...(steps === 1 ? firstForm : secondForm)} >
                     <form onSubmit={steps === 1 ? firstForm.handleSubmit(handleFirstStepSubmit) : secondForm.handleSubmit(handleSecondStepSubmit)} className="space-y-4 w-full">
@@ -161,7 +161,7 @@ export default function FormTemplate() {
                                         </FormItem>
                                     )}
                                 />
-                                <Button type="submit">Next Step</Button>
+                                <Button type="submit" className="w-full">Next Step</Button>
                             </>}
                         {steps >= 2 &&
                             <div className="grid grid-cols-2 gap-3">
@@ -253,16 +253,20 @@ export default function FormTemplate() {
                                         )}
                                     />
                                 </div>
-                                <Button variant="outline" type="button" onClick={() => setSteps(steps - 1)} disabled={steps === 3}>Revenir en arrière</Button>
-                                {steps === 2 &&
-                                    <Button type="submit">
-                                        Ajouter une transaction
+                                <div className="md:col-span-1 col-span-2">
+                                    <Button variant="outline" type="button" onClick={() => setSteps(steps - 1)} disabled={steps === 3} className="w-full">Revenir en arrière</Button>
+                                </div>
+                                <div className="md:col-span-1 col-span-2">
+                                    {steps === 2 &&
+                                        <Button type="submit" className="w-full">
+                                            Ajouter une transaction
+                                        </Button>}
+                                    {steps === 3 && <Button type="submit" disabled="true" className="w-full">
+                                        <svg className="animate-spin h-5 w-5 mr-3 border-gray-200 border-2 border-t-blue-600 rounded-full" viewBox="0 0 24 24">
+                                        </svg>
+                                        Loading...
                                     </Button>}
-                                {steps === 3 && <Button type="submit" disabled="true">
-                                    <svg className="animate-spin h-5 w-5 mr-3 border-gray-200 border-2 border-t-blue-600 rounded-full" viewBox="0 0 24 24">
-                                    </svg>
-                                    Loading...
-                                </Button>}
+                                </div>
                             </div>
                         }
                     </form>

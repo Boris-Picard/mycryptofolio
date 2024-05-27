@@ -7,7 +7,7 @@ export default function Navbar() {
                 <div className="text-white text-xl font-bold">#</div>
                 <div className="hidden md:flex space-x-4">
                     <Link to="/" className="text-white">Add a coin</Link>
-                    <Link to="" className="text-white">See my coins</Link>
+                    <Link to="/seecoins" className="text-white">See my coins</Link>
                 </div>
             </div>
         </nav>

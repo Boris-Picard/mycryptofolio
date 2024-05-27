@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HomePage from './Pages/HomePage';
+import SeeCoins from "./Pages/SeeCoins"
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/seecoins" element={<SeeCoins />} />
         </Routes>
       </div>
     </BrowserRouter>
