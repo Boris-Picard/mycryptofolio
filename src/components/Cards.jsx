@@ -13,14 +13,15 @@ export default function Cards() {
         <div className="grid grid-cols-4 h-full items-center gap-3">
             <Card>
                 <CardHeader>
-                    <CardTitle>Card Title</CardTitle>
-                    <CardDescription>Card Description</CardDescription>
+                    <CardTitle>Bitcoin</CardTitle>
+                    <CardDescription>Quantité : 1000</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <p>Card Content</p>
+                    <p>Prix : </p>
+                    <p>Total dépensé :</p>
                 </CardContent>
                 <CardFooter>
-                    <p>Card Footer</p>
+                    <p>Date : </p>
                 </CardFooter>
             </Card>
         </div>
