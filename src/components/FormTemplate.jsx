@@ -42,6 +42,7 @@ export default function FormTemplate() {
 
     const [steps, setSteps] = useState(1)
     const [dataStep, setDataStep] = useState([])
+    const [coinId, setCoinId] = useState(null)
 
 
     const list = listData;
@@ -111,8 +112,9 @@ export default function FormTemplate() {
             axios.post("http://localhost:3001/api/coin/", {
                 name: dataStep.step1.coins
             })
-                .then((reponse) => {
-                    console.log(reponse);
+                .then((response) => {
+                    console.log(response);
+                    setCoinId(response.data._id);
                 })
         } catch (error) {
             console.log(error);
@@ -142,6 +144,7 @@ export default function FormTemplate() {
                 price: dataStep.step2.price,
                 spent: dataStep.step2.spent,
                 date: dataStep.step2.date,
+                coinId: coinId,
             })
                 .then((reponse) => {
                     console.log(reponse);
@@ -149,7 +152,7 @@ export default function FormTemplate() {
         } catch (error) {
             console.log(error);
         }
-    }, [dataStep.step2])
+    }, [dataStep.step2, coinId])
 
     return (
         <div className="flex h-full items-center justify-center">
