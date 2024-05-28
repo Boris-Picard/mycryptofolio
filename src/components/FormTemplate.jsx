@@ -92,21 +92,6 @@ export default function FormTemplate() {
         }
     });
 
-    // console.log(dataStep?.step1?.coins);
-
-    useEffect(() => {
-        try {
-            axios.post("http://localhost:3001/api/coin/", {
-                name: dataStep.step1.coins
-            })
-                .then((reponse) => {
-                    console.log(reponse);
-                })
-        } catch (error) {
-            console.log(error);
-        }
-    }, [dataStep])
-
     // Handle submission for the first step
     const handleFirstStepSubmit = (data) => {
         try {
@@ -120,6 +105,19 @@ export default function FormTemplate() {
             console.log("Form data is invalid", error.message);
         }
     };
+
+    useEffect(() => {
+        try {
+            axios.post("http://localhost:3001/api/coin/", {
+                name: dataStep.step1.coins
+            })
+                .then((reponse) => {
+                    console.log(reponse);
+                })
+        } catch (error) {
+            console.log(error);
+        }
+    }, [dataStep.step1])
 
     // Handle submission for the second step
     const handleSecondStepSubmit = (data) => {
@@ -136,6 +134,22 @@ export default function FormTemplate() {
             console.log("Form data is invalid", error.message);
         }
     };
+
+    useEffect(() => {
+        try {
+            axios.post("http://localhost:3001/api/transactions/", {
+                quantity: dataStep.step2.quantity,
+                price: dataStep.step2.price,
+                spent: dataStep.step2.spent,
+                date: dataStep.step2.date,
+            })
+                .then((reponse) => {
+                    console.log(reponse);
+                })
+        } catch (error) {
+            console.log(error);
+        }
+    }, [dataStep.step2])
 
     return (
         <div className="flex h-full items-center justify-center">
@@ -282,7 +296,7 @@ export default function FormTemplate() {
                                         <Button type="submit" className="w-full">
                                             Ajouter une transaction
                                         </Button>}
-                                    {steps === 3 && <Button type="submit" disabled="true" className="w-full">
+                                    {steps === 3 && <Button type="submit" disabled={true} className="w-full">
                                         <svg className="animate-spin h-5 w-5 mr-3 border-gray-200 border-2 border-t-blue-600 rounded-full" viewBox="0 0 24 24">
                                         </svg>
                                         Loading...
