@@ -23,7 +23,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
@@ -35,6 +35,8 @@ import {
 } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import { useNavigate } from "react-router-dom"
+
+import axios from "axios"
 
 export default function FormTemplate() {
 
@@ -90,6 +92,21 @@ export default function FormTemplate() {
         }
     });
 
+    // console.log(dataStep?.step1?.coins);
+
+    useEffect(() => {
+        try {
+            axios.post("http://localhost:3001/api/coin/", {
+                name: dataStep.step1.coins
+            })
+                .then((reponse) => {
+                    console.log(reponse);
+                })
+        } catch (error) {
+            console.log(error);
+        }
+    }, [dataStep])
+
     // Handle submission for the first step
     const handleFirstStepSubmit = (data) => {
         try {
@@ -120,8 +137,6 @@ export default function FormTemplate() {
         }
     };
 
-
-    console.log(dataStep);
     return (
         <div className="flex h-full items-center justify-center">
             <div className="flex w-full md:w-1/2 flex-col justify-center items-center shadow-lg p-6 rounded-md bg-slate-200">
