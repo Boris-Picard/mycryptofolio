@@ -94,65 +94,47 @@ export default function FormTemplate() {
     });
 
     // Handle submission for the first step
-    const handleFirstStepSubmit = (data) => {
+    const handleFirstStepSubmit = async (data) => {
         try {
             // Validate the data according to the schema
             const parsedData = FormSchemaFirstStep.parse(data);
-            // Proceed to the next step
-            setSteps(steps + 1);
             // Store the parsed data
             setDataStep((prev) => ({ ...prev, step1: parsedData }));
+            const response = await axios.post("http://localhost:3001/api/coin", {
+                name: parsedData.coins,
+            })
+            setCoinId(response.data._id)
+            // Proceed to the next step
+            setSteps(steps + 1);
         } catch (error) {
             console.log("Form data is invalid", error.message);
         }
     };
-
-    useEffect(() => {
-        try {
-            axios.post("http://localhost:3001/api/coin/", {
-                name: dataStep.step1.coins
-            })
-                .then((response) => {
-                    console.log(response);
-                    setCoinId(response.data._id);
-                })
-        } catch (error) {
-            console.log(error);
-        }
-    }, [dataStep.step1])
 
     // Handle submission for the second step
-    const handleSecondStepSubmit = (data) => {
+    const handleSecondStepSubmit = async (data) => {
         try {
-            // Validate the data according to the schema
             const parsedData = FormSchemaSecondStep.parse(data);
-            // Store the parsed data
             setDataStep((prev) => ({ ...prev, step2: parsedData }));
-            setSteps(steps + 1)
+            setSteps(steps + 1);
+
+            await axios.post("http://localhost:3001/api/coin/transaction", {
+                coinId: coinId,
+                transactionData: {
+                    quantity: parsedData.quantity,
+                    price: parsedData.price,
+                    spent: parsedData.spent,
+                    date: parsedData.date,
+                },
+            });
+
             setTimeout(() => {
                 navigate('/seecoins');
-            }, 4000)
+            }, 4000);
         } catch (error) {
             console.log("Form data is invalid", error.message);
         }
     };
-
-    useEffect(() => {
-        try {
-            axios.post("http://localhost:3001/api/transactions/", {
-                quantity: dataStep.step2.quantity,
-                price: dataStep.step2.price,
-                spent: dataStep.step2.spent,
-                date: dataStep.step2.date,
-                coinId: coinId,
-            })
-                .then((reponse) => {
-                    console.log(reponse);
-                })
-        } catch (error) {
-            console.log(error);
-        }
-    }, [dataStep.step2, coinId])
 
     return (
         <div className="flex h-full items-center justify-center">
