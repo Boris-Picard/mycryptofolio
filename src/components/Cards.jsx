@@ -8,22 +8,20 @@ import {
 } from "@/components/ui/card"
 
 
-export default function Cards() {
+export default function Cards({ quantity, price, spent, date, name }) {
     return (
-        <div className="grid grid-cols-4 h-full items-center gap-3">
-            <Card>
-                <CardHeader>
-                    <CardTitle>Bitcoin</CardTitle>
-                    <CardDescription>Quantité : 1000</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <p>Prix : </p>
-                    <p>Total dépensé :</p>
-                </CardContent>
-                <CardFooter>
-                    <p>Date : </p>
-                </CardFooter>
-            </Card>
-        </div>
+        <Card>
+            <CardHeader>
+                <CardTitle>{name}</CardTitle>
+                <CardDescription>Quantité : {quantity}</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <p>Prix : {price}</p>
+                <p>Total dépensé : {spent}</p>
+            </CardContent>
+            <CardFooter>
+                <p>Date : {date}</p>
+            </CardFooter>
+        </Card>
     )
 }
