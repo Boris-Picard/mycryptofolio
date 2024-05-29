@@ -22,7 +22,7 @@ export default function SeeCoins() {
     return (<div className="container h-screen p-10">
         <div className="grid grid-cols-4 gap-3">
             {transactions.map((coin) => {
-                return <Cards key={coin._id} className="col-span-1" quantity={coin.quantity} price={coin.price} spent={coin.spent} data={coin.date} name={coin.coin.name} />
+                return <Cards key={coin._id} className="col-span-1" quantity={coin.quantity} price={coin.price} spent={coin.spent} date={new Date(coin.date).toLocaleDateString()} name={coin.coin.name} />
             })}
         </div>
     </div>)
