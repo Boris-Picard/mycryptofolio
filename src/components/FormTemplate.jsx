@@ -23,7 +23,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
@@ -34,7 +34,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 import axios from "axios"
 import Error from "./ui/error"
@@ -45,12 +45,31 @@ export default function FormTemplate() {
     const [dataStep, setDataStep] = useState([])
     const [coinId, setCoinId] = useState(null)
     const [error, setError] = useState(null)
+    const [transaction, setTransaction] = useState(null)
 
 
     const list = listData;
     const parsedlist = JSON.parse(JSON.stringify(list));
 
     const navigate = useNavigate()
+    const { id } = useParams()
+
+    useEffect(() => {
+        const fetchTransaction = async () => {
+            if (id) {
+                try {
+                    const response = await axios.get(`http://localhost:3001/api/transaction/${id}`);
+                    setTransaction(response.data);
+                } catch (error) {
+                    console.error("Error fetching transaction", error);
+                }
+            }
+        };
+
+        fetchTransaction();
+    }, [id]);
+
+    console.log(transaction);
 
     // Validation schema for the first form step
     const FormSchemaFirstStep = z.object({

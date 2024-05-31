@@ -8,9 +8,11 @@ import {
 } from "@/components/ui/card"
 import { Button } from "./ui/button"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 
 export default function Cards({ quantity, price, spent, date, name, id }) {
+    const navigate = useNavigate()
 
     const deleteTransaction = async (id) => {
         try {
@@ -20,6 +22,10 @@ export default function Cards({ quantity, price, spent, date, name, id }) {
             console.error("Error deleting transaction", error)
         }
     }
+
+    const updateTransaction = (id) => {
+        navigate(`/${id}`);
+    };
 
     return (
         <Card>
@@ -33,6 +39,7 @@ export default function Cards({ quantity, price, spent, date, name, id }) {
             </CardContent>
             <CardFooter>
                 <p>Date : {date}</p>
+                <Button onClick={() => updateTransaction(id)} variant="secondary">Update</Button>
                 <Button onClick={() => deleteTransaction(id)} variant="destructive">Delete</Button>
             </CardFooter>
         </Card>
