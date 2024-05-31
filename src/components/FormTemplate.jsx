@@ -23,7 +23,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
@@ -37,12 +37,14 @@ import { cn } from "@/lib/utils"
 import { useNavigate } from "react-router-dom"
 
 import axios from "axios"
+import Error from "./ui/error"
 
 export default function FormTemplate() {
 
     const [steps, setSteps] = useState(1)
     const [dataStep, setDataStep] = useState([])
     const [coinId, setCoinId] = useState(null)
+    const [error, setError] = useState(null)
 
 
     const list = listData;
@@ -107,6 +109,7 @@ export default function FormTemplate() {
             // Proceed to the next step
             setSteps(steps + 1);
         } catch (error) {
+            setError(error.response.data.error)
             console.log("Form data is invalid", error.message);
         }
     };
@@ -132,6 +135,7 @@ export default function FormTemplate() {
                 navigate('/seecoins');
             }, 4000);
         } catch (error) {
+            setError(error.response.data.error)
             console.log("Form data is invalid", error.message);
         }
     };
@@ -154,6 +158,7 @@ export default function FormTemplate() {
                     <form onSubmit={steps === 1 ? firstForm.handleSubmit(handleFirstStepSubmit) : secondForm.handleSubmit(handleSecondStepSubmit)} className="space-y-4 w-full">
                         {steps === 1 &&
                             <>
+                                <Error message={error} />
                                 <FormField
                                     control={firstForm.control}
                                     name="coins"
@@ -186,6 +191,7 @@ export default function FormTemplate() {
                         {steps >= 2 &&
                             <div className="grid grid-cols-2 gap-3">
                                 <div className="col-span-1">
+                                    <Error message={error} />
                                     <FormField
                                         control={secondForm.control}
                                         name="quantity"
