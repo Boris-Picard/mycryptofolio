@@ -46,6 +46,7 @@ export default function FormTemplate() {
     const [coinId, setCoinId] = useState(null)
     const [error, setError] = useState(null)
     const [transaction, setTransaction] = useState(null)
+    const [defaultCoin, setDefaultCoin] = useState("");
 
 
     const list = listData;
@@ -70,6 +71,14 @@ export default function FormTemplate() {
     }, [id]);
 
     console.log(transaction);
+
+    useEffect(() => {
+        if (id && transaction && transaction.transaction.coin.name) {
+            setDefaultCoin(transaction.transaction.coin.name);
+        } else {
+            setDefaultCoin(""); 
+        }
+    }, [id, transaction]);
 
     // Validation schema for the first form step
     const FormSchemaFirstStep = z.object({
@@ -184,7 +193,7 @@ export default function FormTemplate() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Coins</FormLabel>
-                                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <Select onValueChange={field.onChange} value={defaultCoin || field.value}>
                                                 <FormControl>
                                                     <SelectTrigger>
                                                         <SelectValue placeholder="Select a coin" />
