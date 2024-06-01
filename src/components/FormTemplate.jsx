@@ -76,7 +76,7 @@ export default function FormTemplate() {
         if (id && transaction && transaction.transaction.coin.name) {
             setDefaultCoin(transaction.transaction.coin.name);
         } else {
-            setDefaultCoin(""); 
+            setDefaultCoin("");
         }
     }, [id, transaction]);
 
@@ -193,7 +193,10 @@ export default function FormTemplate() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Coins</FormLabel>
-                                            <Select onValueChange={field.onChange} value={defaultCoin || field.value}>
+                                            <Select onValueChange={value => {
+                                                field.onChange(value);
+                                                setDefaultCoin(value);
+                                            }} value={defaultCoin || field.value}>
                                                 <FormControl>
                                                     <SelectTrigger>
                                                         <SelectValue placeholder="Select a coin" />
