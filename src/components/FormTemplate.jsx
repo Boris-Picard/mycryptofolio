@@ -61,6 +61,7 @@ export default function FormTemplate() {
                 try {
                     const response = await axios.get(`http://localhost:3001/api/transaction/${id}`);
                     setTransaction(response.data);
+                    setCoinId(response.data.transaction.coin._id)
                 } catch (error) {
                     console.error("Error fetching transaction", error);
                 }
@@ -132,7 +133,9 @@ export default function FormTemplate() {
             setDataStep((prev) => ({ ...prev, step1: parsedData }));
             let response;
             if (id && transaction && transaction.transaction.coin.name) {
-                response = await axios.put(`http://localhost:3001/api/transaction/${id}`)
+                response = await axios.put(`http://localhost:3001/api/coin/${coinId}`, {
+                    name: parsedData.coins
+                })
             } else {
                 response = await axios.post("http://localhost:3001/api/coin", {
                     name: parsedData.coins,
