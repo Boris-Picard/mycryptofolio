@@ -130,9 +130,14 @@ export default function FormTemplate() {
             const parsedData = FormSchemaFirstStep.parse(data);
             // Store the parsed data
             setDataStep((prev) => ({ ...prev, step1: parsedData }));
-            const response = await axios.post("http://localhost:3001/api/coin", {
-                name: parsedData.coins,
-            })
+            let response;
+            if (id && transaction && transaction.transaction.coin.name) {
+                response = await axios.put(`http://localhost:3001/api/transaction/${id}`)
+            } else {
+                response = await axios.post("http://localhost:3001/api/coin", {
+                    name: parsedData.coins,
+                })
+            }
             setCoinId(response.data._id)
             // Proceed to the next step
             setSteps(steps + 1);
@@ -141,6 +146,7 @@ export default function FormTemplate() {
             console.log("Form data is invalid", error.message);
         }
     };
+    console.log(coinId);
 
     // Handle submission for the second step
     const handleSecondStepSubmit = async (data) => {
