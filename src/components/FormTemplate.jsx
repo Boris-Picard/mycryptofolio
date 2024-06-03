@@ -160,16 +160,15 @@ export default function FormTemplate() {
             const parsedData = FormSchemaSecondStep.parse(data);
             setDataStep((prev) => ({ ...prev, step2: parsedData }));
             setSteps(steps + 1);
-            let response;
             if (id && transaction && transaction.transaction._id) {
-                response = await axios.put(`http://localhost:3001/api/transaction/${transaction.transaction._id}`, {
+                await axios.put(`http://localhost:3001/api/transaction/${transaction.transaction._id}`, {
                     quantity: parsedData.quantity,
                     price: parsedData.price,
                     spent: parsedData.spent,
                     date: parsedData.date,
                 })
             } else {
-                response = await axios.post("http://localhost:3001/api/coin/transaction", {
+                await axios.post("http://localhost:3001/api/coin/transaction", {
                     coinId: coinId,
                     transactionData: {
                         quantity: parsedData.quantity,
@@ -179,7 +178,6 @@ export default function FormTemplate() {
                     },
                 });
             }
-            console.log(response);
             setTimeout(() => {
                 navigate('/seecoins');
             }, 4000);
@@ -336,7 +334,7 @@ export default function FormTemplate() {
                                 <div className="md:col-span-1 col-span-2">
                                     {steps === 2 &&
                                         <Button type="submit" className="w-full">
-                                            Ajouter une transaction
+                                            {id ? "Modifier la transaction" : "Ajouter une transaction"}
                                         </Button>}
                                     {steps === 3 && <Button type="submit" disabled={true} className="w-full">
                                         <svg className="animate-spin h-5 w-5 mr-3 border-gray-200 border-2 border-t-blue-600 rounded-full" viewBox="0 0 24 24">
