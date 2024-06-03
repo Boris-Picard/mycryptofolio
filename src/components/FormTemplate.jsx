@@ -98,7 +98,7 @@ export default function FormTemplate() {
     const firstForm = useForm({
         resolver: zodResolver(FormSchemaFirstStep),
         defaultValues: {
-            coin: transaction?.transaction?.coin.name || "",
+            coin: "",
         }
     });
 
@@ -112,10 +112,10 @@ export default function FormTemplate() {
     const secondForm = useForm({
         resolver: zodResolver(FormSchemaSecondStep),
         defaultValues: {
-            quantity: transaction?.transaction?.quantity || 0,
-            price: transaction?.transaction?.price || 0,
-            spent: transaction?.transaction?.spent || 0,
-            date: transaction?.transaction?.date ? new Date(transaction.transaction.date) : new Date(),
+            quantity: 0,
+            price: 0,
+            spent: 0,
+            date: new Date(),
         }
     });
 
