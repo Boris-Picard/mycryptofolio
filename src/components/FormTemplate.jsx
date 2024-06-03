@@ -153,7 +153,6 @@ export default function FormTemplate() {
             console.log("Form data is invalid", error.message);
         }
     };
-    console.log(coinId);
 
     // Handle submission for the second step
     const handleSecondStepSubmit = async (data) => {
@@ -162,14 +161,12 @@ export default function FormTemplate() {
             setDataStep((prev) => ({ ...prev, step2: parsedData }));
             setSteps(steps + 1);
             let response;
-            if (id && transaction && transaction.transaction.coin.name) {
+            if (id && transaction && transaction.transaction._id) {
                 response = await axios.put(`http://localhost:3001/api/transaction/${transaction.transaction._id}`, {
-                    transactionData: {
-                        quantity: parsedData.quantity,
-                        price: parsedData.price,
-                        spent: parsedData.spent,
-                        date: parsedData.date,
-                    }
+                    quantity: parsedData.quantity,
+                    price: parsedData.price,
+                    spent: parsedData.spent,
+                    date: parsedData.date,
                 })
             } else {
                 response = await axios.post("http://localhost:3001/api/coin/transaction", {
