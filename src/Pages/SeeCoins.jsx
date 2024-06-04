@@ -6,6 +6,7 @@ import Error from "@/components/ui/error";
 export default function SeeCoins() {
     const [transactions, setTransactions] = useState([])
     const [transactionsName, setTransactionsName] = useState()
+    const [dataTransactionApi, setDataTransactionApi] = useState([])
     const [error, setError] = useState(null)
 
     useEffect(() => {
@@ -29,14 +30,14 @@ export default function SeeCoins() {
         const fetchCryptoCoin = async () => {
             try {
                 const response = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${transactionsName}&x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
-                console.log(response.data);
+                setDataTransactionApi(response.data)
             } catch (error) {
                 console.error(error)
             }
         }
         fetchCryptoCoin()
     }, [transactions])
-
+console.log(dataTransactionApi);
     console.log(transactions);
 
     return (<div className="container h-screen p-10">

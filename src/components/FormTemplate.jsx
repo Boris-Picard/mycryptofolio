@@ -98,10 +98,10 @@ export default function FormTemplate() {
         }).min(0.0000000001, { message: "Please enter at least one number" }),
         price: z.coerce.number({
             message: "Please enter a number"
-        }).min(1, { message: "Please enter at least one number" }),
+        }).min(0.0000000001, { message: "Please enter at least one number" }),
         spent: z.coerce.number({
             message: "Please enter a number"
-        }).min(1, { message: "Please enter at least one number" }),
+        }).min(0.0000000001, { message: "Please enter at least one number" }),
         date: z.date().refine(date => date <= new Date(), "Please enter a valid date")
     });
 
