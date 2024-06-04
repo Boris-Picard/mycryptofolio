@@ -30,7 +30,7 @@ export default function Cards({ quantity, price, spent, date, name, id }) {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>{name}</CardTitle>
+                <CardTitle className="uppercase">{name}</CardTitle>
                 <CardDescription>Quantité : {quantity}</CardDescription>
             </CardHeader>
             <CardContent>

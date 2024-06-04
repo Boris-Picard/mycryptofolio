@@ -46,6 +46,7 @@ export default function FormTemplate() {
     const [coinId, setCoinId] = useState(null)
     const [error, setError] = useState(null)
     const [transaction, setTransaction] = useState(null)
+    const [selectData, setSelectData] = useState([])
 
 
     const list = listData;
@@ -69,6 +70,19 @@ export default function FormTemplate() {
 
         fetchTransaction();
     }, [id]);
+
+    useEffect(() => {
+        const fetchList = async () => {
+            try {
+                const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R")
+                setSelectData(response.data)
+            } catch (error) {
+                console.log("Error fetching CoinGecko list :", error)
+            }
+        }
+        fetchList()
+    }, [])
+    console.log(selectData);
 
     // Validation schema for the first form step
     const FormSchemaFirstStep = z.object({
@@ -221,9 +235,9 @@ export default function FormTemplate() {
                                                     </SelectTrigger>
                                                 </FormControl>
                                                 <SelectContent>
-                                                    {parsedlist.map((coin) => {
+                                                    {selectData.map((coin) => {
                                                         return (
-                                                            <SelectItem key={coin.symbol} value={coin.symbol}><div className="flex items-center"><img src={coin.logoURI} className="mr-2" width={24} height={24}></img>{coin.symbol}</div></SelectItem>
+                                                            <SelectItem key={coin.symbol} value={coin.id}><div className="flex items-center"><img src={coin.image} className="mr-2" width={24} height={24}></img>{coin.name}</div></SelectItem>
                                                         )
                                                     })}
                                                 </SelectContent>
