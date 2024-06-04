@@ -7,7 +7,7 @@ export default function SeeCoins() {
     const [transactions, setTransactions] = useState([])
     const [transactionsName, setTransactionsName] = useState()
     const [dataTransactionApi, setDataTransactionApi] = useState([])
-    const [coinsValue, setCoinsValue] = useState()
+    const [coinsValue, setCoinsValue] = useState([])
     const [error, setError] = useState(null)
 
     useEffect(() => {
@@ -50,7 +50,8 @@ export default function SeeCoins() {
                     // Stocke les transactions avec leur prix actuel et leur id
                     return {
                         id: coinData.id,
-                        current_price: coinData.current_price
+                        // Calcule le gain ou la perte directement : actualPrice = quantité * prix_actuel - montant_dépensé
+                        actualPrice: transaction.quantity * coinData.current_price - transaction.spent
                     };
                 }
                 return null;
