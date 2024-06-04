@@ -7,6 +7,7 @@ export default function SeeCoins() {
     const [transactions, setTransactions] = useState([])
     const [transactionsName, setTransactionsName] = useState()
     const [dataTransactionApi, setDataTransactionApi] = useState([])
+    const [coinsValue, setCoinsValue] = useState()
     const [error, setError] = useState(null)
 
     useEffect(() => {
@@ -24,8 +25,6 @@ export default function SeeCoins() {
         fetchTransactions()
     }, [])
 
-    console.log(transactionsName);
-
     useEffect(() => {
         const fetchCryptoCoin = async () => {
             try {
@@ -37,8 +36,31 @@ export default function SeeCoins() {
         }
         fetchCryptoCoin()
     }, [transactions])
-console.log(dataTransactionApi);
+
+    console.log(dataTransactionApi);
     console.log(transactions);
+
+    useEffect(() => {
+        const getCoinsValue = () => {
+            // Itère sur les transactions
+            const coinValues = transactions.map(transaction => {
+                // Cherche la donnée du coin qui a le même nom que celui de la transaction
+                const coinData = dataTransactionApi.find(coin => coin.id === transaction.coin.name);
+                if (coinData) {
+                    // Stocke les transactions avec leur prix actuel et leur id
+                    return {
+                        id: coinData.id,
+                        current_price: coinData.current_price
+                    };
+                }
+                return null;
+            }).filter(coinValue => coinValue !== null); // Filtre les valeurs nulles
+            setCoinsValue(coinValues);
+        };
+        getCoinsValue();
+    }, [transactions, dataTransactionApi]);
+
+    console.log(coinsValue);
 
     return (<div className="container h-screen p-10">
         <Error message={error} />

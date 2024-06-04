@@ -11,7 +11,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
 
-export default function Cards({ quantity, price, spent, date, name, id }) {
+export default function Cards({ quantity, price, spent, date, name, id, gainOrLoss }) {
     const navigate = useNavigate()
 
     const deleteTransaction = async (id) => {
@@ -36,6 +36,7 @@ export default function Cards({ quantity, price, spent, date, name, id }) {
             <CardContent>
                 <p>Prix : {price}</p>
                 <p>Total dépensé : {spent}</p>
+                <p>Pertes et profits : {gainOrLoss}</p>
             </CardContent>
             <CardFooter>
                 <p>Date : {date}</p>
