@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import listData from "../data/list.json"
 
 import { Progress } from "./ui/progress"
 
@@ -49,8 +48,6 @@ export default function FormTemplate() {
     const [selectData, setSelectData] = useState([])
 
 
-    const list = listData;
-    const parsedlist = JSON.parse(JSON.stringify(list));
 
     const navigate = useNavigate()
     const { id } = useParams()
