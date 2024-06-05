@@ -1,7 +1,15 @@
-import Cards from "@/components/Cards";
+import TableData from "@/components/TableData";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Error from "@/components/ui/error";
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table"
 
 export default function SeeCoins() {
     const [transactions, setTransactions] = useState([])
@@ -49,6 +57,12 @@ export default function SeeCoins() {
                         actualPrice: transaction.quantity * coinData.current_price - transaction.spent,
                         image: coinData.image,
                         name: coinData.name,
+                        rank: coinData.market_cap_rank,
+                        price: coinData.current_price,
+                        price_change_24h: coinData.price_change_percentage_24h,
+                        market_cap: coinData.market_cap,
+                        ath: coinData.ath,
+                        symbol: coinData.symbol,
                     };
                 }
                 // Si coinData n'est pas trouvé, retourne l'objet transaction original
@@ -65,10 +79,26 @@ export default function SeeCoins() {
 
     return (<div className="container h-screen p-10">
         <Error message={error} />
-        <div className="grid md:grid-cols-4 gap-3">
-            {transactions.map((coin) => {
-                return <Cards key={coin._id} image={coin.image} gainOrLoss={coin.actualPrice} className="col-span-1" quantity={coin.quantity} price={coin.price} spent={coin.spent} date={new Date(coin.date).toLocaleDateString()} name={coin.name} id={coin._id} />
-            })}
-        </div>
+        <Table className="bg-white">
+            <TableCaption>A list of your recent trade</TableCaption>
+            <TableHeader>
+                <TableRow>
+                    <TableHead className="w-[100px]">#</TableHead>
+                    <TableHead>Monnaie</TableHead>
+                    <TableHead>Cours</TableHead>
+                    <TableHead>24h</TableHead>
+                    <TableHead>Capitalisation boursière</TableHead>
+                    <TableHead>Ath</TableHead>
+                    <TableHead>Participations</TableHead>
+                    <TableHead>Pertes et profits</TableHead>
+                    <TableHead>Actions</TableHead>
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                {transactions.map((coin) => {
+                    return <TableData symbol={coin.symbol} ath={coin.ath} marketCap={coin.market_cap} priceChange={coin.price_change_24h} price={coin.price} key={coin._id} rank={coin.rank} image={coin.image} gainOrLoss={coin.actualPrice} className="col-span-1" quantity={coin.quantity} price={coin.price} spent={coin.spent} date={new Date(coin.date).toLocaleDateString()} name={coin.name} id={coin._id} />
+                })}
+            </TableBody>
+        </Table>
     </div>)
 }
