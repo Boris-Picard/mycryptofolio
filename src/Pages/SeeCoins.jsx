@@ -5,9 +5,8 @@ import Error from "@/components/ui/error";
 
 export default function SeeCoins() {
     const [transactions, setTransactions] = useState([])
-    const [transactionsName, setTransactionsName] = useState()
+    const [transactionsName, setTransactionsName] = useState([])
     const [dataTransactionApi, setDataTransactionApi] = useState([])
-    const [coinsValue, setCoinsValue] = useState([])
     const [error, setError] = useState(null)
 
     useEffect(() => {
@@ -35,10 +34,7 @@ export default function SeeCoins() {
             }
         }
         fetchCryptoCoin()
-    }, [transactions])
-
-    console.log(dataTransactionApi);
-    console.log(transactions);
+    }, [transactionsName])
 
     useEffect(() => {
         const getCoinsValue = () => {
@@ -47,27 +43,29 @@ export default function SeeCoins() {
                 // Cherche la donnée du coin qui a le même nom que celui de la transaction
                 const coinData = dataTransactionApi.find(coin => coin.id === transaction.coin.name);
                 if (coinData) {
-                    // Stocke les transactions avec leur prix actuel et leur id
+                    // Si coinData est trouvé, enrichit transaction avec actualPrice
                     return {
-                        id: coinData.id,
-                        // Calcule le gain ou la perte directement : actualPrice = quantité * prix_actuel - montant_dépensé
+                        ...transaction,
                         actualPrice: transaction.quantity * coinData.current_price - transaction.spent
                     };
                 }
-                return null;
-            }).filter(coinValue => coinValue !== null); // Filtre les valeurs nulles
-            setCoinsValue(coinValues);
+                // Si coinData n'est pas trouvé, retourne l'objet transaction original
+                return transaction;
+            });
+            // Met à jour l'état transactions avec les nouvelles valeurs
+            setTransactions(coinValues);
         };
         getCoinsValue();
-    }, [transactions, dataTransactionApi]);
+    }, [dataTransactionApi]); // S'exécute lorsque dataTransactionApi change
 
-    console.log(coinsValue);
+
+    console.log(transactions);
 
     return (<div className="container h-screen p-10">
         <Error message={error} />
         <div className="grid md:grid-cols-4 gap-3">
             {transactions.map((coin) => {
-                return <Cards key={coin._id} className="col-span-1" quantity={coin.quantity} price={coin.price} spent={coin.spent} date={new Date(coin.date).toLocaleDateString()} name={coin.coin.name} id={coin._id} />
+                return <Cards key={coin._id} gainOrLoss={coin.actualPrice} className="col-span-1" quantity={coin.quantity} price={coin.price} spent={coin.spent} date={new Date(coin.date).toLocaleDateString()} name={coin.coin.name} id={coin._id} />
             })}
         </div>
     </div>)
