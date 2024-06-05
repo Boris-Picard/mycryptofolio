@@ -6,7 +6,7 @@ import { Button } from "./ui/button"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
-export default function TableData({ quantity, price, spent, date, name, id, gainOrLoss, image, rank, priceChange, marketCap, ath, symbol }) {
+export default function TableData({ quantity, price, spent, date, name, id, gainOrLoss, image, rank, priceChange, marketCap, ath, symbol, percent }) {
     const navigate = useNavigate()
 
     const deleteTransaction = async (id) => {
@@ -51,7 +51,10 @@ export default function TableData({ quantity, price, spent, date, name, id, gain
             <TableCell><div className="flex flex-col">
                 {spent} $US<span className="uppercase text-slate-500 font-normal">{quantity} {symbol}</span>
             </div></TableCell>
-            <TableCell>{gainOrLoss} $US</TableCell>
+            <TableCell><div className="flex flex-col">
+                {gainOrLoss} $US
+                <span>{arrowUpOrDown(percent)}</span>
+            </div></TableCell>
             <TableCell>
                 <Button onClick={() => updateTransaction(id)} variant="secondary">Update</Button>
                 <Button onClick={() => deleteTransaction(id)} variant="destructive">Delete</Button>
