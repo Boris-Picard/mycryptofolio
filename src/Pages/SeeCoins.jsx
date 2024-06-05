@@ -55,6 +55,7 @@ export default function SeeCoins() {
                     return {
                         ...transaction,
                         actualPrice: transaction.quantity * coinData.current_price - transaction.spent,
+                        gainOrLossPercentage: ((coinData.current_price - transaction.spent) / transaction.spent) * 100,
                         image: coinData.image,
                         name: coinData.name,
                         rank: coinData.market_cap_rank,

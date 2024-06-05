@@ -23,15 +23,18 @@ export default function TableData({ quantity, price, spent, date, name, id, gain
     };
 
     const arrowUpOrDown = (value) => {
-        const direction = value?.toString().startsWith("-") ? "down" : "up";
+        if (!value) {
+            return
+        }
+        const direction = value.toString().startsWith("-") ? "down" : "up";
         return (
-            <div className="flex">
+            <div className={`flex ${value.toString().startsWith('-') ? "text-red-500" : "text-green-500"}`}>
                 <svg fill="currentColor" className="w-5 h-5" viewBox="0 0 24 24">
                     <path
                         d={direction === "up" ? "M7 14l5-5 5 5H7z" : " M7 10l5 5 5-5H7z"}
                     />
                 </svg>
-                {value.toFixed(1)} %
+                <span>{value.toFixed(1)} %</span>
             </div>
         );
     };
@@ -42,12 +45,7 @@ export default function TableData({ quantity, price, spent, date, name, id, gain
             <TableCell className="font-medium">{rank}</TableCell>
             <TableCell><div className="flex gap-2 items-center"><img src={image} alt={name} width={24} height={24} />{name}</div></TableCell>
             <TableCell>{price} $US</TableCell>
-            <TableCell className={` ${priceChange
-                .toString()
-                .startsWith("-")
-                ? "text-red-500"
-                : "text-green-500"
-                }`}>{arrowUpOrDown(priceChange)}</TableCell>
+            <TableCell>{arrowUpOrDown(priceChange)}</TableCell>
             <TableCell>{marketCap} $US</TableCell>
             <TableCell>{ath} $US</TableCell>
             <TableCell><div className="flex flex-col">
