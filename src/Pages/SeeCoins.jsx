@@ -79,11 +79,11 @@ export default function SeeCoins() {
 
     return (<div className="container h-screen p-10">
         <Error message={error} />
-        <Table className="bg-white">
+        <Table className="bg-white rounded-xl">
             <TableCaption>A list of your recent trade</TableCaption>
             <TableHeader>
                 <TableRow>
-                    <TableHead className="w-[100px]">#</TableHead>
+                    <TableHead>#</TableHead>
                     <TableHead>Monnaie</TableHead>
                     <TableHead>Cours</TableHead>
                     <TableHead>24h</TableHead>

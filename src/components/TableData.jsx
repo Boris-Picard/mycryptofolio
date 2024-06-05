@@ -23,15 +23,15 @@ export default function TableData({ quantity, price, spent, date, name, id, gain
     };
 
     return (
-        <TableRow>
+        <TableRow className="font-semibold">
             <TableCell className="font-medium">{rank}</TableCell>
-            <TableCell className="flex gap-2 items-center font-semibold"><img src={image} alt={name} width={24} height={24} />{name}</TableCell>
+            <TableCell><div className="flex gap-2 items-center"><img src={image} alt={name} width={24} height={24} />{name}</div></TableCell>
             <TableCell>{price} $US</TableCell>
             <TableCell>{priceChange}</TableCell>
             <TableCell>{marketCap} $US</TableCell>
             <TableCell>{ath} $US</TableCell>
             <TableCell><div className="flex flex-col">
-                {spent} $US<span className="uppercase">{quantity} {symbol}</span>
+                {spent} $US<span className="uppercase text-slate-500 font-normal">{quantity} {symbol}</span>
             </div></TableCell>
             <TableCell>{gainOrLoss} $US</TableCell>
             <TableCell>
