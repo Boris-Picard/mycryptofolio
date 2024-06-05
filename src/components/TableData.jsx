@@ -28,7 +28,7 @@ export default function TableData({ quantity, price, spent, date, name, id, gain
         }
         const direction = value.toString().startsWith("-") ? "down" : "up";
         return (
-            <div className={`flex ${value.toString().startsWith('-') ? "text-red-500" : "text-green-500"}`}>
+            <div className={`flex ${direction === "down" ? "text-red-500" : "text-green-500"}`}>
                 <svg fill="currentColor" className="w-5 h-5" viewBox="0 0 24 24">
                     <path
                         d={direction === "up" ? "M7 14l5-5 5 5H7z" : " M7 10l5 5 5-5H7z"}
