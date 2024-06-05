@@ -11,7 +11,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
 
-export default function Cards({ quantity, price, spent, date, name, id, gainOrLoss }) {
+export default function Cards({ quantity, price, spent, date, name, id, gainOrLoss, image }) {
     const navigate = useNavigate()
 
     const deleteTransaction = async (id) => {
@@ -30,7 +30,7 @@ export default function Cards({ quantity, price, spent, date, name, id, gainOrLo
     return (
         <Card>
             <CardHeader>
-                <CardTitle className="uppercase">{name}</CardTitle>
+                <CardTitle className="uppercase flex gap-2"><img src={image} alt={name} width={24} height={24} />{name}</CardTitle>
                 <CardDescription>Quantité : {quantity}</CardDescription>
             </CardHeader>
             <CardContent>

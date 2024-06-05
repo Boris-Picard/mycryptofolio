@@ -30,7 +30,7 @@ export default function SeeCoins() {
                 const response = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${transactionsName}&x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
                 setDataTransactionApi(response.data)
             } catch (error) {
-                console.error(error)
+                setError(error)
             }
         }
         fetchCryptoCoin()
@@ -46,7 +46,9 @@ export default function SeeCoins() {
                     // Si coinData est trouvé, enrichit transaction avec actualPrice
                     return {
                         ...transaction,
-                        actualPrice: transaction.quantity * coinData.current_price - transaction.spent
+                        actualPrice: transaction.quantity * coinData.current_price - transaction.spent,
+                        image: coinData.image,
+                        name: coinData.name,
                     };
                 }
                 // Si coinData n'est pas trouvé, retourne l'objet transaction original
@@ -58,14 +60,14 @@ export default function SeeCoins() {
         getCoinsValue();
     }, [dataTransactionApi]); // S'exécute lorsque dataTransactionApi change
 
-
+    console.log(dataTransactionApi);
     console.log(transactions);
 
     return (<div className="container h-screen p-10">
         <Error message={error} />
         <div className="grid md:grid-cols-4 gap-3">
             {transactions.map((coin) => {
-                return <Cards key={coin._id} gainOrLoss={coin.actualPrice} className="col-span-1" quantity={coin.quantity} price={coin.price} spent={coin.spent} date={new Date(coin.date).toLocaleDateString()} name={coin.coin.name} id={coin._id} />
+                return <Cards key={coin._id} image={coin.image} gainOrLoss={coin.actualPrice} className="col-span-1" quantity={coin.quantity} price={coin.price} spent={coin.spent} date={new Date(coin.date).toLocaleDateString()} name={coin.name} id={coin._id} />
             })}
         </div>
     </div>)
