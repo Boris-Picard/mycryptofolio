@@ -34,8 +34,6 @@ const SelectTriggerFolio = React.forwardRef(({ className, children, ...props }, 
     )}
     {...props}>
     {children}
-    < SelectPrimitive.Icon asChild >
-    </SelectPrimitive.Icon >
   </SelectPrimitive.Trigger >
 ))
 SelectTriggerFolio.displayName = SelectPrimitive.Trigger.displayName

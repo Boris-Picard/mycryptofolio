@@ -10,6 +10,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import CardsData from "@/components/CardsData";
 
 export default function SeeCoins() {
     const [transactions, setTransactions] = useState([])
@@ -79,6 +80,9 @@ export default function SeeCoins() {
     console.log(transactions);
 
     return (<div className="container h-screen p-10">
+        <div className="grid grid-cols-4 mb-3 gap-3">
+            <CardsData />
+        </div>
         <Error message={error} />
         <Table className="bg-white rounded-xl">
             <TableCaption>A list of your recent trade</TableCaption>

@@ -64,16 +64,16 @@ export default function TableData({ quantity, price, spent, date, name, id, gain
             </div></TableCell>
             <TableCell>
                 <Select>
-                    <SelectTriggerFolio >
+                    <SelectTriggerFolio>
                         <EllipsisVertical className="w-5 h-5 cursor-pointer" />
                     </SelectTriggerFolio>
-                    <SelectContent>
-                        <SelectGroup>
-                            <div className="p-2 cursor-pointer relative flex w-full  select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => updateTransaction(id)}>
-                                Update
+                    <SelectContent className="p-1">
+                        <SelectGroup className="font-semibold">
+                            <div className="p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => updateTransaction(id)}>
+                                Mettre a jour la transaction
                             </div>
-                            <div className="p-2 cursor-pointer relative flex w-full  select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => deleteTransaction(id)}>
-                                Delete
+                            <div className="p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => deleteTransaction(id)}>
+                                Supprimer la monnaie
                             </div>
                         </SelectGroup>
                     </SelectContent>
