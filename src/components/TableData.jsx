@@ -2,9 +2,16 @@ import {
     TableCell,
     TableRow,
 } from "@/components/ui/table"
-import { Button } from "./ui/button"
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectTriggerFolio,
+} from "@/components/ui/select"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { EllipsisVertical } from "lucide-react"
+
 
 export default function TableData({ quantity, price, spent, date, name, id, gainOrLoss, image, rank, priceChange, marketCap, ath, symbol, percent }) {
     const navigate = useNavigate()
@@ -56,8 +63,21 @@ export default function TableData({ quantity, price, spent, date, name, id, gain
                 <span>{arrowUpOrDown(percent)}</span>
             </div></TableCell>
             <TableCell>
-                <Button onClick={() => updateTransaction(id)} variant="secondary">Update</Button>
-                <Button onClick={() => deleteTransaction(id)} variant="destructive">Delete</Button>
+                <Select>
+                    <SelectTriggerFolio >
+                        <EllipsisVertical className="w-5 h-5 cursor-pointer" />
+                    </SelectTriggerFolio>
+                    <SelectContent>
+                        <SelectGroup>
+                            <div className="p-2 cursor-pointer relative flex w-full  select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => updateTransaction(id)}>
+                                Update
+                            </div>
+                            <div className="p-2 cursor-pointer relative flex w-full  select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => deleteTransaction(id)}>
+                                Delete
+                            </div>
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
             </TableCell>
         </TableRow>
     )
