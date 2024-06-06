@@ -13,7 +13,7 @@ export default function CardsData({ transactions }) {
     console.log(transactions);
     const [totalInvested, setTotalInvested] = useState(0);
     useEffect(() => {
-        const totalAmount = transactions.reduce((acc, transaction) => acc + transaction.spent, 0)
+        const totalAmount = transactions.reduce((acc, transaction) => acc + transaction.actualValue, 0)
         setTotalInvested(totalAmount)
     }, [transactions])
     return (<>

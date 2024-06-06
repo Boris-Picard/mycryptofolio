@@ -57,6 +57,7 @@ export default function SeeCoins() {
                     return {
                         ...transaction,
                         actualPrice: transaction.quantity * coinData.current_price - transaction.spent,
+                        actualValue: transaction.quantity * coinData.current_price,
                         gainOrLossPercentage: (transaction.quantity * coinData.current_price - transaction.spent) / transaction.spent * 100,
                         image: coinData.image,
                         name: coinData.name,
@@ -102,7 +103,7 @@ export default function SeeCoins() {
             </TableHeader>
             <TableBody>
                 {transactions.map((coin) => {
-                    return <TableData percent={coin.gainOrLossPercentage} symbol={coin.symbol} ath={coin.ath} marketCap={coin.market_cap} priceChange={coin.price_change_24h} price={coin.price} key={coin._id} rank={coin.rank} image={coin.image} gainOrLoss={coin.actualPrice} className="col-span-1" quantity={coin.quantity} price={coin.price} spent={coin.spent} date={new Date(coin.date).toLocaleDateString()} name={coin.name} id={coin._id} />
+                    return <TableData percent={coin.gainOrLossPercentage} actualValue={coin.actualValue} symbol={coin.symbol} ath={coin.ath} marketCap={coin.market_cap} priceChange={coin.price_change_24h} price={coin.price} key={coin._id} rank={coin.rank} image={coin.image} gainOrLoss={coin.actualPrice} className="col-span-1" quantity={coin.quantity} price={coin.price} spent={coin.spent} date={new Date(coin.date).toLocaleDateString()} name={coin.name} id={coin._id} />
                 })}
             </TableBody>
         </Table>

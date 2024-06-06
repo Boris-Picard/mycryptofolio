@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom"
 import { EllipsisVertical } from "lucide-react"
 
 
-export default function TableData({ quantity, price, spent, date, name, id, gainOrLoss, image, rank, priceChange, marketCap, ath, symbol, percent }) {
+export default function TableData({ quantity, price, spent, date, name, id, gainOrLoss, image, rank, priceChange, marketCap, ath, symbol, percent, actualValue }) {
     const navigate = useNavigate()
 
     const deleteTransaction = async (id) => {
@@ -56,7 +56,7 @@ export default function TableData({ quantity, price, spent, date, name, id, gain
             <TableCell>{marketCap} $US</TableCell>
             <TableCell>{ath} $US</TableCell>
             <TableCell><div className="flex flex-col">
-                {spent} $US<span className="uppercase text-slate-500 font-normal">{quantity} {symbol}</span>
+                {actualValue} $US<span className="uppercase text-slate-500 font-normal">{quantity} {symbol}</span>
             </div></TableCell>
             <TableCell><div className="flex flex-col">
                 {gainOrLoss} $US
