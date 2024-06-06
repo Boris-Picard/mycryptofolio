@@ -52,6 +52,7 @@ export default function SeeCoins() {
                 // Cherche la donnée du coin qui a le même nom que celui de la transaction
                 const coinData = dataTransactionApi.find(coin => coin.id === transaction.coin.name);
                 if (coinData) {
+                    const totalInvested = transactions.reduce((acc, transaction) => acc + transaction.spent, 0);
                     // Si coinData est trouvé, enrichit transaction avec actualPrice
                     return {
                         ...transaction,
@@ -81,7 +82,7 @@ export default function SeeCoins() {
 
     return (<div className="container h-screen p-10">
         <div className="grid grid-cols-4 mb-3 gap-3">
-            <CardsData />
+            <CardsData transactions={transactions} />
         </div>
         <Error message={error} />
         <Table className="bg-white rounded-xl">
