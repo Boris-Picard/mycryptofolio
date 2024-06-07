@@ -21,7 +21,8 @@ import {
 
 
 
-export default function TableData({ quantity, price, spent, date, name, id, gainOrLoss, image, rank, priceChange, marketCap, ath, symbol, percent, actualValue }) {
+export default function TableData({ quantity, price, spent, date, name, id, gainOrLoss, image, rank, priceChange, marketCap, ath, symbol, percent, actualValue, _id }) {
+
     const navigate = useNavigate()
 
     const deleteTransaction = async (id) => {
@@ -36,6 +37,10 @@ export default function TableData({ quantity, price, spent, date, name, id, gain
     const updateTransaction = (id) => {
         navigate(`/${id}`);
     };
+
+    const addTransaction = (id) => {
+        navigate(`/${id}`);
+    }
 
     const arrowUpOrDown = (value) => {
         if (!value) {
@@ -77,7 +82,7 @@ export default function TableData({ quantity, price, spent, date, name, id, gain
             <TableCell className="flex gap-3">
                 <TooltipProvider>
                     <Tooltip>
-                        <TooltipTrigger><Plus /></TooltipTrigger>
+                        <TooltipTrigger><Plus onClick={() => addTransaction(_id)} /></TooltipTrigger>
                         <TooltipContent>
                             <p>Ajouter une transaction</p>
                         </TooltipContent>
