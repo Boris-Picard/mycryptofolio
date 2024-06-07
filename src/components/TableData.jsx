@@ -10,7 +10,15 @@ import {
 } from "@/components/ui/select"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
-import { EllipsisVertical } from "lucide-react"
+import { EllipsisVertical, Plus } from "lucide-react"
+
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
+
 
 
 export default function TableData({ quantity, price, spent, date, name, id, gainOrLoss, image, rank, priceChange, marketCap, ath, symbol, percent, actualValue }) {
@@ -55,17 +63,36 @@ export default function TableData({ quantity, price, spent, date, name, id, gain
             <TableCell>{arrowUpOrDown(priceChange)}</TableCell>
             <TableCell>{marketCap} $US</TableCell>
             <TableCell>{ath} $US</TableCell>
-            <TableCell><div className="flex flex-col">
-                {actualValue} $US<span className="uppercase text-slate-500 font-normal">{quantity} {symbol}</span>
-            </div></TableCell>
-            <TableCell><div className="flex flex-col">
-                {gainOrLoss} $US
-                <span>{arrowUpOrDown(percent)}</span>
-            </div></TableCell>
             <TableCell>
+                <div className="flex flex-col">
+                    {actualValue} $US<span className="uppercase text-slate-500 font-normal">{quantity} {symbol}</span>
+                </div>
+            </TableCell>
+            <TableCell>
+                <div className="flex flex-col">
+                    {gainOrLoss} $US
+                    <span>{arrowUpOrDown(percent)}</span>
+                </div>
+            </TableCell>
+            <TableCell className="flex gap-3">
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger><Plus /></TooltipTrigger>
+                        <TooltipContent>
+                            <p>Ajouter une transaction</p>
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
                 <Select>
                     <SelectTriggerFolio>
-                        <EllipsisVertical className="w-5 h-5 cursor-pointer" />
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger><EllipsisVertical className="w-5 h-5 cursor-pointer" /></TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Plus d'actions</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
                     </SelectTriggerFolio>
                     <SelectContent className="p-1">
                         <SelectGroup className="font-semibold">
