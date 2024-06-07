@@ -50,8 +50,8 @@ export default function FormTemplate() {
 
 
     const navigate = useNavigate()
-    const { id } = useParams()
-
+    const { id, name } = useParams()
+    console.log(name);
     useEffect(() => {
         const fetchTransaction = async () => {
             if (id) {
@@ -172,7 +172,7 @@ export default function FormTemplate() {
             setDataStep((prev) => ({ ...prev, step2: parsedData }));
             setSteps(steps + 1);
             if (id && transaction && transaction.transaction._id) {
-                await axios.put(`http://localhost:3001/api/transaction/${transaction.transaction._id}`, {
+                await axios.put(`http://localhost:3001/api/transaction/id/${transaction.transaction._id}`, {
                     quantity: parsedData.quantity,
                     price: parsedData.price,
                     spent: parsedData.spent,

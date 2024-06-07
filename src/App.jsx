@@ -10,7 +10,8 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/:id" element={<HomePage />} />
+          <Route path="/id/:id" element={<HomePage />} />
+          <Route path="/name/:name" element={<HomePage />} />
           <Route path="/seecoins" element={<SeeCoins />} />
         </Routes>
       </div>

@@ -21,7 +21,7 @@ import {
 
 
 
-export default function TableData({ quantity, price, spent, date, name, id, gainOrLoss, image, rank, priceChange, marketCap, ath, symbol, percent, actualValue, _id }) {
+export default function TableData({ quantity, price, spent, date, name, id, gainOrLoss, image, rank, priceChange, marketCap, ath, symbol, percent, actualValue, coinDataName }) {
 
     const navigate = useNavigate()
 
@@ -35,11 +35,11 @@ export default function TableData({ quantity, price, spent, date, name, id, gain
     }
 
     const updateTransaction = (id) => {
-        navigate(`/${id}`);
+        navigate(`/id/${id}`);
     };
 
-    const addTransaction = (id) => {
-        navigate(`/${id}`);
+    const addTransaction = (coinDataName) => {
+        navigate(`/name/${coinDataName}`);
     }
 
     const arrowUpOrDown = (value) => {
@@ -82,7 +82,7 @@ export default function TableData({ quantity, price, spent, date, name, id, gain
             <TableCell className="flex gap-3">
                 <TooltipProvider>
                     <Tooltip>
-                        <TooltipTrigger><Plus onClick={() => addTransaction(_id)} /></TooltipTrigger>
+                        <TooltipTrigger><Plus onClick={() => addTransaction(coinDataName)} /></TooltipTrigger>
                         <TooltipContent>
                             <p>Ajouter une transaction</p>
                         </TooltipContent>
