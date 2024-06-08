@@ -57,7 +57,7 @@ export default function FormTemplate() {
             if (id) {
                 try {
                     const response = await axios.get(`http://localhost:3001/api/transaction/id/${id}`);
-                    setTransaction(response.data);
+                    setTransaction(response.data.transaction);
                     setCoinId(response.data.transaction.coin._id)
                 } catch (error) {
                     console.error("Error fetching transaction", error);
@@ -66,7 +66,7 @@ export default function FormTemplate() {
                 try {
                     const response = await axios.get(`http://localhost:3001/api/transaction/name/${name}`);
                     setTransaction(response.data);
-                    setCoinId(response.data.transaction.coin._id)
+                    console.log(response.data);
                 } catch (error) {
                     console.error("Error fetching transaction", error);
                 }
@@ -75,7 +75,7 @@ export default function FormTemplate() {
 
         fetchTransaction();
     }, [id, name]);
-console.log(transaction);
+
     useEffect(() => {
         const fetchList = async () => {
             try {
@@ -123,7 +123,7 @@ console.log(transaction);
 
     useEffect(() => {
         if (transaction) {
-            firstForm.setValue('coin', transaction.transaction.coin.name);
+            firstForm.setValue('coin', transaction.coin.name);
         }
     }, [transaction, firstForm]);
 
@@ -140,10 +140,10 @@ console.log(transaction);
 
     useEffect(() => {
         if (transaction) {
-            secondForm.setValue('quantity', transaction.transaction.quantity);
-            secondForm.setValue('price', transaction.transaction.price);
-            secondForm.setValue('spent', transaction.transaction.spent);
-            secondForm.setValue('date', new Date(transaction.transaction.date));
+            secondForm.setValue('quantity', transaction.quantity);
+            secondForm.setValue('price', transaction.price);
+            secondForm.setValue('spent', transaction.spent);
+            secondForm.setValue('date', new Date(transaction.date));
         }
     }, [transaction, secondForm]);
 
@@ -155,8 +155,8 @@ console.log(transaction);
             // Store the parsed data
             setDataStep((prev) => ({ ...prev, step1: parsedData }));
             let response;
-            if (id && transaction && transaction.transaction.coin.name) {
-                response = await axios.put(`http://localhost:3001/api/coin/${transaction.transaction.coin._id}`, {
+            if (id && transaction && transaction.coin.name) {
+                response = await axios.put(`http://localhost:3001/api/coin/${transaction.coin._id}`, {
                     name: parsedData.coin
                 })
             } else {
@@ -179,8 +179,8 @@ console.log(transaction);
             const parsedData = FormSchemaSecondStep.parse(data);
             setDataStep((prev) => ({ ...prev, step2: parsedData }));
             setSteps(steps + 1);
-            if (id && transaction && transaction.transaction._id) {
-                await axios.put(`http://localhost:3001/api/transaction/id/${transaction.transaction._id}`, {
+            if (id && transaction && transaction._id) {
+                await axios.put(`http://localhost:3001/api/transaction/id/${transaction._id}`, {
                     quantity: parsedData.quantity,
                     price: parsedData.price,
                     spent: parsedData.spent,
@@ -220,8 +220,8 @@ console.log(transaction);
                 <div className="my-5 w-full">
                     <Progress value={steps === 1 && id ? 0 : steps === 2 || name ? 50 : steps === 3 ? 100 : ""} />
                 </div>
-                <Form {...(steps === 1 || id ? firstForm : secondForm)} >
-                    <form onSubmit={steps === 1 || id ? firstForm.handleSubmit(handleFirstStepSubmit) : secondForm.handleSubmit(handleSecondStepSubmit)} className="space-y-4 w-full">
+                <Form {...(steps === 1  ? firstForm : secondForm)} >
+                    <form onSubmit={steps === 1 ? firstForm.handleSubmit(handleFirstStepSubmit) : secondForm.handleSubmit(handleSecondStepSubmit)} className="space-y-4 w-full">
                         {steps === 1 && id &&
                             <>
                                 <Error message={error} />
@@ -256,7 +256,7 @@ console.log(transaction);
                                 />
                                 <Button type="submit" className="w-full">Next Step</Button>
                             </>}
-                        {steps >= 2 || name &&
+                        {steps >= 2 &&
                             <div className="grid grid-cols-2 gap-3">
                                 <div className="col-span-1">
                                     <Error message={error} />
@@ -351,7 +351,7 @@ console.log(transaction);
                                     <Button variant="outline" type="button" onClick={() => setSteps(steps - 1)} disabled={steps === 3} className="w-full">Revenir en arrière</Button>
                                 </div>
                                 <div className="md:col-span-1 col-span-2">
-                                    {steps === 2 || name &&
+                                    {steps === 2 &&
                                         <Button type="submit" className="w-full">
                                             {id || name ? "Modifier la transaction" : "Ajouter une transaction"}
                                         </Button>}
