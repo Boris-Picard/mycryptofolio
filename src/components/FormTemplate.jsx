@@ -66,7 +66,7 @@ export default function FormTemplate() {
                 try {
                     const response = await axios.get(`http://localhost:3001/api/transaction/name/${name}`);
                     setTransaction(response.data);
-                    console.log(response.data);
+                    setSteps(steps + 1)
                 } catch (error) {
                     console.error("Error fetching transaction", error);
                 }
@@ -175,12 +175,20 @@ export default function FormTemplate() {
 
     // Handle submission for the second step
     const handleSecondStepSubmit = async (data) => {
+        console.log(data);
         try {
             const parsedData = FormSchemaSecondStep.parse(data);
             setDataStep((prev) => ({ ...prev, step2: parsedData }));
             setSteps(steps + 1);
             if (id && transaction && transaction._id) {
                 await axios.put(`http://localhost:3001/api/transaction/id/${transaction._id}`, {
+                    quantity: parsedData.quantity,
+                    price: parsedData.price,
+                    spent: parsedData.spent,
+                    date: parsedData.date,
+                })
+            } else if (name && transaction && transaction.name) {
+                await axios.put(`http://localhost:3001/api/transaction/name/${transaction.name}`, {
                     quantity: parsedData.quantity,
                     price: parsedData.price,
                     spent: parsedData.spent,
@@ -220,9 +228,9 @@ export default function FormTemplate() {
                 <div className="my-5 w-full">
                     <Progress value={steps === 1 && id ? 0 : steps === 2 || name ? 50 : steps === 3 ? 100 : ""} />
                 </div>
-                <Form {...(steps === 1  ? firstForm : secondForm)} >
+                <Form {...(steps === 1 ? firstForm : secondForm)} >
                     <form onSubmit={steps === 1 ? firstForm.handleSubmit(handleFirstStepSubmit) : secondForm.handleSubmit(handleSecondStepSubmit)} className="space-y-4 w-full">
-                        {steps === 1 && id &&
+                        {steps === 1 &&
                             <>
                                 <Error message={error} />
                                 <FormField
@@ -305,7 +313,7 @@ export default function FormTemplate() {
                                     />
                                 </div>
                                 <div className="col-span-2">
-                                    <FormField
+                                    {/* <FormField
                                         control={secondForm.control}
                                         name="date"
                                         render={({ field }) => (
@@ -345,7 +353,7 @@ export default function FormTemplate() {
                                                 <FormMessage />
                                             </FormItem>
                                         )}
-                                    />
+                                    /> */}
                                 </div>
                                 <div className="md:col-span-1 col-span-2">
                                     <Button variant="outline" type="button" onClick={() => setSteps(steps - 1)} disabled={steps === 3} className="w-full">Revenir en arrière</Button>
