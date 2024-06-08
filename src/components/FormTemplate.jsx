@@ -51,12 +51,20 @@ export default function FormTemplate() {
 
     const navigate = useNavigate()
     const { id, name } = useParams()
-    console.log(name);
+
     useEffect(() => {
         const fetchTransaction = async () => {
             if (id) {
                 try {
-                    const response = await axios.get(`http://localhost:3001/api/transaction/${id}`);
+                    const response = await axios.get(`http://localhost:3001/api/transaction/id/${id}`);
+                    setTransaction(response.data);
+                    setCoinId(response.data.transaction.coin._id)
+                } catch (error) {
+                    console.error("Error fetching transaction", error);
+                }
+            } else if (name) {
+                try {
+                    const response = await axios.get(`http://localhost:3001/api/transaction/name/${name}`);
                     setTransaction(response.data);
                     setCoinId(response.data.transaction.coin._id)
                 } catch (error) {
@@ -66,8 +74,8 @@ export default function FormTemplate() {
         };
 
         fetchTransaction();
-    }, [id]);
-
+    }, [id, name]);
+console.log(transaction);
     useEffect(() => {
         const fetchList = async () => {
             try {
@@ -210,11 +218,11 @@ export default function FormTemplate() {
                     </h2>
                 </div>
                 <div className="my-5 w-full">
-                    <Progress value={steps === 1 ? 0 : steps === 2 ? 50 : steps === 3 ? 100 : ""} />
+                    <Progress value={steps === 1 && id ? 0 : steps === 2 || name ? 50 : steps === 3 ? 100 : ""} />
                 </div>
-                <Form {...(steps === 1 ? firstForm : secondForm)} >
-                    <form onSubmit={steps === 1 ? firstForm.handleSubmit(handleFirstStepSubmit) : secondForm.handleSubmit(handleSecondStepSubmit)} className="space-y-4 w-full">
-                        {steps === 1 &&
+                <Form {...(steps === 1 || id ? firstForm : secondForm)} >
+                    <form onSubmit={steps === 1 || id ? firstForm.handleSubmit(handleFirstStepSubmit) : secondForm.handleSubmit(handleSecondStepSubmit)} className="space-y-4 w-full">
+                        {steps === 1 && id &&
                             <>
                                 <Error message={error} />
                                 <FormField
@@ -248,7 +256,7 @@ export default function FormTemplate() {
                                 />
                                 <Button type="submit" className="w-full">Next Step</Button>
                             </>}
-                        {steps >= 2 &&
+                        {steps >= 2 || name &&
                             <div className="grid grid-cols-2 gap-3">
                                 <div className="col-span-1">
                                     <Error message={error} />
@@ -343,9 +351,9 @@ export default function FormTemplate() {
                                     <Button variant="outline" type="button" onClick={() => setSteps(steps - 1)} disabled={steps === 3} className="w-full">Revenir en arrière</Button>
                                 </div>
                                 <div className="md:col-span-1 col-span-2">
-                                    {steps === 2 &&
+                                    {steps === 2 || name &&
                                         <Button type="submit" className="w-full">
-                                            {id ? "Modifier la transaction" : "Ajouter une transaction"}
+                                            {id || name ? "Modifier la transaction" : "Ajouter une transaction"}
                                         </Button>}
                                     {steps === 3 && <Button type="submit" disabled={true} className="w-full">
                                         <svg className="animate-spin h-5 w-5 mr-3 border-gray-200 border-2 border-t-blue-600 rounded-full" viewBox="0 0 24 24">
