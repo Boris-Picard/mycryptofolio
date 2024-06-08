@@ -44,7 +44,7 @@ export default function FormTemplate() {
     const [dataStep, setDataStep] = useState([])
     const [coinId, setCoinId] = useState(null)
     const [error, setError] = useState(null)
-    const [transaction, setTransaction] = useState(null)
+    const [transaction, setTransaction] = useState([])
     const [selectData, setSelectData] = useState([])
 
 
@@ -65,7 +65,9 @@ export default function FormTemplate() {
             } else if (name) {
                 try {
                     const response = await axios.get(`http://localhost:3001/api/transaction/name/${name}`);
-                    setTransaction(response.data);
+                    setTransaction(response.data.coin[0]);
+                    console.log(response.data.coin[0]);
+                    setCoinId(response.data.coin[0]._id)
                     setSteps(steps + 1)
                 } catch (error) {
                     console.error("Error fetching transaction", error);
@@ -76,18 +78,17 @@ export default function FormTemplate() {
         fetchTransaction();
     }, [id, name]);
 
-    useEffect(() => {
-        const fetchList = async () => {
-            try {
-                const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R")
-                setSelectData(response.data)
-            } catch (error) {
-                console.log("Error fetching CoinGecko list :", error)
-            }
-        }
-        fetchList()
-    }, [])
-    console.log(selectData);
+    // useEffect(() => {
+    //     const fetchList = async () => {
+    //         try {
+    //             const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R")
+    //             setSelectData(response.data)
+    //         } catch (error) {
+    //             console.log("Error fetching CoinGecko list :", error)
+    //         }
+    //     }
+    //     fetchList()
+    // }, [])
 
     // Validation schema for the first form step
     const FormSchemaFirstStep = z.object({
@@ -122,10 +123,13 @@ export default function FormTemplate() {
     });
 
     useEffect(() => {
-        if (transaction) {
+        if (id) {
             firstForm.setValue('coin', transaction.coin.name);
         }
-    }, [transaction, firstForm]);
+        if(name) {
+            firstForm.setValue('coin', transaction.name)
+        }
+    }, [transaction, firstForm, name, id]);
 
     // Hook form instance for the second step with validation resolver
     const secondForm = useForm({
@@ -149,6 +153,7 @@ export default function FormTemplate() {
 
     // Handle submission for the first step
     const handleFirstStepSubmit = async (data) => {
+        console.log(data);
         try {
             // Validate the data according to the schema
             const parsedData = FormSchemaFirstStep.parse(data);
@@ -172,7 +177,7 @@ export default function FormTemplate() {
             console.log("Form data is invalid", error.message);
         }
     };
-
+    
     // Handle submission for the second step
     const handleSecondStepSubmit = async (data) => {
         console.log(data);
@@ -264,7 +269,7 @@ export default function FormTemplate() {
                                 />
                                 <Button type="submit" className="w-full">Next Step</Button>
                             </>}
-                        {steps >= 2 &&
+                        {steps === 2 &&
                             <div className="grid grid-cols-2 gap-3">
                                 <div className="col-span-1">
                                     <Error message={error} />
@@ -361,7 +366,7 @@ export default function FormTemplate() {
                                 <div className="md:col-span-1 col-span-2">
                                     {steps === 2 &&
                                         <Button type="submit" className="w-full">
-                                            {id || name ? "Modifier la transaction" : "Ajouter une transaction"}
+                                            {id ? (name ? "Modifier la transaction" : "Ajouter une transaction") : "Ajouter une transaction"}
                                         </Button>}
                                     {steps === 3 && <Button type="submit" disabled={true} className="w-full">
                                         <svg className="animate-spin h-5 w-5 mr-3 border-gray-200 border-2 border-t-blue-600 rounded-full" viewBox="0 0 24 24">
