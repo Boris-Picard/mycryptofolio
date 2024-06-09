@@ -67,6 +67,7 @@ export default function FormTemplate() {
                     const response = await axios.get(`http://localhost:3001/api/transaction/name/${name}`);
                     setTransaction(response.data.coin[0]);
                     setCoinId(response.data.coin[0]._id)
+                    setDataStep({ step1: { coin: response.data.coin[0]._id } })
                     setSteps(2)
                 } catch (error) {
                     console.error("Error fetching transaction", error);
@@ -152,7 +153,7 @@ export default function FormTemplate() {
             secondForm.setValue('spent', transaction.spent);
             secondForm.setValue('date', new Date(transaction.date));
         }
-        if(name) {
+        if (name) {
             secondForm.setValue('date', new Date());
         }
     }, [transaction, secondForm, name, id]);
@@ -191,22 +192,20 @@ export default function FormTemplate() {
             const parsedData = FormSchemaSecondStep.parse(data);
             setDataStep((prev) => ({ ...prev, step2: parsedData }));
             setSteps(3);
-            if (id && transaction && transaction._id) {
+            if (id) {
                 await axios.put(`http://localhost:3001/api/transaction/id/${transaction._id}`, {
                     quantity: parsedData.quantity,
                     price: parsedData.price,
                     spent: parsedData.spent,
                     date: parsedData.date,
                 })
-            } else if (name && transaction && transaction.name) {
-                await axios.put(`http://localhost:3001/api/transaction/name/${transaction.name}`, {
+            } else if (name) {
+                await axios.post(`http://localhost:3001/api/transaction/name/${transaction.name}`, {
+                    quantity: parsedData.quantity,
+                    price: parsedData.price,
+                    spent: parsedData.spent,
+                    date: parsedData.date,
                     coinId: coinId,
-                    transactionData: {
-                        quantity: parsedData.quantity,
-                        price: parsedData.price,
-                        spent: parsedData.spent,
-                        date: parsedData.date,
-                    },
                 })
             } else {
                 await axios.post("http://localhost:3001/api/coin/transaction", {
@@ -227,7 +226,7 @@ export default function FormTemplate() {
             console.log("Form data is invalid", error.message);
         }
     };
-
+    console.log(dataStep);
     return (
         <div className="flex h-full items-center justify-center">
             <div className="flex w-full md:w-1/2 flex-col justify-center items-center shadow-lg p-6 rounded-md bg-slate-200">
