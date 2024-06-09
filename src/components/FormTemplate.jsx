@@ -66,29 +66,27 @@ export default function FormTemplate() {
                 try {
                     const response = await axios.get(`http://localhost:3001/api/transaction/name/${name}`);
                     setTransaction(response.data.coin[0]);
-                    console.log(response.data.coin[0]);
                     setCoinId(response.data.coin[0]._id)
-                    setSteps(steps + 1)
+                    setSteps(2)
                 } catch (error) {
                     console.error("Error fetching transaction", error);
                 }
             }
         };
-
         fetchTransaction();
     }, [id, name]);
 
-    // useEffect(() => {
-    //     const fetchList = async () => {
-    //         try {
-    //             const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R")
-    //             setSelectData(response.data)
-    //         } catch (error) {
-    //             console.log("Error fetching CoinGecko list :", error)
-    //         }
-    //     }
-    //     fetchList()
-    // }, [])
+    useEffect(() => {
+        const fetchList = async () => {
+            try {
+                const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R")
+                setSelectData(response.data)
+            } catch (error) {
+                console.log("Error fetching CoinGecko list :", error)
+            }
+        }
+        fetchList()
+    }, [])
 
     // Validation schema for the first form step
     const FormSchemaFirstStep = z.object({
@@ -123,12 +121,17 @@ export default function FormTemplate() {
     });
 
     useEffect(() => {
-        if (id) {
-            firstForm.setValue('coin', transaction.coin.name);
+        try {
+            if (id) {
+                firstForm.setValue('coin', transaction.coin.name);
+            }
+            if (name) {
+                firstForm.setValue('coin', transaction.name)
+            }
+        } catch (error) {
+            console.log(error);
         }
-        if(name) {
-            firstForm.setValue('coin', transaction.name)
-        }
+
     }, [transaction, firstForm, name, id]);
 
     // Hook form instance for the second step with validation resolver
@@ -143,13 +146,16 @@ export default function FormTemplate() {
     });
 
     useEffect(() => {
-        if (transaction) {
+        if (id) {
             secondForm.setValue('quantity', transaction.quantity);
             secondForm.setValue('price', transaction.price);
             secondForm.setValue('spent', transaction.spent);
             secondForm.setValue('date', new Date(transaction.date));
         }
-    }, [transaction, secondForm]);
+        if(name) {
+            secondForm.setValue('date', new Date());
+        }
+    }, [transaction, secondForm, name, id]);
 
     // Handle submission for the first step
     const handleFirstStepSubmit = async (data) => {
@@ -171,20 +177,20 @@ export default function FormTemplate() {
             }
             setCoinId(response.data._id)
             // Proceed to the next step
-            setSteps(steps + 1);
+            setSteps(2);
         } catch (error) {
             setError(error.response.data.error)
             console.log("Form data is invalid", error.message);
         }
     };
-    
+
     // Handle submission for the second step
     const handleSecondStepSubmit = async (data) => {
         console.log(data);
         try {
             const parsedData = FormSchemaSecondStep.parse(data);
             setDataStep((prev) => ({ ...prev, step2: parsedData }));
-            setSteps(steps + 1);
+            setSteps(3);
             if (id && transaction && transaction._id) {
                 await axios.put(`http://localhost:3001/api/transaction/id/${transaction._id}`, {
                     quantity: parsedData.quantity,
@@ -194,10 +200,13 @@ export default function FormTemplate() {
                 })
             } else if (name && transaction && transaction.name) {
                 await axios.put(`http://localhost:3001/api/transaction/name/${transaction.name}`, {
-                    quantity: parsedData.quantity,
-                    price: parsedData.price,
-                    spent: parsedData.spent,
-                    date: parsedData.date,
+                    coinId: coinId,
+                    transactionData: {
+                        quantity: parsedData.quantity,
+                        price: parsedData.price,
+                        spent: parsedData.spent,
+                        date: parsedData.date,
+                    },
                 })
             } else {
                 await axios.post("http://localhost:3001/api/coin/transaction", {
@@ -318,7 +327,7 @@ export default function FormTemplate() {
                                     />
                                 </div>
                                 <div className="col-span-2">
-                                    {/* <FormField
+                                    <FormField
                                         control={secondForm.control}
                                         name="date"
                                         render={({ field }) => (
@@ -358,7 +367,7 @@ export default function FormTemplate() {
                                                 <FormMessage />
                                             </FormItem>
                                         )}
-                                    /> */}
+                                    />
                                 </div>
                                 <div className="md:col-span-1 col-span-2">
                                     <Button variant="outline" type="button" onClick={() => setSteps(steps - 1)} disabled={steps === 3} className="w-full">Revenir en arrière</Button>
