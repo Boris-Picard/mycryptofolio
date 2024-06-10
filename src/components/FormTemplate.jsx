@@ -191,7 +191,6 @@ export default function FormTemplate() {
         try {
             const parsedData = FormSchemaSecondStep.parse(data);
             setDataStep((prev) => ({ ...prev, step2: parsedData }));
-            setSteps(3);
             if (id) {
                 await axios.put(`http://localhost:3001/api/transaction/id/${transaction._id}`, {
                     quantity: parsedData.quantity,
@@ -218,6 +217,7 @@ export default function FormTemplate() {
                     },
                 });
             }
+            setSteps(3);
             setTimeout(() => {
                 navigate('/seecoins');
             }, 4000);
@@ -226,7 +226,7 @@ export default function FormTemplate() {
             console.log("Form data is invalid", error.message);
         }
     };
-    
+
     return (
         <div className="flex h-full items-center justify-center">
             <div className="flex w-full md:w-1/2 flex-col justify-center items-center shadow-lg p-6 rounded-md bg-slate-200">
@@ -239,7 +239,7 @@ export default function FormTemplate() {
                     </h2>
                 </div>
                 <div className="my-5 w-full">
-                    <Progress value={steps === 1 && id ? 0 : steps === 2 || name ? 50 : steps === 3 ? 100 : ""} />
+                    <Progress value={steps === 1 ? 0 : steps === 2 ? 50 : steps === 3 ? 100 : ""} />
                 </div>
                 <Form {...(steps === 1 ? firstForm : secondForm)} >
                     <form onSubmit={steps === 1 ? firstForm.handleSubmit(handleFirstStepSubmit) : secondForm.handleSubmit(handleSecondStepSubmit)} className="space-y-4 w-full">

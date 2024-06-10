@@ -40,7 +40,6 @@ export default function TableData({ data }) {
     
     const seeTransactions = (coin) => {
         let coinData = data.filter(coinId => coinId.coin._id === coin.coin._id);
-        console.log(coinData);
         navigate(`/detailed/${coin.coin._id}`, { state: { coinData } })
     }
 

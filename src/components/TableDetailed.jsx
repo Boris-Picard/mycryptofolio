@@ -2,14 +2,13 @@ import {
     TableCell,
     TableRow,
 } from "@/components/ui/table"
-import { useState } from "react";
 
 import { useLocation } from "react-router-dom";
 
 export default function TableDetailed() {
     const location = useLocation()
     const { coinData } = location.state // Récupère les données du coin passées via navigate
-    console.log(coinData);
+
     return (
         <>
             {coinData.map((coin, i) => {
