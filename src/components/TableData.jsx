@@ -24,8 +24,7 @@ export default function TableData({ data }) {
 
     const deleteTransaction = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost:3001/api/transaction/${id}`)
-            console.log(response.data.message);
+            await axios.delete(`http://localhost:3001/api/transaction/${id}`)
         } catch (error) {
             console.error("Error deleting transaction", error)
         }
@@ -39,8 +38,8 @@ export default function TableData({ data }) {
         navigate(`/name/${coinDataName}`);
     }
 
-    const seeTransactions = (coinId) => {
-        navigate(`/detailed/${coinId}`)
+    const seeTransactions = (coin) => {
+        navigate(`/detailed/${coin.coin._id}`, { state: { coin } })
     }
 
     const arrowUpOrDown = (value) => {
@@ -73,19 +72,19 @@ export default function TableData({ data }) {
                     <TableCell>{coin.ath} $US</TableCell>
                     <TableCell>
                         <div className="flex flex-col">
-                            {coin.actualValue} $US<span className="uppercase text-slate-500 font-normal">{coin.quantity} {coin.symbol}</span>
+                            {coin.actualValue?.toFixed(2)} $US<span className="uppercase text-slate-500 font-normal">{coin.quantity} {coin.symbol}</span>
                         </div>
                     </TableCell>
                     <TableCell>
                         <div className="flex flex-col">
-                            {coin.actualPrice} $US
+                            {coin.actualPrice?.toFixed(2)} $US
                             <span>{arrowUpOrDown(coin.gainOrLossPercentage)}</span>
                         </div>
                     </TableCell>
                     <TableCell className="flex gap-3">
                         <TooltipProvider>
                             <Tooltip>
-                                <TooltipTrigger><Plus onClick={() => addTransaction(coin.coinDataName)} /></TooltipTrigger>
+                                <TooltipTrigger><Plus onClick={() => addTransaction(coin.coin.name)} /></TooltipTrigger>
                                 <TooltipContent>
                                     <p>Ajouter une transaction</p>
                                 </TooltipContent>
@@ -110,7 +109,7 @@ export default function TableData({ data }) {
                                     <div className="p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => deleteTransaction(coin._id)}>
                                         Supprimer la monnaie
                                     </div>
-                                    <div className="p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => seeTransactions(coin.coin._id)}>
+                                    <div className="p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => seeTransactions(coin)}>
                                         Voir les transactions
                                     </div>
                                 </SelectGroup>
