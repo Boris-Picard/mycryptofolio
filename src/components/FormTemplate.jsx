@@ -226,7 +226,7 @@ export default function FormTemplate() {
             console.log("Form data is invalid", error.message);
         }
     };
-    console.log(dataStep);
+    
     return (
         <div className="flex h-full items-center justify-center">
             <div className="flex w-full md:w-1/2 flex-col justify-center items-center shadow-lg p-6 rounded-md bg-slate-200">

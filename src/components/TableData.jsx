@@ -19,10 +19,7 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-
-
-export default function TableData({ quantity, price, spent, date, name, id, gainOrLoss, image, rank, priceChange, marketCap, ath, symbol, percent, actualValue, coinDataName }) {
-
+export default function TableData({ data }) {
     const navigate = useNavigate()
 
     const deleteTransaction = async (id) => {
@@ -42,8 +39,8 @@ export default function TableData({ quantity, price, spent, date, name, id, gain
         navigate(`/name/${coinDataName}`);
     }
 
-    const seeTransactions = (name) => {
-        navigate(`/detailed/${name}`)
+    const seeTransactions = (coinId) => {
+        navigate(`/detailed/${coinId}`)
     }
 
     const arrowUpOrDown = (value) => {
@@ -62,61 +59,66 @@ export default function TableData({ quantity, price, spent, date, name, id, gain
             </div>
         );
     };
-
+console.log(data);
     return (
-        <TableRow className="font-semibold">
-            <TableCell className="font-medium">{rank}</TableCell>
-            <TableCell><div className="flex gap-2 items-center"><img src={image} alt={name} width={24} height={24} />{name}</div></TableCell>
-            <TableCell>{price} $US</TableCell>
-            <TableCell>{arrowUpOrDown(priceChange)}</TableCell>
-            <TableCell>{marketCap} $US</TableCell>
-            <TableCell>{ath} $US</TableCell>
-            <TableCell>
-                <div className="flex flex-col">
-                    {actualValue} $US<span className="uppercase text-slate-500 font-normal">{quantity} {symbol}</span>
-                </div>
-            </TableCell>
-            <TableCell>
-                <div className="flex flex-col">
-                    {gainOrLoss} $US
-                    <span>{arrowUpOrDown(percent)}</span>
-                </div>
-            </TableCell>
-            <TableCell className="flex gap-3">
-                <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger><Plus onClick={() => addTransaction(coinDataName)} /></TooltipTrigger>
-                        <TooltipContent>
-                            <p>Ajouter une transaction</p>
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
-                <Select>
-                    <SelectTriggerFolio>
+        <>
+            {data.map((coin, i) => {
+                console.log(coin);
+                return <TableRow key={i} className="font-semibold">
+                    <TableCell className="font-medium">{coin.rank}</TableCell>
+                    <TableCell><div className="flex gap-2 items-center"><img src={coin.image} alt={coin.name} width={24} height={24} />{coin.name}</div></TableCell>
+                    <TableCell>{coin.price} $US</TableCell>
+                    <TableCell>{arrowUpOrDown(coin.price_change_24h)}</TableCell>
+                    <TableCell>{coin.market_cap} $US</TableCell>
+                    <TableCell>{coin.ath} $US</TableCell>
+                    <TableCell>
+                        <div className="flex flex-col">
+                            {coin.actualValue} $US<span className="uppercase text-slate-500 font-normal">{coin.quantity} {coin.symbol}</span>
+                        </div>
+                    </TableCell>
+                    <TableCell>
+                        <div className="flex flex-col">
+                            {coin.actualPrice} $US
+                            <span>{arrowUpOrDown(coin.gainOrLossPercentage)}</span>
+                        </div>
+                    </TableCell>
+                    <TableCell className="flex gap-3">
                         <TooltipProvider>
                             <Tooltip>
-                                <TooltipTrigger><EllipsisVertical className="w-5 h-5 cursor-pointer" /></TooltipTrigger>
+                                <TooltipTrigger><Plus onClick={() => addTransaction(coin.coinDataName)} /></TooltipTrigger>
                                 <TooltipContent>
-                                    <p>Plus d'actions</p>
+                                    <p>Ajouter une transaction</p>
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>
-                    </SelectTriggerFolio>
-                    <SelectContent className="p-1">
-                        <SelectGroup className="font-semibold">
-                            <div className="p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => updateTransaction(id)}>
-                                Mettre a jour la transaction
-                            </div>
-                            <div className="p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => deleteTransaction(id)}>
-                                Supprimer la monnaie
-                            </div>
-                            <div className="p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => seeTransactions(coinDataName)}>
-                                Voir les transactions
-                            </div>
-                        </SelectGroup>
-                    </SelectContent>
-                </Select>
-            </TableCell>
-        </TableRow>
+                        <Select>
+                            <SelectTriggerFolio>
+                                <TooltipProvider>
+                                    <Tooltip>
+                                        <TooltipTrigger><EllipsisVertical className="w-5 h-5 cursor-pointer" /></TooltipTrigger>
+                                        <TooltipContent>
+                                            <p>Plus d'actions</p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
+                            </SelectTriggerFolio>
+                            <SelectContent className="p-1">
+                                <SelectGroup className="font-semibold">
+                                    <div className="p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => updateTransaction(coin.id)}>
+                                        Mettre a jour la transaction
+                                    </div>
+                                    <div className="p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => deleteTransaction(coin.id)}>
+                                        Supprimer la monnaie
+                                    </div>
+                                    <div className="p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => seeTransactions(coin.coinId)}>
+                                        Voir les transactions
+                                    </div>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </TableCell>
+                </TableRow>
+            })}
+        </>
     )
 }

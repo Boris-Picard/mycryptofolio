@@ -22,7 +22,6 @@ export default function CardsData({ transactions }) {
         const totalWinOrLoss = transactions.reduce((acc, transaction) => acc + transaction.actualPrice, 0)
         const totalPercentWinOrLoss = transactions.reduce((acc, transaction) => acc + transaction.gainOrLossPercentage, 0)
         const percentageWinOrLoss = transactions.reduce((max, transaction) => transaction.gainOrLossPercentage > max.gainOrLossPercentage ? transaction : max, transactions[0])
-        console.log(percentageWinOrLoss);
         if (percentageWinOrLoss) {
             const bestWinner = percentageWinOrLoss.actualValue - percentageWinOrLoss.spent
             setBestWinnerValue(bestWinner)
