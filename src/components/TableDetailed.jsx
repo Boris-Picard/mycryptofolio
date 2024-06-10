@@ -8,12 +8,11 @@ import { useLocation } from "react-router-dom";
 
 export default function TableDetailed() {
     const location = useLocation()
-    const { coin } = location.state // Récupère les données du coin passées via navigate
-    const [data, setData] = useState([coin])
-
+    const { coinData } = location.state // Récupère les données du coin passées via navigate
+    console.log(coinData);
     return (
         <>
-            {data.map((coin, i) => {
+            {coinData.map((coin, i) => {
                 return <TableRow key={i} className="font-semibold">
                     <TableCell className="font-medium">{coin.rank}</TableCell>
                     <TableCell><div className="flex gap-2 items-center"><img src={coin.image} alt={coin.name} width={24} height={24} />{coin.name}</div></TableCell>

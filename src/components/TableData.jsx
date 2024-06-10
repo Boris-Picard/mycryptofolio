@@ -37,9 +37,11 @@ export default function TableData({ data }) {
     const addTransaction = (coinDataName) => {
         navigate(`/name/${coinDataName}`);
     }
-
+    
     const seeTransactions = (coin) => {
-        navigate(`/detailed/${coin.coin._id}`, { state: { coin } })
+        let coinData = data.filter(coinId => coinId.coin._id === coin.coin._id);
+        console.log(coinData);
+        navigate(`/detailed/${coin.coin._id}`, { state: { coinData } })
     }
 
     const arrowUpOrDown = (value) => {
@@ -62,7 +64,6 @@ export default function TableData({ data }) {
     return (
         <>
             {data.map((coin, i) => {
-                console.log(coin);
                 return <TableRow key={i} className="font-semibold">
                     <TableCell className="font-medium">{coin.rank}</TableCell>
                     <TableCell><div className="flex gap-2 items-center"><img src={coin.image} alt={coin.name} width={24} height={24} />{coin.name}</div></TableCell>
