@@ -277,7 +277,7 @@ export default function FormTemplate() {
                                 />
                                 <Button type="submit" className="w-full">Next Step</Button>
                             </>}
-                        {steps === 2 &&
+                        {steps >= 2 &&
                             <div className="grid grid-cols-2 gap-3">
                                 <div className="col-span-1">
                                     <Error message={error} />
