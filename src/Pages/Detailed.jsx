@@ -18,13 +18,10 @@ export default function Detailed() {
             <TableCaption>A list of your recent trade</TableCaption>
             <TableHeader>
                 <TableRow>
-                    <TableHead>#</TableHead>
-                    <TableHead>Monnaie</TableHead>
                     <TableHead>Cours</TableHead>
-                    <TableHead>24h</TableHead>
-                    <TableHead>Capitalisation boursière</TableHead>
-                    <TableHead>Ath</TableHead>
-                    <TableHead>Participations</TableHead>
+                    <TableHead>Quantité</TableHead>
+                    <TableHead>Date & Heure</TableHead>
+                    <TableHead>Coût</TableHead>
                     <TableHead>Pertes et profits</TableHead>
                     <TableHead>Actions</TableHead>
                 </TableRow>
