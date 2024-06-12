@@ -62,14 +62,39 @@ export default function TableData({ data }) {
             </div>
         );
     };
-    useEffect(() => {
-        
-    }, [data]);
 
+    useEffect(() => {
+        // Utilisation de reduce pour agréger les données par coin._id
+        const aggregated = data.reduce((acc, curr) => {
+            const coinId = curr.coin._id; // Récupération de l'ID du coin actuel
+
+            // Si l'ID du coin n'existe pas encore dans l'accumulateur, initialiser avec les valeurs de curr
+            if (!acc[coinId]) {
+                acc[coinId] = {
+                    ...curr,
+                };
+            } else {
+                // Si l'ID du coin existe déjà, additionner les valeurs pertinentes
+                acc[coinId] = {
+                    ...acc[coinId],
+                    quantity: acc[coinId].quantity + curr.quantity,
+                    spent: acc[coinId].spent + curr.spent,
+                    actualPrice: acc[coinId].actualPrice + curr.actualPrice,
+                    actualValue: acc[coinId].actualValue + curr.actualValue,
+                    gainOrLossPercentage: acc[coinId].gainOrLossPercentage + curr.gainOrLossPercentage,
+                };
+            }
+
+            return acc; // Retourner l'accumulateur pour la prochaine itération
+        }, {});
+
+        // Mettre à jour l'état aggregatedData avec les valeurs agrégées
+        setAggregatedData(Object.values(aggregated));
+    }, [data]); // Exécuter l'effet à chaque fois que data change
 
     return (
         <>
-            {data.map((coin, i) => {
+            {aggregatedData.map((coin, i) => {
                 return <TableRow key={i} className="font-semibold">
                     <TableCell className="font-medium">{coin.rank}</TableCell>
                     <TableCell><div className="flex gap-2 items-center"><img src={coin.image} alt={coin.name} width={24} height={24} />{coin.name}</div></TableCell>
