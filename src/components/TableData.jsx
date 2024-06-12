@@ -115,7 +115,7 @@ export default function TableData({ data }) {
                     </TableCell>
                     <TableCell className="flex gap-3">
                         <TooltipProvider>
-                            <Tooltip>
+                            <Tooltip delayDuration={0}>
                                 <TooltipTrigger><Plus onClick={() => addTransaction(coin.coin.name)} /></TooltipTrigger>
                                 <TooltipContent>
                                     <p>Ajouter une transaction</p>
@@ -125,7 +125,7 @@ export default function TableData({ data }) {
                         <Select>
                             <SelectTriggerFolio>
                                 <TooltipProvider>
-                                    <Tooltip>
+                                    <Tooltip delayDuration={0}>
                                         <TooltipTrigger><EllipsisVertical className="w-5 h-5 cursor-pointer" /></TooltipTrigger>
                                         <TooltipContent>
                                             <p>Plus d'actions</p>
