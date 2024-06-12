@@ -18,8 +18,11 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useEffect, useState } from "react"
 
 export default function TableData({ data }) {
+    const [aggregatedData, setAggregatedData] = useState([]);
+
     const navigate = useNavigate()
 
     const deleteTransaction = async (id) => {
@@ -37,7 +40,7 @@ export default function TableData({ data }) {
     const addTransaction = (coinDataName) => {
         navigate(`/name/${coinDataName}`);
     }
-    
+
     const seeTransactions = (coin) => {
         let coinData = data.filter(coinId => coinId.coin._id === coin.coin._id);
         navigate(`/detailed/${coin.coin._id}`, { state: { coinData } })
@@ -59,6 +62,10 @@ export default function TableData({ data }) {
             </div>
         );
     };
+    useEffect(() => {
+        
+    }, [data]);
+
 
     return (
         <>
