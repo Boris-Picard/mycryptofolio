@@ -66,8 +66,8 @@ export default function CardsData({ transactions }) {
         </Card>
         <Card>
             <CardHeader>
-                <CardTitle>Card Title</CardTitle>
-                <CardDescription>Solde actuel</CardDescription>
+                <CardTitle></CardTitle>
+                <CardDescription></CardDescription>
             </CardHeader>
         </Card>
         <Card>

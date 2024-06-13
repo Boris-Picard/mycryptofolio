@@ -80,7 +80,7 @@ export default function FormTemplate() {
     useEffect(() => {
         const fetchList = async () => {
             try {
-                const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R")
+                const response = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
                 setSelectData(response.data)
             } catch (error) {
                 console.log("Error fetching CoinGecko list :", error)

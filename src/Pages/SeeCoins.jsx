@@ -77,9 +77,6 @@ export default function SeeCoins() {
         getCoinsValue();
     }, [dataTransactionApi]); // S'exécute lorsque dataTransactionApi change
 
-    console.log(dataTransactionApi);
-    console.log(transactions);
-
     return (<div className="container h-screen p-10">
         <div className="grid grid-cols-4 mb-3 gap-3">
             <CardsData transactions={transactions} />
