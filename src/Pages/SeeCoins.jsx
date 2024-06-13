@@ -79,7 +79,7 @@ export default function SeeCoins() {
 
     return (<div className="container h-screen p-10">
         <div className="grid grid-cols-4 mb-3 gap-3">
-            <CardsData transactions={transactions} />
+            <CardsData />
         </div>
         <Error message={error} />
         <Table className="bg-white rounded-xl">

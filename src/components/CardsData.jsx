@@ -6,14 +6,17 @@ import {
 } from "@/components/ui/card"
 import { useEffect, useState } from "react"
 
+import { useDeleteTransaction } from "@/stores/delete-transaction";
 
-export default function CardsData({ transactions }) {
-    console.log(transactions);
+
+export default function CardsData() {
     const [totalInvested, setTotalInvested] = useState(0);
     const [totalGain, setTotalGain] = useState(0)
     const [maxTransaction, setMaxTransaction] = useState(0)
     const [bestWinnerValue, setBestWinnerValue] = useState(0)
     const [totalWinOrLoss, setTotalWinOrLoss] = useState(0)
+
+    const { transactions } = useDeleteTransaction()
 
     useEffect(() => {
         const totalAmount = transactions.reduce((acc, transaction) => acc + transaction.actualValue, 0)
