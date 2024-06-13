@@ -54,15 +54,7 @@ export default function FormTemplate() {
 
     useEffect(() => {
         const fetchTransaction = async () => {
-            if (id) {
-                try {
-                    const response = await axios.get(`http://localhost:3001/api/transaction/id/${id}`);
-                    setTransaction(response.data.transaction);
-                    setCoinId(response.data.transaction.coin._id)
-                } catch (error) {
-                    console.error("Error fetching transaction", error);
-                }
-            } else if (name) {
+            if (name) {
                 try {
                     const response = await axios.get(`http://localhost:3001/api/transaction/name/${name}`);
                     setTransaction(response.data.coin[0]);
@@ -123,9 +115,6 @@ export default function FormTemplate() {
 
     useEffect(() => {
         try {
-            if (id) {
-                firstForm.setValue('coin', transaction.coin.name);
-            }
             if (name) {
                 firstForm.setValue('coin', transaction.name)
             }
@@ -147,12 +136,6 @@ export default function FormTemplate() {
     });
 
     useEffect(() => {
-        if (id) {
-            secondForm.setValue('quantity', transaction.quantity);
-            secondForm.setValue('price', transaction.price);
-            secondForm.setValue('spent', transaction.spent);
-            secondForm.setValue('date', new Date(transaction.date));
-        }
         if (name) {
             secondForm.setValue('date', new Date());
         }
@@ -191,14 +174,7 @@ export default function FormTemplate() {
         try {
             const parsedData = FormSchemaSecondStep.parse(data);
             setDataStep((prev) => ({ ...prev, step2: parsedData }));
-            if (id) {
-                await axios.put(`http://localhost:3001/api/transaction/id/${transaction._id}`, {
-                    quantity: parsedData.quantity,
-                    price: parsedData.price,
-                    spent: parsedData.spent,
-                    date: parsedData.date,
-                })
-            } else if (name) {
+            if (name) {
                 await axios.post(`http://localhost:3001/api/transaction/name/${transaction.name}`, {
                     quantity: parsedData.quantity,
                     price: parsedData.price,
@@ -374,7 +350,7 @@ export default function FormTemplate() {
                                 <div className="md:col-span-1 col-span-2">
                                     {steps === 2 &&
                                         <Button type="submit" className="w-full">
-                                            {id ? (name ? "Modifier la transaction" : "Ajouter une transaction") : "Ajouter une transaction"}
+                                            Ajouter une transaction
                                         </Button>}
                                     {steps === 3 && <Button type="submit" disabled={true} className="w-full">
                                         <svg className="animate-spin h-5 w-5 mr-3 border-gray-200 border-2 border-t-blue-600 rounded-full" viewBox="0 0 24 24">
