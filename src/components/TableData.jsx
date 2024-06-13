@@ -18,22 +18,25 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { useEffect, useState } from "react"
+import { useEffect} from "react"
+
+import { useDeleteTransaction } from "@/stores/delete-transaction"
 
 export default function TableData({ data }) {
-    const [aggregatedData, setAggregatedData] = useState([]);
-
     const navigate = useNavigate()
+
+    const { transactions, addTransaction, removeTransaction } = useDeleteTransaction()
 
     const deleteTransaction = async (id) => {
         try {
             await axios.delete(`http://localhost:3001/api/transaction/${id}`)
+            removeTransaction(id)
         } catch (error) {
             console.error("Error deleting transaction", error)
         }
     }
 
-    const addTransaction = (coinDataName) => {
+    const addTransactionPage = (coinDataName) => {
         navigate(`/name/${coinDataName}`);
     }
 
@@ -85,12 +88,13 @@ export default function TableData({ data }) {
         }, {});
 
         // Mettre à jour l'état aggregatedData avec les valeurs agrégées
-        setAggregatedData(Object.values(aggregated));
+        // setAggregatedData(Object.values(aggregated));
+        addTransaction(Object.values(aggregated))
     }, [data]); // Exécuter l'effet à chaque fois que data change
 
     return (
         <>
-            {aggregatedData.map((coin, i) => {
+            {transactions.map((coin, i) => {
                 return <TableRow key={i} className="font-semibold">
                     <TableCell className="font-medium">{coin.rank}</TableCell>
                     <TableCell><div className="flex gap-2 items-center"><img src={coin.image} alt={coin.name} width={24} height={24} />{coin.name}</div></TableCell>
@@ -112,7 +116,7 @@ export default function TableData({ data }) {
                     <TableCell className="flex gap-3">
                         <TooltipProvider>
                             <Tooltip delayDuration={0}>
-                                <TooltipTrigger><Plus onClick={() => addTransaction(coin.coin.name)} /></TooltipTrigger>
+                                <TooltipTrigger><Plus onClick={() => addTransactionPage(coin.coin.name)} /></TooltipTrigger>
                                 <TooltipContent>
                                     <p>Ajouter une transaction</p>
                                 </TooltipContent>
