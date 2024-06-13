@@ -375,7 +375,7 @@ export default function FormTemplate() {
                                 <div className={`${steps === 2 && !id && !name ? "md:col-span-1 col-span-2" : "md:col-span-2 col-span-2"}`}>
                                     {steps === 2 &&
                                         <Button type="submit" className="w-full">
-                                            {id ? (name ? "Modifier la transaction" : "Ajouter une transaction") : "Ajouter une transaction"}
+                                            {id ?  "Modifier la transaction" : "Ajouter une transaction"}
                                         </Button>}
                                     {steps === 3 && <Button type="submit" disabled={true} className="w-full">
                                         <svg className="animate-spin h-5 w-5 mr-3 border-gray-200 border-2 border-t-blue-600 rounded-full" viewBox="0 0 24 24">
