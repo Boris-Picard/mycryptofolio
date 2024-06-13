@@ -59,6 +59,7 @@ export default function FormTemplate() {
                     const response = await axios.get(`http://localhost:3001/api/transaction/id/${id}`);
                     setTransaction(response.data.transaction);
                     setCoinId(response.data.transaction.coin._id)
+                    setSteps(2)
                 } catch (error) {
                     console.error("Error fetching transaction", error);
                 }
@@ -151,7 +152,7 @@ export default function FormTemplate() {
             secondForm.setValue('quantity', transaction.quantity);
             secondForm.setValue('price', transaction.price);
             secondForm.setValue('spent', transaction.spent);
-            secondForm.setValue('date', new Date(transaction.date));
+            secondForm.setValue('date', transaction.date);
         }
         if (name) {
             secondForm.setValue('date', new Date());
@@ -369,9 +370,9 @@ export default function FormTemplate() {
                                     />
                                 </div>
                                 <div className="md:col-span-1 col-span-2">
-                                    <Button variant="outline" type="button" onClick={() => setSteps(steps - 1)} disabled={steps === 3} className="w-full">Revenir en arrière</Button>
+                                    {steps === 2 && !id && !name ? <Button variant="outline" type="button" onClick={() => setSteps(steps - 1)} disabled={steps === 3} className="w-full">Revenir en arrière</Button> : ""}
                                 </div>
-                                <div className="md:col-span-1 col-span-2">
+                                <div className={`${steps === 2 && !id && !name ? "md:col-span-1 col-span-2" : "md:col-span-2 col-span-2"}`}>
                                     {steps === 2 &&
                                         <Button type="submit" className="w-full">
                                             {id ? (name ? "Modifier la transaction" : "Ajouter une transaction") : "Ajouter une transaction"}
