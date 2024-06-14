@@ -25,7 +25,7 @@ import {
 import { useState, useEffect } from "react"
 
 import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
+import { CalendarIcon, LogIn } from "lucide-react"
 import { Calendar } from "@/components/ui/calendar"
 import {
     Popover,
@@ -111,7 +111,7 @@ export default function FormTemplate() {
         spent: z.coerce.number({
             message: "Please enter a number"
         }).min(0.0000000001, { message: "Please enter at least one number" }),
-        date: z.date().refine(date => date <= new Date(), "Please enter a valid date")
+        date: z.coerce.date().refine(date => date <= new Date(), "Please enter a valid date")
     });
 
     // Hook form instance for the first step with validation resolver
@@ -146,7 +146,7 @@ export default function FormTemplate() {
             date: new Date(),
         }
     });
-
+    
     useEffect(() => {
         if (id) {
             secondForm.setValue('quantity', transaction.quantity);
@@ -357,6 +357,7 @@ export default function FormTemplate() {
                                                             mode="single"
                                                             selected={field.value}
                                                             onSelect={field.onChange}
+                                                            required
                                                             disabled={(date) =>
                                                                 date > new Date() || date < new Date("1900-01-01")
                                                             }
@@ -375,7 +376,7 @@ export default function FormTemplate() {
                                 <div className={`${steps === 2 && !id && !name ? "md:col-span-1 col-span-2" : "md:col-span-2 col-span-2"}`}>
                                     {steps === 2 &&
                                         <Button type="submit" className="w-full">
-                                            {id ?  "Modifier la transaction" : "Ajouter une transaction"}
+                                            {id ? "Modifier la transaction" : "Ajouter une transaction"}
                                         </Button>}
                                     {steps === 3 && <Button type="submit" disabled={true} className="w-full">
                                         <svg className="animate-spin h-5 w-5 mr-3 border-gray-200 border-2 border-t-blue-600 rounded-full" viewBox="0 0 24 24">
