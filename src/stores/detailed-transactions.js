@@ -4,11 +4,11 @@ export const useDeleteDetailedTransaction = create((set) => ({
   transactions: [],
   setTransactions: (newTransactions) => set({ transactions: newTransactions }),
   addTransaction: (newTransaction) =>
-    set((state) => ({ transactions: newTransaction, ...state.transactions })),
+    set((state) => ({ transactions: [...state.transactions, newTransaction] })),
   removeTransaction: (transactionId) =>
     set((state) => ({
       transactions: state.transactions.filter(
-        (transaction) => transaction.coin._id !== transactionId
+        (transaction) => transaction._id !== transactionId
       ),
     })),
 }));

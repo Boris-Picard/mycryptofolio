@@ -16,7 +16,7 @@ import { useEffect, useState } from "react"
 export default function Detailed() {
     const location = useLocation()
     const { coinData } = location.state
-    console.log(coinData);
+    
     const [data, setData] = useState([])
 
     useEffect(() => {

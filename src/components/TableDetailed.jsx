@@ -22,14 +22,13 @@ export default function TableDetailed() {
     const location = useLocation()
     const { coinData } = location.state // Récupère les données du coin passées via navigate
 
-    const { transactions, removeTransaction, addTransaction } = useDeleteDetailedTransaction()
-
-    useEffect(() => {
-        addTransaction(coinData)
-    }, [coinData])
-
+    const { transactions, removeTransaction, setTransactions } = useDeleteDetailedTransaction()
     const navigate = useNavigate()
 
+    useEffect(() => {
+        setTransactions(coinData)
+    }, [coinData, setTransactions])
+    
     const updateTransaction = async (id) => {
         navigate(`/id/${id}`)
     }
@@ -37,9 +36,8 @@ export default function TableDetailed() {
     const deleteTransaction = async (id) => {
         try {
             if (id) {
-                const response = await axios.delete(`http://localhost:3000/api/transaction/id/delete/${id}`)
-                console.log(response);
-                removeTransaction(response)
+                await axios.delete(`http://localhost:3001/api/transaction/id/delete/${id}`)
+                removeTransaction(id)
             }
         } catch (error) {
             console.error(error)
