@@ -27,8 +27,6 @@ export default function Detailed() {
         setTransactions(coinData)
     }, [coinData, setTransactions])
 
-    console.log(transactions);
-
     useEffect(() => {
         transactions.map(value => setData({ image: value.image, name: value.coin.name, actual_price: value.price, price_change_24h: value.price_change_24h, symbol: value.symbol }))
     }, [transactions])

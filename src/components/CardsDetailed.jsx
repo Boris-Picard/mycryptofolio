@@ -6,12 +6,11 @@ import {
 } from "@/components/ui/card"
 import { useEffect, useState } from "react"
 
-import { useLocation } from "react-router-dom"
+import { useDeleteDetailedTransaction } from "@/stores/detailed-transactions.js";
 
 export default function CardsDetailed() {
-    const location = useLocation()
-    const { coinData } = location.state
-    
+    const { transactions } = useDeleteDetailedTransaction()
+
     const [totalValue, setTotalValue] = useState(0)
     const [totalCoins, setTotalCoins] = useState(0)
     const [totalSpent, setTotalSpent] = useState(0)
@@ -20,18 +19,18 @@ export default function CardsDetailed() {
     const [symbol, setSymbol] = useState([])
 
     useEffect(() => {
-        coinData.map(value => setSymbol(value.symbol))
-        const allValue = coinData.reduce((acc, value) => acc + value.actualValue, 0)
-        const allCoins = coinData.reduce((acc, value) => acc + value.quantity, 0)
-        const spent = coinData.reduce((acc, value) => acc + value.spent, 0)
-        const gainOrLoss = coinData.reduce((acc, value) => acc + value.actualPrice, 0)
+        transactions.map(value => setSymbol(value.symbol))
+        const allValue = transactions.reduce((acc, value) => acc + value.actualValue, 0)
+        const allCoins = transactions.reduce((acc, value) => acc + value.quantity, 0)
+        const spent = transactions.reduce((acc, value) => acc + value.spent, 0)
+        const gainOrLoss = transactions.reduce((acc, value) => acc + value.actualPrice, 0)
         const averagePrice = spent / allCoins
         setTotalValue(allValue)
         setTotalCoins(allCoins)
         setTotalSpent(spent)
         setTotalGainOrLoss(gainOrLoss)
         setAverageBuyPrice(averagePrice)
-    }, [coinData])
+    }, [transactions])
 
     const UpOrDown = (value) => {
         if (!value) {

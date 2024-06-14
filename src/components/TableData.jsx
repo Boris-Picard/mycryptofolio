@@ -27,7 +27,6 @@ export default function TableData({ data }) {
 
     const { transactions, addTransaction, removeTransaction } = useDeleteTransaction()
 
-    console.log(transactions);
 
     const deleteTransaction = async (id) => {
         try {
@@ -90,9 +89,8 @@ export default function TableData({ data }) {
         }, {});
 
         // Mettre à jour l'état aggregatedData avec les valeurs agrégées
-        // setAggregatedData(Object.values(aggregated));
         addTransaction(Object.values(aggregated))
-    }, [data]); // Exécuter l'effet à chaque fois que data change
+    }, [data, addTransaction]); // Exécuter l'effet à chaque fois que data change
 
     return (
         <>
