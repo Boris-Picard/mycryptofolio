@@ -36,8 +36,11 @@ export default function TableDetailed() {
 
     const deleteTransaction = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost:3000/api/transaction/id/delete/${id}`)
-            console.log(response);
+            if (id) {
+                const response = await axios.delete(`http://localhost:3000/api/transaction/id/delete/${id}`)
+                console.log(response);
+                removeTransaction(response)
+            }
         } catch (error) {
             console.error(error)
         }
