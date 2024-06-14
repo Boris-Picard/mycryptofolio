@@ -13,22 +13,14 @@ import {
 
 import axios from "axios";
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useDeleteDetailedTransaction } from "@/stores/detailed-transactions.js";
-import { useEffect } from "react";
 
 export default function TableDetailed() {
-    const location = useLocation()
-    const { coinData } = location.state // Récupère les données du coin passées via navigate
-
-    const { transactions, removeTransaction, setTransactions } = useDeleteDetailedTransaction()
+    const { transactions, removeTransaction } = useDeleteDetailedTransaction()
     const navigate = useNavigate()
 
-    useEffect(() => {
-        setTransactions(coinData)
-    }, [coinData, setTransactions])
-    
     const updateTransaction = async (id) => {
         navigate(`/id/${id}`)
     }

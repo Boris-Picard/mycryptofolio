@@ -27,6 +27,8 @@ export default function TableData({ data }) {
 
     const { transactions, addTransaction, removeTransaction } = useDeleteTransaction()
 
+    console.log(transactions);
+
     const deleteTransaction = async (id) => {
         try {
             await axios.delete(`http://localhost:3001/api/transaction/${id}`)

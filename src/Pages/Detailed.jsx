@@ -13,15 +13,25 @@ import { useLocation } from "react-router-dom"
 import CardsDetailed from "@/components/CardsDetailed"
 import { useEffect, useState } from "react"
 
+import { useDeleteDetailedTransaction } from "@/stores/detailed-transactions.js";
+
 export default function Detailed() {
     const location = useLocation()
     const { coinData } = location.state
-    
+
+    const { transactions, setTransactions } = useDeleteDetailedTransaction()
+
     const [data, setData] = useState([])
 
     useEffect(() => {
-        coinData.map(value => setData({ image: value.image, name: value.coin.name, actual_price: value.price, price_change_24h: value.price_change_24h, symbol: value.symbol }))
-    }, [coinData])
+        setTransactions(coinData)
+    }, [coinData, setTransactions])
+
+    console.log(transactions);
+
+    useEffect(() => {
+        transactions.map(value => setData({ image: value.image, name: value.coin.name, actual_price: value.price, price_change_24h: value.price_change_24h, symbol: value.symbol }))
+    }, [transactions])
 
     const arrowUpOrDown = (value) => {
         if (!value) {
