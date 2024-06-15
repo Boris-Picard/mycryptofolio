@@ -16,12 +16,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import { useDeleteDetailedTransaction } from "@/stores/detailed-transactions.js";
-import { useEffect, useState } from "react";
 
 export default function TableDetailed() {
     const { transactions, removeTransaction } = useDeleteDetailedTransaction()
     const navigate = useNavigate()
-    const [shouldNavigate, setShouldNavigate] = useState(false);
+    // const [shouldNavigate, setShouldNavigate] = useState(false);
 
     const updateTransaction = async (id) => {
         navigate(`/id/${id}`)
@@ -32,22 +31,14 @@ export default function TableDetailed() {
             if (id) {
                 await axios.delete(`http://localhost:3001/api/transaction/id/delete/${id}`)
                 removeTransaction(id)
+                if (transactions.length === 1) {
+                    navigate("/seecoins");
+                }
             }
         } catch (error) {
             console.error(error)
         }
     }
-
-    useEffect(() => {
-        if (transactions.length === 0) {
-            setShouldNavigate(true);
-        } else {
-            setShouldNavigate(false);
-        }
-        if (transactions.length === 0 && shouldNavigate) {
-            navigate("/seecoins");
-        }
-    }, [transactions, shouldNavigate, navigate]);
 
     const UpOrDown = (value) => {
         if (!value) {
