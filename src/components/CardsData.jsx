@@ -17,12 +17,15 @@ export default function CardsData() {
     const [totalWinOrLoss, setTotalWinOrLoss] = useState(0)
 
     const { transactions } = useDeleteTransaction()
-
+    console.log(transactions);
     useEffect(() => {
         const totalAmount = transactions.reduce((acc, transaction) => acc + transaction.actualValue, 0)
         const totalWinOrLoss = transactions.reduce((acc, transaction) => acc + transaction.actualPrice, 0)
         const totalPercentWinOrLoss = transactions.reduce((acc, transaction) => acc + transaction.gainOrLossPercentage, 0)
         const percentageWinOrLoss = transactions.reduce((max, transaction) => transaction.gainOrLossPercentage > max.gainOrLossPercentage ? transaction : max, transactions[0])
+
+        /* todo algo pour calculer la fluctation du prix sur 24h */
+
         if (percentageWinOrLoss) {
             const bestWinner = percentageWinOrLoss.actualValue - percentageWinOrLoss.spent
             setBestWinnerValue(bestWinner)
@@ -71,7 +74,7 @@ export default function CardsData() {
         <Card>
             <CardHeader>
                 <CardTitle></CardTitle>
-                <CardDescription></CardDescription>
+                <CardDescription>Fluctuation du portefeuille sur 24h</CardDescription>
             </CardHeader>
         </Card>
         <Card>

@@ -301,7 +301,7 @@ export default function FormTemplate() {
                                                 </FormControl>
                                                 <SelectContent>
                                                     <div className="flex p-4">
-                                                        <Input placeholder="Rechercher un token" value={searchText} onChange={handleSearch} />
+                                                        <Input placeholder="Rechercher un token (CoinGecko data)" value={searchText} onChange={handleSearch} />
                                                     </div>
                                                     <div className="flex pl-8 py-3 font-normal text-slate-500">
                                                         {queryData.length > 0 ? "Searched tokens" : "Top 100 Tokens"}
