@@ -46,6 +46,7 @@ export default function FormTemplate() {
     const [error, setError] = useState(null)
     const [transaction, setTransaction] = useState([])
     const [selectData, setSelectData] = useState([])
+    const [searchText, setSearchText] = useState("")
     const [queryData, setQueryData] = useState([])
 
 
@@ -229,14 +230,24 @@ export default function FormTemplate() {
         }
     };
 
-    const handleChange = async (value) => {
-        try {
-            const response = await axios.get(`https://api.coingecko.com/api/v3/search?query=${value}&x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
-            setQueryData(response.data.coins);
-        } catch (error) {
-            console.error(error)
+    const handleSearch = (e) => {
+        setSearchText(e.target.value);
+        if (searchText === "") {
+            return true;
         }
     }
+
+    useEffect(() => {
+        const getQuery = async () => {
+            try {
+                const response = await axios.get(`https://api.coingecko.com/api/v3/search?query=${searchText}&x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
+                setQueryData(response.data.coins);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getQuery()
+    }, [searchText])
 
     return (
         <div className="flex h-full items-center justify-center">
@@ -272,7 +283,7 @@ export default function FormTemplate() {
                                                     </SelectTrigger>
                                                 </FormControl>
                                                 <SelectContent>
-                                                    <Input placeholder="Rechercher un token" onChange={(e) => handleChange(e.target.value)} />
+                                                    <Input placeholder="Rechercher un token" value={searchText} onChange={handleSearch} />
                                                     {queryData.length > 0 ?
                                                         queryData.map((coin) => (
                                                             <SelectItem key={coin.api_symbol} value={coin.id}>

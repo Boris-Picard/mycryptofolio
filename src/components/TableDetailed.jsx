@@ -20,7 +20,6 @@ import { useDeleteDetailedTransaction } from "@/stores/detailed-transactions.js"
 export default function TableDetailed() {
     const { transactions, removeTransaction } = useDeleteDetailedTransaction()
     const navigate = useNavigate()
-    // const [shouldNavigate, setShouldNavigate] = useState(false);
 
     const updateTransaction = async (id) => {
         navigate(`/id/${id}`)
