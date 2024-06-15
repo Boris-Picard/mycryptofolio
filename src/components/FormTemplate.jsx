@@ -46,6 +46,7 @@ export default function FormTemplate() {
     const [error, setError] = useState(null)
     const [transaction, setTransaction] = useState([])
     const [selectData, setSelectData] = useState([])
+    const [queryData, setQueryData] = useState([])
 
 
 
@@ -146,7 +147,7 @@ export default function FormTemplate() {
             date: new Date(),
         }
     });
-    
+
     useEffect(() => {
         if (id) {
             secondForm.setValue('quantity', transaction.quantity);
@@ -228,6 +229,15 @@ export default function FormTemplate() {
         }
     };
 
+    const handleChange = async (value) => {
+        try {
+            const response = await axios.get(`https://api.coingecko.com/api/v3/search?query=${value}&x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
+            setQueryData(response.data.coins);
+        } catch (error) {
+            console.error(error)
+        }
+    }
+    console.log(queryData);
     return (
         <div className="flex h-full items-center justify-center">
             <div className="flex w-full md:w-1/2 flex-col justify-center items-center shadow-lg p-6 rounded-md bg-slate-200">
@@ -262,11 +272,27 @@ export default function FormTemplate() {
                                                     </SelectTrigger>
                                                 </FormControl>
                                                 <SelectContent>
-                                                    {selectData.map((coin) => {
-                                                        return (
-                                                            <SelectItem key={coin.symbol} value={coin.id}><div className="flex items-center"><img src={coin.image} className="mr-2" width={24} height={24}></img>{coin.name}</div></SelectItem>
-                                                        )
-                                                    })}
+                                                    <Input placeholder="Rechercher un token" onChange={(e) => handleChange(e.target.value)} />
+                                                    {queryData.length > 0 ?
+                                                        queryData.map((coin) => (
+                                                            <SelectItem key={coin.api_symbol} value={coin.id}>
+                                                                <div className="flex items-center">
+                                                                    <span className="mr-3 font-semibold">{coin.market_cap_rank}</span>
+                                                                    <img src={coin.thumb} className="mr-2" width={24} height={24} />
+                                                                    {coin.name}
+                                                                </div>
+                                                            </SelectItem>
+                                                        )) :
+                                                        selectData.map((coin) => (
+                                                            <SelectItem key={coin.symbol} value={coin.id}>
+                                                                <div className="flex items-center">
+                                                                    <span className="mr-3 font-semibold">{coin.market_cap_rank}</span>
+                                                                    <img src={coin.image} className="mr-2" width={24} height={24} />
+                                                                    {coin.name}
+                                                                </div>
+                                                            </SelectItem>
+                                                        ))
+                                                    }
                                                 </SelectContent>
                                             </Select>
                                             <FormDescription>

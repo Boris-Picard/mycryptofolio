@@ -49,13 +49,14 @@ export default function CardsData() {
         }
         const direction = value.toString().startsWith("-") ? "down" : "up";
         return (
-            <div className={`flex font-semibold ${direction === "down" ? "text-red-500" : "text-green-500"}`}>
-                <svg fill="currentColor" className="w-5 h-5" viewBox="0 0 24 24">
+            <div className="flex">
+                <span>Total des profits et pertes</span>
+                <svg fill="currentColor" className={`w-5 h-5 ${direction === "down" ? "text-red-500" : "text-green-500"}`} viewBox="0 0 24 24">
                     <path
                         d={direction === "up" ? "M7 14l5-5 5 5H7z" : " M7 10l5 5 5-5H7z"}
                     />
                 </svg>
-                <span >{value.toFixed(1)} %</span>
+                <span className={`font-semibold ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{value.toFixed(1)} %</span>
             </div>
         );
     };
@@ -76,7 +77,7 @@ export default function CardsData() {
         <Card>
             <CardHeader>
                 <CardTitle>{UpOrDown(totalGain)}</CardTitle>
-                <CardDescription>Total des profits et pertes {arrowUpOrDown(totalWinOrLoss)}</CardDescription>
+                <CardDescription> {arrowUpOrDown(totalWinOrLoss)}</CardDescription>
             </CardHeader>
         </Card>
         <Card>
