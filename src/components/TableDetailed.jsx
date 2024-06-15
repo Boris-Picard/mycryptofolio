@@ -16,10 +16,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import { useDeleteDetailedTransaction } from "@/stores/detailed-transactions.js";
+import { useEffect, useState } from "react";
 
 export default function TableDetailed() {
     const { transactions, removeTransaction } = useDeleteDetailedTransaction()
     const navigate = useNavigate()
+    const [shouldNavigate, setShouldNavigate] = useState(false);
 
     const updateTransaction = async (id) => {
         navigate(`/id/${id}`)
@@ -36,9 +38,20 @@ export default function TableDetailed() {
         }
     }
 
+    useEffect(() => {
+        if (transactions.length === 0) {
+            setShouldNavigate(true);
+        } else {
+            setShouldNavigate(false);
+        }
+        if (transactions.length === 0 && shouldNavigate) {
+            navigate("/seecoins");
+        }
+    }, [transactions, shouldNavigate, navigate]);
+
     const UpOrDown = (value) => {
         if (!value) {
-            return
+            return null
         }
         const direction = value.toString().startsWith("-") ? "down" : "up";
         return (
