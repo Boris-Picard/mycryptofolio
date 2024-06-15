@@ -237,7 +237,7 @@ export default function FormTemplate() {
             console.error(error)
         }
     }
-    console.log(queryData);
+
     return (
         <div className="flex h-full items-center justify-center">
             <div className="flex w-full md:w-1/2 flex-col justify-center items-center shadow-lg p-6 rounded-md bg-slate-200">
@@ -279,7 +279,10 @@ export default function FormTemplate() {
                                                                 <div className="flex items-center">
                                                                     <span className="mr-3 font-semibold">{coin.market_cap_rank}</span>
                                                                     <img src={coin.thumb} className="mr-2" width={24} height={24} />
-                                                                    {coin.name}
+                                                                    <div className="flex gap-2">
+                                                                        <span className="font-semibold">{coin.name}</span>
+                                                                        <span className="uppercase font-normal text-slate-500">{coin.symbol}</span>
+                                                                    </div>
                                                                 </div>
                                                             </SelectItem>
                                                         )) :
@@ -288,7 +291,10 @@ export default function FormTemplate() {
                                                                 <div className="flex items-center">
                                                                     <span className="mr-3 font-semibold">{coin.market_cap_rank}</span>
                                                                     <img src={coin.image} className="mr-2" width={24} height={24} />
-                                                                    {coin.name}
+                                                                    <div className="flex gap-2">
+                                                                        <span className="font-semibold">{coin.name}</span>
+                                                                        <span className="uppercase font-normal text-slate-500">{coin.symbol}</span>
+                                                                    </div>
                                                                 </div>
                                                             </SelectItem>
                                                         ))
