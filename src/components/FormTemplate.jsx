@@ -249,6 +249,23 @@ export default function FormTemplate() {
         getQuery()
     }, [searchText])
 
+    const arrowUpOrDown = (value) => {
+        if (!value) {
+            return
+        }
+        const direction = value.toString().startsWith("-") ? "down" : "up";
+        return (
+            <div className={`flex ${direction === "down" ? "text-red-500" : "text-green-500"}`}>
+                <svg fill="currentColor" className="w-5 h-5" viewBox="0 0 24 24">
+                    <path
+                        d={direction === "up" ? "M7 14l5-5 5 5H7z" : " M7 10l5 5 5-5H7z"}
+                    />
+                </svg>
+                <span>{value.toFixed(1)} %</span>
+            </div>
+        );
+    };
+
     return (
         <div className="flex h-full items-center justify-center">
             <div className="flex w-full md:w-1/2 flex-col justify-center items-center shadow-lg p-6 rounded-md bg-slate-200">
@@ -283,7 +300,12 @@ export default function FormTemplate() {
                                                     </SelectTrigger>
                                                 </FormControl>
                                                 <SelectContent>
-                                                    <Input placeholder="Rechercher un token" value={searchText} onChange={handleSearch} />
+                                                    <div className="flex p-4">
+                                                        <Input placeholder="Rechercher un token" value={searchText} onChange={handleSearch} />
+                                                    </div>
+                                                    <div className="flex pl-8 py-3 font-normal text-slate-500">
+                                                        {queryData.length > 0 ? "Searched tokens" : "Top 100 Tokens"}
+                                                    </div>
                                                     {queryData.length > 0 ?
                                                         queryData.map((coin) => (
                                                             <SelectItem key={coin.api_symbol} value={coin.id}>
@@ -305,6 +327,7 @@ export default function FormTemplate() {
                                                                     <div className="flex gap-2">
                                                                         <span className="font-semibold">{coin.name}</span>
                                                                         <span className="uppercase font-normal text-slate-500">{coin.symbol}</span>
+                                                                        {arrowUpOrDown(coin.price_change_percentage_24h)}
                                                                     </div>
                                                                 </div>
                                                             </SelectItem>
