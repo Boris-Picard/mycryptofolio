@@ -82,42 +82,42 @@ export default function CardsData() {
     };
 
     return (<>
-        <Card>
+        {transactions.length > 0 ? <><Card>
             <CardHeader>
                 <CardTitle>{totalInvested.toFixed(2)} $US</CardTitle>
                 <CardDescription>Solde actuel</CardDescription>
             </CardHeader>
         </Card>
-        <Card>
-            <CardHeader>
-                <CardTitle>{UpOrDown(valueInDollars)}</CardTitle>
-                <CardDescription>
-                    <div className="flex">
-                        <span>
-                            Portefeuille sur 24h
-                        </span>
-                        {arrowUpOrDown(valueInPercent)}
-                    </div>
-                </CardDescription>
-            </CardHeader>
-        </Card>
-        <Card>
-            <CardHeader>
-                <CardTitle>{UpOrDown(totalGain)}</CardTitle>
-                <CardDescription>
-                    <div className="flex">
-                        <span>Total des profits et pertes</span>
-                        {arrowUpOrDown(totalWinOrLoss)}
-                    </div>
-                </CardDescription>
-            </CardHeader>
-        </Card>
-        <Card>
-            <CardHeader>
-                <CardTitle className="flex gap-2"><img src={maxTransaction?.image} alt={maxTransaction?.name} width={24} height={24} />{maxTransaction?.name} <span className="text-slate-500 uppercase font-normal">{maxTransaction?.symbol}</span></CardTitle>
-                <CardDescription>Meilleur Gagnant {UpOrDown(bestWinnerValue)}</CardDescription>
-            </CardHeader>
-        </Card>
+            <Card>
+                <CardHeader>
+                    <CardTitle>{UpOrDown(valueInDollars)}</CardTitle>
+                    <CardDescription>
+                        <div className="flex">
+                            <span>
+                                Portefeuille sur 24h
+                            </span>
+                            {arrowUpOrDown(valueInPercent)}
+                        </div>
+                    </CardDescription>
+                </CardHeader>
+            </Card>
+            <Card>
+                <CardHeader>
+                    <CardTitle>{UpOrDown(totalGain)}</CardTitle>
+                    <CardDescription>
+                        <div className="flex">
+                            <span>Total des profits et pertes</span>
+                            {arrowUpOrDown(totalWinOrLoss)}
+                        </div>
+                    </CardDescription>
+                </CardHeader>
+            </Card>
+            <Card>
+                <CardHeader>
+                    <CardTitle className="flex gap-2"><img src={maxTransaction?.image} alt={maxTransaction?.name} width={24} height={24} />{maxTransaction?.name} <span className="text-slate-500 uppercase font-normal">{maxTransaction?.symbol}</span></CardTitle>
+                    <CardDescription>Meilleur Gagnant {UpOrDown(bestWinnerValue)}</CardDescription>
+                </CardHeader>
+            </Card></> : ""}
     </>
     )
 }
