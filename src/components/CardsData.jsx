@@ -15,16 +15,31 @@ export default function CardsData() {
     const [maxTransaction, setMaxTransaction] = useState(0)
     const [bestWinnerValue, setBestWinnerValue] = useState(0)
     const [totalWinOrLoss, setTotalWinOrLoss] = useState(0)
+    const [valueInDollars, setValueInDollars] = useState(0)
+    const [valueInPercent, setValueInPercent] = useState(0)
 
     const { transactions } = useDeleteTransaction()
-    console.log(transactions);
     useEffect(() => {
         const totalAmount = transactions.reduce((acc, transaction) => acc + transaction.actualValue, 0)
         const totalWinOrLoss = transactions.reduce((acc, transaction) => acc + transaction.actualPrice, 0)
         const totalPercentWinOrLoss = transactions.reduce((acc, transaction) => acc + transaction.gainOrLossPercentage, 0)
         const percentageWinOrLoss = transactions.reduce((max, transaction) => transaction.gainOrLossPercentage > max.gainOrLossPercentage ? transaction : max, transactions[0])
+        const priceChange24h = transactions.reduce((acc, transaction) => acc + transaction.price_change_24h, 0)
+        const totalQuantity = transactions.reduce((acc, transaction) => acc + transaction.quantity, 0)
 
-        /* todo algo pour calculer la fluctation du prix sur 24h */
+        const actualPricePerCoin = totalAmount / totalQuantity;
+
+        // Calcul du prix il y a 24 heures
+        const price24hAgo = actualPricePerCoin / (1 + priceChange24h / 100);
+
+        // Calcul de la valeur du portefeuille il y a 24 heures
+        const value24hAgo = totalQuantity * price24hAgo;
+
+        // Calcul de la différence en dollars
+        const differenceInDollars = totalAmount - value24hAgo;
+
+        // Calcul de la fluctuation en pourcentage
+        const fluctuationPercentage = ((totalAmount - value24hAgo) / value24hAgo) * 100;
 
         if (percentageWinOrLoss) {
             const bestWinner = percentageWinOrLoss.actualValue - percentageWinOrLoss.spent
@@ -34,6 +49,9 @@ export default function CardsData() {
         setTotalGain(totalWinOrLoss)
         setMaxTransaction(percentageWinOrLoss)
         setTotalWinOrLoss(totalPercentWinOrLoss)
+
+        setValueInDollars(differenceInDollars)
+        setValueInPercent(fluctuationPercentage)
     }, [transactions])
 
     const UpOrDown = (value) => {
@@ -73,8 +91,8 @@ export default function CardsData() {
         </Card>
         <Card>
             <CardHeader>
-                <CardTitle></CardTitle>
-                <CardDescription>Fluctuation du portefeuille sur 24h</CardDescription>
+                <CardTitle>{valueInDollars}</CardTitle>
+                <CardDescription>Fluctuation du portefeuille sur 24h {valueInPercent}</CardDescription>
             </CardHeader>
         </Card>
         <Card>
