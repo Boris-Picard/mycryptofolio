@@ -2,6 +2,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import mycryptofolio from "../../public/assets/mycryptofolio.png"
+
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -17,6 +19,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { PasswordInput } from "@/components/ui/password-input"
 
 import { Info } from "lucide-react"
+
 
 export default function SignIn() {
 
@@ -59,6 +62,9 @@ export default function SignIn() {
         <div className="container">
             <div className="h-screen flex items-center justify-center">
                 <div className="bg-white rounded-xl p-10 w-2/4">
+                    <div className="flex justify-center">
+                        <img src={mycryptofolio} alt="" width={190} height={150} className="brightness-0 invert-0" />
+                    </div>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
                             <FormField
