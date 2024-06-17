@@ -13,35 +13,35 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { toast } from "@/components/ui/use-toast"
+import { useToast } from "@/components/ui/use-toast"
 
 export default function SignIn() {
+
+    const { toast } = useToast()
+
     const FormSchema = z.object({
         username: z.string().min(2, {
             message: "Username must be at least 2 characters.",
         }),
     })
 
-    const InputForm = () => {
-        const form = useForm({
-            resolver: zodResolver(FormSchema),
-            defaultValues: {
-                username: "",
-            },
+    const form = useForm({
+        resolver: zodResolver(FormSchema),
+        defaultValues: {
+            username: "",
+        },
+    })
+
+    const onSubmit = (data) => {
+        console.log(data);
+        toast({
+            title: "You submitted the following values:",
+            description: JSON.stringify(data),
         })
+    }
 
-        function onSubmit(data) {
-            toast({
-                title: "You submitted the following values:",
-                description: (
-                    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                        <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-                    </pre>
-                ),
-            })
-        }
-
-        return (
+    return (
+        <div>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
                     <FormField
@@ -63,8 +63,9 @@ export default function SignIn() {
                     <Button type="submit">Submit</Button>
                 </form>
             </Form>
-        )
-    }
+        </div>
+    )
+
 }
 
 
