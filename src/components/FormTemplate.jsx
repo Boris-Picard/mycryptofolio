@@ -261,7 +261,7 @@ export default function FormTemplate() {
                         d={direction === "up" ? "M7 14l5-5 5 5H7z" : " M7 10l5 5 5-5H7z"}
                     />
                 </svg>
-                <span>{value.toFixed(1)} %</span>
+                <span>{value.toLocaleString()} %</span>
             </div>
         );
     };

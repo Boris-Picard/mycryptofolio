@@ -38,14 +38,14 @@ export default function CardsDetailed() {
         }
         const direction = value.toString().startsWith("-") ? "down" : "up";
         return (
-            <span className={`font-semibold ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{value.toFixed(2)} $US</span>
+            <span className={`font-semibold ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{value.toLocaleString()} $US</span>
         );
     };
 
     return (<>
         <Card>
             <CardHeader>
-                <CardTitle>{totalValue?.toFixed(2)} $US</CardTitle>
+                <CardTitle>{totalValue?.toLocaleString()} $US</CardTitle>
                 <CardDescription>Valeur des participations</CardDescription>
             </CardHeader>
         </Card>
@@ -63,7 +63,7 @@ export default function CardsDetailed() {
         </Card>
         <Card>
             <CardHeader>
-                <CardTitle>{averageBuyPrice?.toFixed(2)} $US</CardTitle>
+                <CardTitle>{averageBuyPrice?.toLocaleString()} $US</CardTitle>
                 <CardDescription>Coût net moyen</CardDescription>
             </CardHeader>
         </Card>

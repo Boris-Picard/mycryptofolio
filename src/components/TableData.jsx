@@ -58,7 +58,7 @@ export default function TableData({ data }) {
                         d={direction === "up" ? "M7 14l5-5 5 5H7z" : " M7 10l5 5 5-5H7z"}
                     />
                 </svg>
-                <span>{value.toFixed(1)} %</span>
+                <span>{value.toLocaleString()} %</span>
             </div>
         );
     };
@@ -98,18 +98,18 @@ export default function TableData({ data }) {
                 return <TableRow key={i} className="font-semibold">
                     <TableCell className="font-medium">{coin.rank}</TableCell>
                     <TableCell><div className="flex gap-2 items-center"><img src={coin.image} alt={coin.name} width={24} height={24} />{coin.name}</div></TableCell>
-                    <TableCell>{coin.price} $US</TableCell>
+                    <TableCell>{coin.price?.toLocaleString()} $US</TableCell>
                     <TableCell>{arrowUpOrDown(coin.price_change_24h)}</TableCell>
-                    <TableCell>{coin.market_cap} $US</TableCell>
-                    <TableCell>{coin.ath} $US</TableCell>
+                    <TableCell>{coin.market_cap?.toLocaleString()} $US</TableCell>
+                    <TableCell>{coin.ath?.toLocaleString()} $US</TableCell>
                     <TableCell>
                         <div className="flex flex-col">
-                            {coin.actualValue?.toFixed(2)} $US<span className="uppercase text-slate-500 font-normal">{coin.quantity} {coin.symbol}</span>
+                            {coin.actualValue?.toLocaleString()} $US<span className="uppercase text-slate-500 font-normal">{coin.quantity?.toLocaleString()} {coin.symbol}</span>
                         </div>
                     </TableCell>
                     <TableCell>
                         <div className="flex flex-col">
-                            {coin.actualPrice?.toFixed(2)} $US
+                            {coin.actualPrice?.toLocaleString()} $US
                             <span>{arrowUpOrDown(coin.gainOrLossPercentage)}</span>
                         </div>
                     </TableCell>

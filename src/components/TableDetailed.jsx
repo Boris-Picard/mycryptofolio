@@ -45,7 +45,7 @@ export default function TableDetailed() {
         }
         const direction = value.toString().startsWith("-") ? "down" : "up";
         return (
-            <span className={`font-semibold ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{direction === "down" ? "-" : "+"}{value.toFixed(2)} $US</span>
+            <span className={`font-semibold ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{direction === "down" ? "-" : "+"}{value.toLocaleString()} $US</span>
         );
     };
 
@@ -53,12 +53,12 @@ export default function TableDetailed() {
         <>
             {transactions.map((coin, i) => {
                 return <TableRow key={i} className="font-semibold">
-                    <TableCell className="font-medium">{coin.price} $US</TableCell>
+                    <TableCell className="font-medium">{coin.price?.toLocaleString()} $US</TableCell>
                     <TableCell>
-                        <span>{coin.quantity}</span> <span className="uppercase font-semibold text-slate-500">{coin.symbol}</span>
+                        <span>{coin.quantity?.toLocaleString()}</span> <span className="uppercase font-semibold text-slate-500">{coin.symbol}</span>
                     </TableCell>
                     <TableCell>{new Date(coin.date).toLocaleDateString()}</TableCell>
-                    <TableCell>{coin.spent} $US</TableCell>
+                    <TableCell>{coin.spent?.toLocaleString()} $US</TableCell>
                     <TableCell>{UpOrDown(coin.actualPrice)}</TableCell>
                     <TableCell>
                         <div className="flex gap-3">

@@ -60,7 +60,7 @@ export default function CardsData() {
         }
         const direction = value.toString().startsWith("-") ? "down" : "up";
         return (
-            <span className={`font-semibold ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{value.toFixed(2)} $US</span>
+            <span className={`font-semibold ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{value.toLocaleString()} $US</span>
         );
     };
 
@@ -76,7 +76,7 @@ export default function CardsData() {
                         d={direction === "up" ? "M7 14l5-5 5 5H7z" : " M7 10l5 5 5-5H7z"}
                     />
                 </svg>
-                <span className={`font-semibold ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{value.toFixed(1)} %</span>
+                <span className={`font-semibold ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{value.toLocaleString()} %</span>
             </div>
         );
     };
@@ -84,7 +84,7 @@ export default function CardsData() {
     return (<>
         {transactions.length > 0 ? <><Card>
             <CardHeader>
-                <CardTitle>{totalInvested.toFixed(2)} $US</CardTitle>
+                <CardTitle>{totalInvested.toLocaleString()} $US</CardTitle>
                 <CardDescription>Solde actuel</CardDescription>
             </CardHeader>
         </Card>
