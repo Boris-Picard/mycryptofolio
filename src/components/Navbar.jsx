@@ -8,6 +8,8 @@ export default function Navbar() {
                 <div className="hidden md:flex space-x-4">
                     <Link to="/" className="text-white">Add a coin</Link>
                     <Link to="/seecoins" className="text-white">See my coins</Link>
+                    <Link to="/signin" className="text-white">Sign In</Link>
+                    <Link to="/signup" className="text-white">Sign Up</Link>
                 </div>
             </div>
         </nav>

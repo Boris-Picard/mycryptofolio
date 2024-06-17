@@ -25,7 +25,7 @@ import {
 import { useState, useEffect } from "react"
 
 import { format } from "date-fns"
-import { CalendarIcon, LogIn } from "lucide-react"
+import { CalendarIcon } from "lucide-react"
 import { Calendar } from "@/components/ui/calendar"
 import {
     Popover,
