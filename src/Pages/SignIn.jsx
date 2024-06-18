@@ -98,7 +98,7 @@ export default function SignIn() {
                                     </FormItem>
                                 )}
                             />
-                            <Button type="submit">Submit</Button>
+                            <Button className="w-full" type="submit">Create Account</Button>
                         </form>
                     </Form>
                 </div>

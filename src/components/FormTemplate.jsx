@@ -48,6 +48,7 @@ export default function FormTemplate() {
     const [selectData, setSelectData] = useState([])
     const [searchText, setSearchText] = useState("")
     const [queryData, setQueryData] = useState([])
+    const [quantityPriceValue, setQuantityPriceValue] = useState(0)
 
 
 
@@ -83,8 +84,13 @@ export default function FormTemplate() {
     useEffect(() => {
         const fetchList = async () => {
             try {
-                const response = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
-                setSelectData(response.data)
+                if (name) {
+                    const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${name}?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
+                    setSelectData(response.data);
+                } else {
+                    const response = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
+                    setSelectData(response.data)
+                }
             } catch (error) {
                 console.log("Error fetching CoinGecko list :", error)
             }
@@ -230,6 +236,13 @@ export default function FormTemplate() {
         }
     };
 
+    useEffect(() => {
+        if (quantityPriceValue > 0 && selectData.market_data?.current_price?.usd) {
+            const totalSpentValue = quantityPriceValue / selectData.market_data.current_price.usd;
+            secondForm.setValue('spent', totalSpentValue);
+        }
+    }, [quantityPriceValue, selectData, secondForm]);
+
     const handleSearch = (e) => {
         setSearchText(e.target.value);
         if (searchText === "") {
@@ -355,7 +368,7 @@ export default function FormTemplate() {
                                             <FormItem>
                                                 <FormLabel>Quantité</FormLabel>
                                                 <FormControl>
-                                                    <Input type="number" placeholder="1.00" {...field} />
+                                                    <Input onInput={(e) => setQuantityPriceValue(e.target.value)} type="number" placeholder="1.00" {...field} />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
