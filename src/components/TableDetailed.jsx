@@ -47,12 +47,12 @@ export default function TableDetailed() {
             <span className={`font-semibold ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{direction === "down" ? "-" : "+"}{value.toLocaleString()} $US</span>
         );
     };
-
+    
     return (
         <>
             {transactions.map((coin, i) => {
                 return <TableRow key={i} className="font-semibold">
-                    <TableCell className="font-medium">{coin.price?.toLocaleString()} $US</TableCell>
+                    <TableCell className="font-medium">{coin.currentPrice?.toLocaleString()} $US</TableCell>
                     <TableCell>
                         <span>{coin.quantity?.toLocaleString()}</span> <span className="uppercase font-semibold text-slate-500">{coin.symbol}</span>
                     </TableCell>
