@@ -238,6 +238,15 @@ export default function FormTemplate() {
         }
     }, [transaction, id, name, secondForm])
 
+    const getPriceCoin = async () => {
+        try {
+            const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${transaction.name}?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
+            secondForm.setValue('price', response.data.market_data.current_price.usd);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
         if (quantityPriceValue) {
             const totalSpentValue = quantityPriceValue.quantity * quantityPriceValue.price
@@ -383,7 +392,10 @@ export default function FormTemplate() {
                                         name="price"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Prix par monnaie</FormLabel>
+                                                <div className="flex justify-between items-center">
+                                                    <FormLabel>Prix par monnaie</FormLabel>
+                                                    <span onClick={getPriceCoin} className="underline cursor-pointer">Utiliser marché</span>
+                                                </div>
                                                 <FormControl>
                                                     <Input onInput={(e) => setQuantityPriceValue((prev) => ({ ...prev, price: e.target.value }))} type="number" placeholder="1.00" {...field} />
                                                 </FormControl>
