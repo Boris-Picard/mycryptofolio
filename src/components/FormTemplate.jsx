@@ -242,7 +242,7 @@ export default function FormTemplate() {
         try {
             const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${transaction.name || transaction.coin.name || dataStep.step1.coin}?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
             secondForm.setValue('price', response.data.market_data.current_price.usd);
-            setQuantityPriceValue((prev) => ({...prev, price: response.data.market_data.current_price.usd}))
+            setQuantityPriceValue((prev) => ({ ...prev, price: response.data.market_data.current_price.usd }))
         } catch (error) {
             console.log(error);
         }
@@ -350,8 +350,9 @@ export default function FormTemplate() {
                                                                     <span className="mr-3 font-semibold">{coin.market_cap_rank}</span>
                                                                     <img src={coin.image} className="mr-2" width={24} height={24} />
                                                                     <div className="flex gap-2">
-                                                                        <span className="font-semibold">{coin.name}</span>
+                                                                        <span className="font-bold">{coin.name}</span>
                                                                         <span className="uppercase font-normal text-slate-500">{coin.symbol}</span>
+                                                                        <span className="font-semibold">{coin.current_price.toLocaleString()} $US</span>
                                                                         {arrowUpOrDown(coin.price_change_percentage_24h)}
                                                                     </div>
                                                                 </div>
