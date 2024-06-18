@@ -239,8 +239,12 @@ export default function FormTemplate() {
     }, [transaction, id, name, secondForm])
 
     const getPriceCoin = async () => {
+        const coinName = transaction?.name || transaction?.coin?.name || dataStep?.step1?.coin;
+        if (!coinName) {
+            throw new Error('No coin name provided.');
+        }
         try {
-            const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${transaction.name || transaction.coin.name || dataStep.step1.coin}?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
+            const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinName}?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
             secondForm.setValue('price', response.data.market_data.current_price.usd);
             setQuantityPriceValue((prev) => ({ ...prev, price: response.data.market_data.current_price.usd }))
         } catch (error) {
