@@ -50,8 +50,6 @@ export default function FormTemplate() {
     const [queryData, setQueryData] = useState([])
     const [quantityPriceValue, setQuantityPriceValue] = useState(0)
 
-
-
     const navigate = useNavigate()
     const { id, name } = useParams()
 
@@ -84,13 +82,8 @@ export default function FormTemplate() {
     useEffect(() => {
         const fetchList = async () => {
             try {
-                if (name) {
-                    const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${name}?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
-                    setSelectData(response.data);
-                } else {
-                    const response = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
-                    setSelectData(response.data)
-                }
+                const response = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
+                setSelectData(response.data)
             } catch (error) {
                 console.log("Error fetching CoinGecko list :", error)
             }
@@ -236,12 +229,21 @@ export default function FormTemplate() {
         }
     };
 
+
     useEffect(() => {
-        if (quantityPriceValue > 0 && selectData.market_data?.current_price?.usd) {
-            const totalSpentValue = quantityPriceValue / selectData.market_data.current_price.usd;
+        if (id || name) {
+            setQuantityPriceValue({ quantity: transaction.quantity, price: transaction.price })
+            const totalSpentValue = quantityPriceValue.quantity * quantityPriceValue.price
             secondForm.setValue('spent', totalSpentValue);
         }
-    }, [quantityPriceValue, selectData, secondForm]);
+    }, [transaction, id, name, secondForm])
+
+    useEffect(() => {
+        if (quantityPriceValue) {
+            const totalSpentValue = quantityPriceValue.quantity * quantityPriceValue.price
+            secondForm.setValue('spent', totalSpentValue);
+        }
+    }, [quantityPriceValue, secondForm]);
 
     const handleSearch = (e) => {
         setSearchText(e.target.value);
@@ -368,7 +370,7 @@ export default function FormTemplate() {
                                             <FormItem>
                                                 <FormLabel>Quantité</FormLabel>
                                                 <FormControl>
-                                                    <Input onInput={(e) => setQuantityPriceValue(e.target.value)} type="number" placeholder="1.00" {...field} />
+                                                    <Input onInput={(e) => setQuantityPriceValue((prev) => ({ ...prev, quantity: e.target.value }))} type="number" placeholder="1.00" {...field} />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -383,7 +385,7 @@ export default function FormTemplate() {
                                             <FormItem>
                                                 <FormLabel>Prix par monnaie</FormLabel>
                                                 <FormControl>
-                                                    <Input type="number" placeholder="1.00" {...field} />
+                                                    <Input onInput={(e) => setQuantityPriceValue((prev) => ({ ...prev, price: e.target.value }))} type="number" placeholder="1.00" {...field} />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
