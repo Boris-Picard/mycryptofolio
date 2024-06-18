@@ -44,10 +44,10 @@ export default function TableDetailed() {
         }
         const direction = value.toString().startsWith("-") ? "down" : "up";
         return (
-            <span className={`font-semibold ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{direction === "down" ? "-" : "+"}{value.toLocaleString()} $US</span>
+            <span className={`font-semibold ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{value.toString().startsWith("-") ? "" : "+"}{value.toLocaleString()} $US</span>
         );
     };
-    
+
     return (
         <>
             {transactions.map((coin, i) => {

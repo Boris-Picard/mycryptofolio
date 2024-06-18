@@ -51,13 +51,13 @@ export default function CardsDetailed() {
         </Card>
         <Card>
             <CardHeader>
-                <CardTitle>{totalCoins} <span className="uppercase">{symbol}</span></CardTitle>
+                <CardTitle>{totalCoins?.toLocaleString()} <span className="uppercase">{symbol}</span></CardTitle>
                 <CardDescription>Participations</CardDescription>
             </CardHeader>
         </Card>
         <Card>
             <CardHeader>
-                <CardTitle>{totalSpent} $US</CardTitle>
+                <CardTitle>{totalSpent?.toLocaleString()} $US</CardTitle>
                 <CardDescription>Coût total</CardDescription>
             </CardHeader>
         </Card>
