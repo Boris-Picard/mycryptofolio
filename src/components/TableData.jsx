@@ -27,7 +27,6 @@ export default function TableData({ data }) {
 
     const { transactions, addTransaction, removeTransaction } = useDeleteTransaction()
 
-
     const deleteTransaction = async (id) => {
         try {
             await axios.delete(`http://localhost:3001/api/transaction/${id}`)
@@ -36,7 +35,6 @@ export default function TableData({ data }) {
             console.error("Error deleting transaction", error)
         }
     }
-
     const addTransactionPage = (coinDataName) => {
         navigate(`/name/${coinDataName}`);
     }
@@ -84,10 +82,8 @@ export default function TableData({ data }) {
                     gainOrLossPercentage: acc[coinId].gainOrLossPercentage + curr.gainOrLossPercentage,
                 };
             }
-
             return acc; // Retourner l'accumulateur pour la prochaine itération
         }, {});
-
         // Mettre à jour l'état aggregatedData avec les valeurs agrégées
         addTransaction(Object.values(aggregated))
     }, [data, addTransaction]); // Exécuter l'effet à chaque fois que data change

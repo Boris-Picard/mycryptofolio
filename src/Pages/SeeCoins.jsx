@@ -61,7 +61,7 @@ export default function SeeCoins() {
                         image: coinData.image,
                         name: coinData.name,
                         rank: coinData.market_cap_rank,
-                        price: coinData.current_price,
+                        currentPrice: coinData.current_price,
                         price_change_24h: coinData.price_change_percentage_24h,
                         market_cap: coinData.market_cap,
                         ath: coinData.ath,

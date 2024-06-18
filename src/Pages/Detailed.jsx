@@ -22,7 +22,7 @@ export default function Detailed() {
     const { transactions, setTransactions } = useDeleteDetailedTransaction()
 
     const [data, setData] = useState([])
-
+    
     useEffect(() => {
         setTransactions(coinData)
     }, [coinData, setTransactions])
@@ -66,6 +66,7 @@ export default function Detailed() {
                     <TableHead>Quantité</TableHead>
                     <TableHead>Date & Heure</TableHead>
                     <TableHead>Coût</TableHead>
+                    <TableHead>Prix par coin</TableHead>
                     <TableHead>Pertes et profits</TableHead>
                     <TableHead>Actions</TableHead>
                 </TableRow>

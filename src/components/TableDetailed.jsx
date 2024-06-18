@@ -20,7 +20,6 @@ import { useDeleteDetailedTransaction } from "@/stores/detailed-transactions.js"
 export default function TableDetailed() {
     const { transactions, removeTransaction } = useDeleteDetailedTransaction()
     const navigate = useNavigate()
-
     const updateTransaction = async (id) => {
         navigate(`/id/${id}`)
     }
@@ -59,6 +58,7 @@ export default function TableDetailed() {
                     </TableCell>
                     <TableCell>{new Date(coin.date).toLocaleDateString()}</TableCell>
                     <TableCell>{coin.spent?.toLocaleString()} $US</TableCell>
+                    <TableCell>{coin.price} $US</TableCell>
                     <TableCell>{UpOrDown(coin.actualPrice)}</TableCell>
                     <TableCell>
                         <div className="flex gap-3">
