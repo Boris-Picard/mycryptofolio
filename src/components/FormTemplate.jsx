@@ -38,6 +38,8 @@ import { useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 import Error from "./ui/error"
 
+import Loading from "./Loading"
+
 export default function FormTemplate() {
 
     const [steps, setSteps] = useState(1)
@@ -48,7 +50,8 @@ export default function FormTemplate() {
     const [selectData, setSelectData] = useState([])
     const [searchText, setSearchText] = useState("")
     const [queryData, setQueryData] = useState([])
-    const [quantityPriceValue, setQuantityPriceValue] = useState(0)
+    const [quantityPriceValue, setQuantityPriceValue] = useState([{ quantity: 0, price: 0 }])
+    const [coinNameImage, setCoinNameImage] = useState([])
 
     const navigate = useNavigate()
     const { id, name } = useParams()
@@ -190,7 +193,6 @@ export default function FormTemplate() {
 
     // Handle submission for the second step
     const handleSecondStepSubmit = async (data) => {
-        console.log(data);
         try {
             const parsedData = FormSchemaSecondStep.parse(data);
             setDataStep((prev) => ({ ...prev, step2: parsedData }));
@@ -223,7 +225,7 @@ export default function FormTemplate() {
             setSteps(3);
             setTimeout(() => {
                 navigate('/seecoins');
-            }, 4000);
+            }, 2000);
         } catch (error) {
             setError(error.response.data.error)
             console.log("Form data is invalid", error.message);
@@ -260,23 +262,24 @@ export default function FormTemplate() {
     // fonction qui permet d'avoir le nom du coin et son image quand on passe au step 2
     useEffect(() => {
         const getCoinNameImage = async () => {
-            if (steps === 2) {
-                const coinName = transaction?.name || transaction.coin?.name || dataStep?.step1?.coin;
-                if (!coinName) {
-                    console.log('No coin name provided.');
-                    return
-                }
-                try {
-                    const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinName}?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
-                    setQuantityPriceValue((prev) => ({ ...prev, name: response.data.name, image: response.data.image.small }))
-                } catch (error) {
-                    console.error(error);
-                }
+            const coinName = transaction?.name || transaction.coin?.name || dataStep?.step1?.coin;
+            if (!coinName) {
+                console.log('No coin name provided.');
+                return
+            }
+            try {
+                const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinName}?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
+                const nameData = await response.data.name
+                const imageData = await response.data.image.small
+                setCoinNameImage({ name: nameData, image: imageData })
+            } catch (error) {
+                console.error(error);
             }
         }
         getCoinNameImage()
-    }, [transaction?.name, transaction?.coin?.name, dataStep?.step1?.coin, steps])
+    }, [transaction?.name, transaction?.coin?.name, dataStep?.step1?.coin])
 
+    console.log(quantityPriceValue);
     useEffect(() => {
         if (quantityPriceValue) {
             const totalSpentValue = quantityPriceValue.quantity * quantityPriceValue.price
@@ -324,16 +327,15 @@ export default function FormTemplate() {
         <div className="flex h-full items-center justify-center">
             <div className="flex w-full md:w-1/2 flex-col justify-center items-center shadow-lg p-6 rounded-md bg-slate-200">
                 <div className="flex flex-col space-y-3 items-center">
-                    <h1 className="font-bold text-5xl">
-                        {steps === 1 ? "Welcome." : ""}
-                    </h1>
+                    {steps === 1 ? <h1 className="font-bold text-5xl"> Welcome.</h1> : ""}
                     {steps === 1 ? <h2 className="font-bold text-3xl">
                         Séléctionner un Coin
                     </h2> : ""}
                     {steps === 2 ? <div className="flex gap-2 w-full justify-center py-6">
-                        <img src={quantityPriceValue?.image} alt={quantityPriceValue?.name} width={54} height={54} className="object-contain" />
-                        <span className="font-bold text-5xl">{quantityPriceValue?.name}</span>
+                        <img src={coinNameImage.image} alt={coinNameImage.name} width={54} height={54} className="object-contain" />
+                        <span className="font-bold text-5xl">{coinNameImage.name}</span>
                     </div> : ""}
+                    {steps === 3 ? <Loading /> : ""}
                 </div>
                 <div className="my-5 w-full">
                     <Progress value={steps === 1 ? 0 : steps === 2 ? 50 : steps === 3 ? 100 : ""} />
