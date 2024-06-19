@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import mycryptofolio from "../../public/assets/mycryptofolio.png"
+import mycryptofolio from "../../assets/mycryptofolio.png"
 
 import { Button } from "@/components/ui/button"
 import {

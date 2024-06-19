@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import mycryptofolio from "../../public/assets/mycryptofolio.png"
+import mycryptofolio from "../../assets/mycryptofolio.png"
 
 export default function Loading({ children, ...props }) {
     const [isLoading, setIsLoading] = useState(true)
