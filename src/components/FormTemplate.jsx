@@ -125,11 +125,13 @@ export default function FormTemplate() {
 
     useEffect(() => {
         try {
-            if (id) {
+            if (id !== undefined) {
                 firstForm.setValue('coin', transaction.coin.name);
             }
-            if (name) {
+            else if (name !== undefined) {
                 firstForm.setValue('coin', transaction.name)
+            } else {
+                return
             }
         } catch (error) {
             console.log(error);
@@ -162,7 +164,6 @@ export default function FormTemplate() {
 
     // Handle submission for the first step
     const handleFirstStepSubmit = async (data) => {
-        console.log(data);
         try {
             // Validate the data according to the schema
             const parsedData = FormSchemaFirstStep.parse(data);
@@ -238,10 +239,13 @@ export default function FormTemplate() {
         }
     }, [transaction, id, name, secondForm])
 
+
+    // permet de récuperer le prix actuel du coin 
     const getPriceCoin = async () => {
         const coinName = transaction?.name || transaction?.coin?.name || dataStep?.step1?.coin;
         if (!coinName) {
-            throw new Error('No coin name provided.');
+            console.log('No coin name provided.');
+            return
         }
         try {
             const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinName}?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
@@ -251,6 +255,26 @@ export default function FormTemplate() {
             console.log(error);
         }
     }
+
+    // fonction qui permet d'avoir le nom du coin et son image quand on passe au step 2
+    useEffect(() => {
+        const getCoinNameImage = async () => {
+            if (steps === 2) {
+                const coinName = transaction?.name || transaction.coin?.name || dataStep?.step1?.coin;
+                if (!coinName) {
+                    console.log('No coin name provided.');
+                    return
+                }
+                try {
+                    const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinName}?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
+                    setQuantityPriceValue((prev) => ({ ...prev, price: response.data.market_data.current_price.usd, name: response.data.name, image: response.data.image.small }))
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        }
+        getCoinNameImage()
+    }, [transaction?.name, transaction?.coin?.name, dataStep?.step1?.coin, steps])
 
     useEffect(() => {
         if (quantityPriceValue) {
@@ -300,11 +324,15 @@ export default function FormTemplate() {
             <div className="flex w-full md:w-1/2 flex-col justify-center items-center shadow-lg p-6 rounded-md bg-slate-200">
                 <div className="flex flex-col space-y-3 items-center">
                     <h1 className="font-bold text-5xl">
-                        Welcome.
+                        {steps === 1 ? "Welcome." : ""}
                     </h1>
-                    <h2 className="font-bold text-3xl">
-                        Add a coin
-                    </h2>
+                    {steps === 1 ? <h2 className="font-bold text-3xl">
+                        Séléctionner un Coin
+                    </h2> : ""}
+                    {steps === 2 ? <div className="flex gap-2 w-full justify-center py-6">
+                        <img src={quantityPriceValue?.image} alt={quantityPriceValue?.name} width={54} height={54} className="object-contain" />
+                        <span className="font-bold text-5xl">{quantityPriceValue?.name}</span>
+                    </div> : ""}
                 </div>
                 <div className="my-5 w-full">
                     <Progress value={steps === 1 ? 0 : steps === 2 ? 50 : steps === 3 ? 100 : ""} />
