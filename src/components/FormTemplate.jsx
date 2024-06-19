@@ -269,8 +269,8 @@ export default function FormTemplate() {
             }
             try {
                 const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinName}?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
-                const nameData = await response.data.name
-                const imageData = await response.data.image.small
+                const nameData = response.data.name
+                const imageData = response.data.image.small
                 setCoinNameImage({ name: nameData, image: imageData })
             } catch (error) {
                 console.error(error);
@@ -279,7 +279,6 @@ export default function FormTemplate() {
         getCoinNameImage()
     }, [transaction?.name, transaction?.coin?.name, dataStep?.step1?.coin])
 
-    console.log(quantityPriceValue);
     useEffect(() => {
         if (quantityPriceValue) {
             const totalSpentValue = quantityPriceValue.quantity * quantityPriceValue.price
@@ -327,10 +326,10 @@ export default function FormTemplate() {
         <div className="flex h-full items-center justify-center">
             <div className="flex w-full md:w-1/2 flex-col justify-center items-center shadow-lg p-6 rounded-md bg-slate-200">
                 <div className="flex flex-col space-y-3 items-center">
-                    {steps === 1 ? <h1 className="font-bold text-5xl"> Welcome.</h1> : ""}
-                    {steps === 1 ? <h2 className="font-bold text-3xl">
+                    {steps === 1 ? <><h1 className="font-bold text-5xl"> Welcome.</h1> <h2 className="font-bold text-3xl">
                         Séléctionner un Coin
-                    </h2> : ""}
+                    </h2></> : ""}
+                    {name ? <h2 className="font-bold text-3xl">Ajouter une transaction </h2> : id ? <h2 className="font-bold text-3xl">Modifier la transaction </h2> : ""}
                     {steps === 2 ? <div className="flex gap-2 w-full justify-center py-6">
                         <img src={coinNameImage.image} alt={coinNameImage.name} width={54} height={54} className="object-contain" />
                         <span className="font-bold text-5xl">{coinNameImage.name}</span>
