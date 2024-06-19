@@ -94,7 +94,7 @@ export default function TableData({ data }) {
                 return <TableRow key={i} className="font-semibold">
                     <TableCell className="font-medium">{coin.rank}</TableCell>
                     <TableCell><div className="flex gap-2 items-center"><img src={coin.image} alt={coin.name} width={24} height={24} />{coin.name}</div></TableCell>
-                    <TableCell>{coin.price?.toLocaleString()} $US</TableCell>
+                    <TableCell>{coin.currentPrice?.toLocaleString()} $US</TableCell>
                     <TableCell>{arrowUpOrDown(coin.price_change_24h)}</TableCell>
                     <TableCell>{coin.market_cap?.toLocaleString()} $US</TableCell>
                     <TableCell>{coin.ath?.toLocaleString()} $US</TableCell>

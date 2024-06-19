@@ -249,8 +249,9 @@ export default function FormTemplate() {
         }
         try {
             const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinName}?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
-            secondForm.setValue('price', response.data.market_data.current_price.usd);
-            setQuantityPriceValue((prev) => ({ ...prev, price: response.data.market_data.current_price.usd }))
+            const price = response.data.market_data.current_price.usd
+            secondForm.setValue('price', price)
+            setQuantityPriceValue((prev) => ({ ...prev, price: price }))
         } catch (error) {
             console.log(error);
         }
@@ -267,7 +268,7 @@ export default function FormTemplate() {
                 }
                 try {
                     const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinName}?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
-                    setQuantityPriceValue((prev) => ({ ...prev, price: response.data.market_data.current_price.usd, name: response.data.name, image: response.data.image.small }))
+                    setQuantityPriceValue((prev) => ({ ...prev, name: response.data.name, image: response.data.image.small }))
                 } catch (error) {
                     console.error(error);
                 }
@@ -446,7 +447,7 @@ export default function FormTemplate() {
                                             <FormItem>
                                                 <FormLabel>Total dépensé</FormLabel>
                                                 <FormControl>
-                                                    <Input type="number" {...field} />
+                                                    <Input type="number" placeholder="1.00" {...field} />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
