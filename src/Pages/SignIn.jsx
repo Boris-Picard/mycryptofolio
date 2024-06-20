@@ -26,7 +26,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-
+import { Link } from "react-router-dom"
 
 
 export default function SignIn() {
@@ -71,8 +71,9 @@ export default function SignIn() {
         <div className="container">
             <div className="h-screen flex items-center justify-center">
                 <div className="bg-white rounded-xl p-10 w-2/4">
-                    <div className="flex justify-center">
-                        <img src={mycryptofolio} alt="" width={190} height={150} className="brightness-0 invert-0" />
+                    <div className="flex flex-col justify-center items-center py-6">
+                        <h1 className="font-bold text-6xl">SignIn</h1>
+                        <img src={mycryptofolio} alt="" width={190} height={150} className="brightness-0 invert-0 object-cover" />
                     </div>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
@@ -83,7 +84,7 @@ export default function SignIn() {
                                     <FormItem>
                                         <FormLabel>Email</FormLabel>
                                         <FormControl>
-                                            <Input autoComplete={"email"} placeholder="example@gmail.com" {...field} />
+                                            <Input type="email" autoComplete="email" placeholder="example@gmail.com" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -94,31 +95,22 @@ export default function SignIn() {
                                 name="password"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <div className="flex gap-2 items-center">
-                                            <FormLabel>Password</FormLabel>
-                                            <TooltipProvider>
-                                                <Tooltip delayDuration={0}>
-                                                    <TooltipTrigger asChild>
-                                                        <Info width={20} height={20} />
-                                                    </TooltipTrigger>
-                                                    <TooltipContent>
-                                                        <p>Password must be between 8 and 50 characters and must contain one uppercase letter, one lowercase letter, one number, and one special character.</p>
-                                                    </TooltipContent>
-                                                </Tooltip>
-                                            </TooltipProvider>
-                                        </div>
+                                        <FormLabel>Password</FormLabel>
                                         <FormControl>
-                                            <PasswordInput autoComplete="new-password" {...field} />
+                                            <PasswordInput autoComplete="current-password" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}
                             />
                             <div className="flex pt-3">
-                                <Button className="w-full" type="submit">Create Account</Button>
+                                <Button className="w-full" type="submit">Sign In</Button>
                             </div>
                         </form>
                     </Form>
+                    <div className="flex gap-3 pt-3">
+                        <span className="font-normal text-slate-500">Don't have an account ?</span><Link className="font-semibold" to="/signup">Sign Up</Link>
+                    </div>
                 </div>
             </div>
         </div>
