@@ -18,7 +18,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { useEffect} from "react"
+import { useEffect } from "react"
 
 import { useDeleteTransaction } from "@/stores/delete-transaction"
 
@@ -87,25 +87,27 @@ export default function TableData({ data }) {
         // Mettre à jour l'état aggregatedData avec les valeurs agrégées
         addTransaction(Object.values(aggregated))
     }, [data, addTransaction]); // Exécuter l'effet à chaque fois que data change
-
+    
     return (
         <>
             {transactions.map((coin, i) => {
                 return <TableRow key={i} className="font-semibold">
                     <TableCell className="font-medium">{coin.rank}</TableCell>
                     <TableCell><div className="flex gap-2 items-center"><img src={coin.image} alt={coin.name} width={24} height={24} />{coin.name}</div></TableCell>
-                    <TableCell>{coin.currentPrice?.toLocaleString()} $US</TableCell>
+                    <TableCell>${coin.currentPrice?.toLocaleString()}</TableCell>
                     <TableCell>{arrowUpOrDown(coin.price_change_24h)}</TableCell>
-                    <TableCell>{coin.market_cap?.toLocaleString()} $US</TableCell>
-                    <TableCell>{coin.ath?.toLocaleString()} $US</TableCell>
+                    <TableCell>${coin.market_cap?.toLocaleString()}</TableCell>
+                    <TableCell>${coin.ath?.toLocaleString()}</TableCell>
                     <TableCell>
                         <div className="flex flex-col">
-                            {coin.actualValue?.toLocaleString()} $US<span className="uppercase text-slate-500 font-normal">{coin.quantity?.toLocaleString()} {coin.symbol}</span>
+                            ${coin.actualValue?.toLocaleString()}<span className="uppercase text-slate-500 font-normal">{coin.quantity?.toLocaleString()} {coin.symbol}</span>
                         </div>
                     </TableCell>
                     <TableCell>
                         <div className="flex flex-col">
-                            {coin.actualPrice?.toLocaleString()} $US
+                            {coin.actualPrice?.toString().startsWith("-")
+                                ? `-$${Math.abs(coin?.actualPrice).toLocaleString()}`
+                                : `+$${coin.actualPrice?.toLocaleString()}`}
                             <span>{arrowUpOrDown(coin.gainOrLossPercentage)}</span>
                         </div>
                     </TableCell>

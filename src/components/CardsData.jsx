@@ -59,8 +59,11 @@ export default function CardsData() {
             return
         }
         const direction = value.toString().startsWith("-") ? "down" : "up";
+        const formattedValue = direction === "down"
+            ? `-$${Math.abs(value).toLocaleString()}`
+            : `+$${value.toLocaleString()}`;
         return (
-            <span className={`font-semibold ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{value.toLocaleString()} $US</span>
+            <span className={`font-semibold ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{formattedValue}</span>
         );
     };
 

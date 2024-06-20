@@ -37,15 +37,18 @@ export default function CardsDetailed() {
             return
         }
         const direction = value.toString().startsWith("-") ? "down" : "up";
+        const formattedValue = direction === "down"
+            ? `-$${Math.abs(value).toLocaleString()}`
+            : `+$${value.toLocaleString()}`;
         return (
-            <span className={`font-semibold ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{value.toLocaleString()} $US</span>
+            <span className={`font-semibold ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{formattedValue}</span>
         );
     };
 
     return (<>
         <Card>
             <CardHeader>
-                <CardTitle>{totalValue?.toLocaleString()} $US</CardTitle>
+                <CardTitle>${totalValue?.toLocaleString()}</CardTitle>
                 <CardDescription>Valeur des participations</CardDescription>
             </CardHeader>
         </Card>
@@ -57,13 +60,13 @@ export default function CardsDetailed() {
         </Card>
         <Card>
             <CardHeader>
-                <CardTitle>{totalSpent?.toLocaleString()} $US</CardTitle>
+                <CardTitle>${totalSpent?.toLocaleString()}</CardTitle>
                 <CardDescription>Coût total</CardDescription>
             </CardHeader>
         </Card>
         <Card>
             <CardHeader>
-                <CardTitle>{averageBuyPrice?.toLocaleString()} $US</CardTitle>
+                <CardTitle>${averageBuyPrice?.toLocaleString()}</CardTitle>
                 <CardDescription>Coût net moyen</CardDescription>
             </CardHeader>
         </Card>
