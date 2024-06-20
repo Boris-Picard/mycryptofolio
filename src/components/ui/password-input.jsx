@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 
 const PasswordInput = forwardRef(
-    ({ className, ...props }, ref) => {
+    ({ className, autoComplete = "current-password", ...props }, ref) => {
         const [showPassword, setShowPassword] = useState(false)
         const disabled = props.value === "" || props.value === undefined || props.disabled
 
@@ -15,6 +15,7 @@ const PasswordInput = forwardRef(
                     type={showPassword ? "text" : "password"}
                     className={cn("hide-password-toggle pr-10", className)}
                     ref={ref}
+                    autoComplete={autoComplete}
                     {...props}
                 />
                 <Button
@@ -42,13 +43,13 @@ const PasswordInput = forwardRef(
                 </Button>
 
                 <style>{`
-					.hide-password-toggle::-ms-reveal,
-					.hide-password-toggle::-ms-clear {
-						visibility: hidden;
-						pointer-events: none;
-						display: none;
-					}
-				`}</style>
+                    .hide-password-toggle::-ms-reveal,
+                    .hide-password-toggle::-ms-clear {
+                        visibility: hidden;
+                        pointer-events: none;
+                        display: none;
+                    }
+                `}</style>
             </div>
         )
     },

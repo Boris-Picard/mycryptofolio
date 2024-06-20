@@ -36,10 +36,10 @@ export default function SignIn() {
             })
             .email({ message: "Email is Invalid" }),
         password: z.string()
-            .min(8, { message: "min 8" })
-            .max(50, { message: "max 50" })
+            .min(8, { message: "Password must be at least 8 characters." })
+            .max(50, { message: "Password must be at most 50 characters." })
             .regex(passwordValidation, {
-                message: 'Your password is not valid',
+                message: 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
             })
     })
 
@@ -47,6 +47,7 @@ export default function SignIn() {
         resolver: zodResolver(FormSchema),
         defaultValues: {
             email: "",
+            password: "",
         },
     })
 
@@ -74,7 +75,7 @@ export default function SignIn() {
                                     <FormItem>
                                         <FormLabel>Email</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="example@gmail.com" {...field} />
+                                            <Input autoComplete={"email"} placeholder="example@gmail.com" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -87,7 +88,7 @@ export default function SignIn() {
                                     <FormItem>
                                         <FormLabel>Password</FormLabel>
                                         <FormControl>
-                                            <PasswordInput {...field} />
+                                            <PasswordInput autoComplete="new-password" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                         <FormDescription className="py-3">

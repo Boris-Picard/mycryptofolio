@@ -386,7 +386,7 @@ export default function FormTemplate() {
                                                                     <div className="flex gap-2">
                                                                         <span className="font-bold">{coin.name}</span>
                                                                         <span className="uppercase font-normal text-slate-500">{coin.symbol}</span>
-                                                                        <span className="font-semibold">{coin.current_price.toLocaleString()} $US</span>
+                                                                        <span className="font-semibold">${coin.current_price.toLocaleString()}</span>
                                                                         {arrowUpOrDown(coin.price_change_percentage_24h)}
                                                                     </div>
                                                                 </div>
