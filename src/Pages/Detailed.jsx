@@ -28,7 +28,7 @@ export default function Detailed() {
     }, [coinData, setTransactions])
 
     useEffect(() => {
-        transactions.map(value => setData({ image: value.image, name: value.coin.name, actual_price: value.price, price_change_24h: value.price_change_24h, symbol: value.symbol }))
+        transactions.map(value => setData({ image: value.image, name: value.coin.name, actual_price: value.currentPrice, price_change_24h: value.price_change_24h, symbol: value.symbol }))
     }, [transactions])
 
     const arrowUpOrDown = (value) => {
@@ -47,7 +47,7 @@ export default function Detailed() {
             </div>
         );
     };
-
+    
     return (<div className="container h-screen p-10">
         <div className="flex mb-3 gap-3 items-center">
             <img src={data.image} alt={data.name} width={24} height={24} /><h1 className="text-white capitalize text-2xl font-semibold">{data.name}</h1><span className="text-slate-500 font-semibold uppercase self-end">{data.symbol}</span>
