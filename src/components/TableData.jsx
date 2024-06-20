@@ -87,7 +87,7 @@ export default function TableData({ data }) {
         // Mettre à jour l'état aggregatedData avec les valeurs agrégées
         addTransaction(Object.values(aggregated))
     }, [data, addTransaction]); // Exécuter l'effet à chaque fois que data change
-    
+
     return (
         <>
             {transactions.map((coin, i) => {
@@ -114,22 +114,30 @@ export default function TableData({ data }) {
                     <TableCell className="flex gap-3">
                         <TooltipProvider>
                             <Tooltip delayDuration={0}>
-                                <TooltipTrigger><Plus onClick={() => addTransactionPage(coin.coin.name)} /></TooltipTrigger>
+                                <TooltipTrigger asChild>
+                                    <div className="cursor-pointer" onClick={() => addTransactionPage(coin.coin.name)} > <Plus /></div>
+                                </TooltipTrigger>
                                 <TooltipContent>
                                     <p>Ajouter une transaction</p>
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>
                         <Select>
-                            <SelectTriggerFolio>
-                                <TooltipProvider>
-                                    <Tooltip delayDuration={0}>
-                                        <TooltipTrigger><EllipsisVertical className="w-5 h-5 cursor-pointer" /></TooltipTrigger>
-                                        <TooltipContent>
-                                            <p>Plus d'actions</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                </TooltipProvider>
+                            <SelectTriggerFolio asChild>
+                                <div>
+                                    <TooltipProvider>
+                                        <Tooltip delayDuration={0}>
+                                            <TooltipTrigger asChild>
+                                                <div className="w-5 h-5 cursor-pointer">
+                                                    <EllipsisVertical />
+                                                </div>
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                <p>Plus d'actions</p>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </TooltipProvider>
+                                </div>
                             </SelectTriggerFolio>
                             <SelectContent className="p-1">
                                 <SelectGroup className="font-semibold">
