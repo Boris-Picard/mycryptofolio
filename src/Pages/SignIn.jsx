@@ -20,6 +20,14 @@ import { PasswordInput } from "@/components/ui/password-input"
 
 import { Info } from "lucide-react"
 
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
+
+
 
 export default function SignIn() {
 
@@ -86,20 +94,29 @@ export default function SignIn() {
                                 name="password"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Password</FormLabel>
+                                        <div className="flex gap-2 items-center">
+                                            <FormLabel>Password</FormLabel>
+                                            <TooltipProvider>
+                                                <Tooltip delayDuration={0}>
+                                                    <TooltipTrigger asChild>
+                                                        <Info width={20} height={20} />
+                                                    </TooltipTrigger>
+                                                    <TooltipContent>
+                                                        <p>Password must be between 8 and 50 characters and must contain one uppercase letter, one lowercase letter, one number, and one special character.</p>
+                                                    </TooltipContent>
+                                                </Tooltip>
+                                            </TooltipProvider>
+                                        </div>
                                         <FormControl>
                                             <PasswordInput autoComplete="new-password" {...field} />
                                         </FormControl>
                                         <FormMessage />
-                                        <FormDescription className="py-3">
-                                            <div className="flex gap-3">
-                                                <div className="text-red-500"><Info /></div> Password must be between 8 and 50 characters and must contain one uppercase letter, one lowercase letter, one number, and one special character.
-                                            </div>
-                                        </FormDescription>
                                     </FormItem>
                                 )}
                             />
-                            <Button className="w-full" type="submit">Create Account</Button>
+                            <div className="flex pt-3">
+                                <Button className="w-full" type="submit">Create Account</Button>
+                            </div>
                         </form>
                     </Form>
                 </div>
