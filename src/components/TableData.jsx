@@ -20,6 +20,16 @@ import {
 } from "@/components/ui/tooltip"
 import { useEffect } from "react"
 
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
+
 import { useDeleteTransaction } from "@/stores/delete-transaction"
 
 export default function TableData({ data }) {
@@ -122,34 +132,34 @@ export default function TableData({ data }) {
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>
-                        <Select>
-                            <SelectTriggerFolio asChild>
-                                <div>
-                                    <TooltipProvider>
-                                        <Tooltip delayDuration={0}>
-                                            <TooltipTrigger asChild>
-                                                <div className="w-5 h-5 cursor-pointer">
-                                                    <EllipsisVertical />
-                                                </div>
-                                            </TooltipTrigger>
-                                            <TooltipContent>
-                                                <p>Plus d'actions</p>
-                                            </TooltipContent>
-                                        </Tooltip>
-                                    </TooltipProvider>
-                                </div>
-                            </SelectTriggerFolio>
-                            <SelectContent className="p-1">
-                                <SelectGroup className="font-semibold">
-                                    <div className="p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => deleteTransaction(coin.coin._id)}>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger>
+                                <TooltipProvider>
+                                    <Tooltip delayDuration={0}>
+                                        <TooltipTrigger asChild>
+                                            <div className="cursor-pointer">
+                                                <EllipsisVertical />
+                                            </div>
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            <p>Plus d'actions</p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                                <DropdownMenuItem>
+                                    <div className="font-semibold p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => deleteTransaction(coin.coin._id)}>
                                         Supprimer la monnaie
                                     </div>
-                                    <div className="p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => seeTransactions(coin)}>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <div className="font-semibold p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => seeTransactions(coin)}>
                                         Voir les transactions
                                     </div>
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </TableCell>
                 </TableRow>
             })}
