@@ -55,7 +55,7 @@ export default function Detailed() {
         <div className="flex mb-5 ">
             <h2 className="text-white text-3xl font-semibold">${data.actual_price}</h2>{arrowUpOrDown(data.price_change_24h)}
         </div>
-        <div className="grid grid-cols-5 mb-3 gap-3">
+        <div className="grid md:grid-cols-2 lg:grid-cols-5 grid-cols-1 mb-3 gap-3">
             <CardsDetailed />
         </div>
         <Table className="bg-white rounded-xl">

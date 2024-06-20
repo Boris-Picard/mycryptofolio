@@ -78,7 +78,7 @@ export default function SeeCoins() {
     }, [dataTransactionApi]); // S'exécute lorsque dataTransactionApi change
 
     return (<div className="container h-screen p-10">
-        <div className="grid grid-cols-4 mb-3 gap-3">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 mb-3 gap-3">
             <CardsData />
         </div>
         <Error message={error} />
