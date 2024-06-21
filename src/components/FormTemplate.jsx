@@ -334,7 +334,7 @@ export default function FormTemplate() {
                         <img src={coinNameImage.image} alt={coinNameImage.name} width={54} height={54} className="object-contain" />
                         <span className="font-bold text-5xl">{coinNameImage.name}</span>
                     </div> : ""}
-                    {steps === 3 ? <Loading /> : ""}
+                    {steps === 3 ? <Loading page={"form"} /> : ""}
                 </div>
                 <div className="my-5 w-full">
                     <Progress value={steps === 1 ? 0 : steps === 2 ? 50 : steps === 3 ? 100 : ""} />

@@ -19,9 +19,9 @@ import { ModeToggle } from "./DarkMode";
 
 export default function Navbar() {
     return (
-        <div className="container sticky top-0 z-50">
-            <header className=" bg-slate-500 mt-8 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 rounded-md bg-opacity-10">
-                <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+        <div className="container sticky top-0 pt-8 z-50">
+            <header className="bg-slate-500 dark:bg-zinc-900 flex h-16 items-center gap-4 bg-background px-4 md:px-6 rounded-md bg-opacity-10">
+                <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6 dark:text-white text-black">
                     <Link
                         to="/"
                         className="flex items-center gap-2 text-lg font-semibold md:text-base"
@@ -30,25 +30,25 @@ export default function Navbar() {
                     </Link>
                     <Link
                         to="/"
-                        className="text-muted-foreground transition-colors hover:text-foreground"
+                        className="hover:text-slate-500 transition-colors hover:text-foreground"
                     >
                         AddCoin
                     </Link>
                     <Link
                         to="/seecoins"
-                        className="text-muted-foreground transition-colors hover:text-foreground"
+                        className="hover:text-slate-500 transition-colors hover:text-foreground"
                     >
                         SeeCoins
                     </Link>
                     <Link
                         to="/signin"
-                        className="text-muted-foreground transition-colors hover:text-foreground"
+                        className="hover:text-slate-500 transition-colors hover:text-foreground"
                     >
                         SignIn
                     </Link>
                     <Link
                         to="/signup"
-                        className="text-muted-foreground transition-colors hover:text-foreground"
+                        className="hover:text-slate-500 transition-colors hover:text-foreground"
                     >
                         SignUp
                     </Link>

@@ -69,19 +69,19 @@ export default function SignUp() {
     }
 
     return (
-        <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px] bg-white h-screen">
+        <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
             <div className="flex items-center justify-center py-12 h-screen">
                 <div className="mx-auto grid w-[350px] gap-6">
                     <div className="grid gap-2 text-center">
-                        <h1 className="text-3xl font-bold">Sign Up</h1>
-                        <p className="text-balance text-muted-foreground">
+                        <h1 className="text-3xl font-bold dark:text-white">Sign Up</h1>
+                        <p className="text-balance text-gray-500 dark:text-gray-400">
                             Enter your email below to create your account
                         </p>
                     </div>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
                             <div className="grid gap-4">
-                                <div className="grid gap-2">
+                                <div className="grid gap-2 dark:text-white">
                                     <FormField
                                         control={form.control}
                                         name="email"
@@ -96,7 +96,7 @@ export default function SignUp() {
                                         )}
                                     />
                                 </div>
-                                <div className="grid gap-2">
+                                <div className="grid gap-2 dark:text-white">
                                     <FormField
                                         control={form.control}
                                         name="password"
@@ -132,7 +132,7 @@ export default function SignUp() {
                             </div>
                         </form>
                     </Form>
-                    <div className="mt-4 text-center text-sm">
+                    <div className="mt-4 text-center text-sm dark:text-white">
                         Already have an account?{" "}
                         <Link to="/signin" className="underline">
                             Sign in
