@@ -1,12 +1,15 @@
 import {
     Card,
     CardDescription,
+    CardContent,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
 import { useEffect, useState } from "react"
 
 import { useDeleteDetailedTransaction } from "@/stores/detailed-transactions.js";
+
+import { DollarSign } from "lucide-react"
 
 export default function CardsDetailed() {
     const { transactions } = useDeleteDetailedTransaction()
@@ -47,34 +50,64 @@ export default function CardsDetailed() {
 
     return (<>
         <Card>
-            <CardHeader>
-                <CardTitle>${totalValue?.toLocaleString()}</CardTitle>
-                <CardDescription>Valeur des participations</CardDescription>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Valeur des participations</CardTitle>
+                <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
+            <CardContent>
+                <div className="text-2xl font-bold">${totalValue?.toLocaleString()}</div>
+                <div className="flex">
+                    <p className="text-xs text-muted-foreground">+20.1% from last month</p>
+                </div>
+            </CardContent>
         </Card>
         <Card>
-            <CardHeader>
-                <CardTitle>{totalCoins?.toLocaleString()} <span className="uppercase">{symbol}</span></CardTitle>
-                <CardDescription>Participations</CardDescription>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Participations</CardTitle>
+                <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
+            <CardContent>
+                <div className="text-2xl font-bold flex gap-3">{totalCoins?.toLocaleString()}<span className="uppercase">{symbol}</span></div>
+                <div className="flex">
+                    <p className="text-xs text-muted-foreground">+20.1% from last month</p>
+                </div>
+            </CardContent>
         </Card>
         <Card>
-            <CardHeader>
-                <CardTitle>${totalSpent?.toLocaleString()}</CardTitle>
-                <CardDescription>Coût total</CardDescription>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Coût total</CardTitle>
+                <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
+            <CardContent>
+                <div className="text-2xl font-bold">${totalSpent?.toLocaleString()}</div>
+                <div className="flex">
+                    <p className="text-xs text-muted-foreground">+20.1% from last month</p>
+                </div>
+            </CardContent>
         </Card>
         <Card>
-            <CardHeader>
-                <CardTitle>${averageBuyPrice?.toLocaleString()}</CardTitle>
-                <CardDescription>Coût net moyen</CardDescription>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Coût net moyen</CardTitle>
+                <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
+            <CardContent>
+                <div className="text-2xl font-bold">${averageBuyPrice?.toLocaleString()}</div>
+                <div className="flex">
+                    <p className="text-xs text-muted-foreground">+20.1% from last month</p>
+                </div>
+            </CardContent>
         </Card>
         <Card>
-            <CardHeader>
-                <CardTitle>{UpOrDown(totalGainOrLoss)}</CardTitle>
-                <CardDescription>Total des profits et pertes</CardDescription>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Total des profits et pertes</CardTitle>
+                <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
+            <CardContent>
+                <div className="text-2xl font-bold">{UpOrDown(totalGainOrLoss)}</div>
+                <div className="flex">
+                    <p className="text-xs text-muted-foreground">+20.1% from last month</p>
+                </div>
+            </CardContent>
         </Card>
     </>)
 }
