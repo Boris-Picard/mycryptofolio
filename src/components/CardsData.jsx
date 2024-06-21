@@ -126,13 +126,13 @@ export default function CardsData() {
                     <img src={maxTransaction?.image} alt={maxTransaction?.name} width={24} height={24} className="object-contain" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">{UpOrDown(totalGain)}</div>
                     <div className="flex">
                         <p className="text-xs text-muted-foreground">Meilleur Gagnant {UpOrDown(bestWinnerValue)}</p>
                     </div>
                 </CardContent>
             </Card>
-            </> : ""}
+        </> : ""
+        }
     </>
     )
 }
