@@ -1,6 +1,7 @@
 import {
     Card,
     CardDescription,
+    CardContent,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
@@ -8,6 +9,7 @@ import { useEffect, useState } from "react"
 
 import { useDeleteTransaction } from "@/stores/delete-transaction";
 
+import { DollarSign } from "lucide-react"
 
 export default function CardsData() {
     const [totalInvested, setTotalInvested] = useState(0);
@@ -79,48 +81,60 @@ export default function CardsData() {
                         d={direction === "up" ? "M7 14l5-5 5 5H7z" : " M7 10l5 5 5-5H7z"}
                     />
                 </svg>
-                <span className={`font-semibold ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{value.toLocaleString()} %</span>
+                <span className={`font-semibold text-xs ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{value.toLocaleString()} %</span>
             </div>
         );
     };
 
     return (<>
-        {transactions.length > 0 ? <><Card>
-            <CardHeader>
-                <CardTitle>${totalInvested.toLocaleString()}</CardTitle>
-                <CardDescription>Solde actuel</CardDescription>
-            </CardHeader>
-        </Card>
+        {transactions.length > 0 ? <>
             <Card>
-                <CardHeader>
-                    <CardTitle>{UpOrDown(valueInDollars)}</CardTitle>
-                    <CardDescription>
-                        <div className="flex">
-                            <span>
-                                Portefeuille sur 24h
-                            </span>
-                            {arrowUpOrDown(valueInPercent)}
-                        </div>
-                    </CardDescription>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Solde actuel</CardTitle>
+                    <DollarSign className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
+                <CardContent>
+                    <div className="text-2xl font-bold">${totalInvested.toLocaleString()}</div>
+                    {/* <p className="text-xs text-muted-foreground">+20.1% from last month</p> */}
+                </CardContent>
             </Card>
             <Card>
-                <CardHeader>
-                    <CardTitle>{UpOrDown(totalGain)}</CardTitle>
-                    <CardDescription>
-                        <div className="flex">
-                            <span>Total des profits et pertes</span>
-                            {arrowUpOrDown(totalWinOrLoss)}
-                        </div>
-                    </CardDescription>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Changement 24h</CardTitle>
+                    <DollarSign className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
+                <CardContent>
+                    <div className="text-2xl font-bold">{UpOrDown(valueInDollars)}</div>
+                    <div className="flex">
+                        <p className="text-xs text-muted-foreground">Portefeuille sur 24h </p>{arrowUpOrDown(valueInPercent)}
+                    </div>
+                </CardContent>
             </Card>
             <Card>
-                <CardHeader>
-                    <CardTitle className="flex gap-2"><img src={maxTransaction?.image} alt={maxTransaction?.name} width={24} height={24} className="object-contain" />{maxTransaction?.name} <span className="text-slate-500 uppercase font-normal">{maxTransaction?.symbol}</span></CardTitle>
-                    <CardDescription>Meilleur Gagnant {UpOrDown(bestWinnerValue)}</CardDescription>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Profits et pertes</CardTitle>
+                    <DollarSign className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
-            </Card></> : ""}
+                <CardContent>
+                    <div className="text-2xl font-bold">{UpOrDown(totalGain)}</div>
+                    <div className="flex">
+                        <p className="text-xs text-muted-foreground">Total des profits et pertes </p>{arrowUpOrDown(totalWinOrLoss)}
+                    </div>
+                </CardContent>
+            </Card>
+            <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium"><div className="flex gap-3">{maxTransaction?.name}<span className="uppercase text-slate-500 font-normal">{maxTransaction?.symbol}</span></div></CardTitle>
+                    <img src={maxTransaction?.image} alt={maxTransaction?.name} width={24} height={24} className="object-contain" />
+                </CardHeader>
+                <CardContent>
+                    <div className="text-2xl font-bold">{UpOrDown(totalGain)}</div>
+                    <div className="flex">
+                        <p className="text-xs text-muted-foreground">Meilleur Gagnant {UpOrDown(bestWinnerValue)}</p>
+                    </div>
+                </CardContent>
+            </Card>
+            </> : ""}
     </>
     )
 }
