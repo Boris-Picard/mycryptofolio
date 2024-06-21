@@ -87,7 +87,7 @@ export default function CardsData() {
     return (<>
         {transactions.length > 0 ? <><Card>
             <CardHeader>
-                <CardTitle>{totalInvested.toLocaleString()} $US</CardTitle>
+                <CardTitle>${totalInvested.toLocaleString()}</CardTitle>
                 <CardDescription>Solde actuel</CardDescription>
             </CardHeader>
         </Card>
@@ -117,7 +117,7 @@ export default function CardsData() {
             </Card>
             <Card>
                 <CardHeader>
-                    <CardTitle className="flex gap-2"><img src={maxTransaction?.image} alt={maxTransaction?.name} width={24} height={24} />{maxTransaction?.name} <span className="text-slate-500 uppercase font-normal">{maxTransaction?.symbol}</span></CardTitle>
+                    <CardTitle className="flex gap-2"><img src={maxTransaction?.image} alt={maxTransaction?.name} width={24} height={24} className="object-contain" />{maxTransaction?.name} <span className="text-slate-500 uppercase font-normal">{maxTransaction?.symbol}</span></CardTitle>
                     <CardDescription>Meilleur Gagnant {UpOrDown(bestWinnerValue)}</CardDescription>
                 </CardHeader>
             </Card></> : ""}

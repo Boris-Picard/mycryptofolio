@@ -4,6 +4,8 @@ import { z } from "zod"
 
 import mycryptofolio from "../../assets/mycryptofolio.png"
 
+import bglogin from "../../assets/bglogin.jpg"
+
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -59,50 +61,80 @@ export default function SignIn() {
     }
 
     return (
-        <div className="container">
-            <div className="h-screen flex items-center justify-center">
-                <div className="bg-white rounded-xl p-10 w-2/4">
-                    <div className="flex flex-col justify-center items-center py-6">
-                        <h1 className="font-bold text-6xl">SignIn</h1>
-                        <img src={mycryptofolio} alt="" width={190} height={150} className="brightness-0 invert-0 object-cover" />
+        //                 <img src={mycryptofolio} alt="" width={190} height={150} className="brightness-0 invert-0 object-cover" />
+        <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px] bg-white h-screen">
+            <div className="flex items-center justify-center py-12 h-screen">
+                <div className="mx-auto grid w-[350px] gap-6">
+                    <div className="grid gap-2 text-center">
+                        <h1 className="text-3xl font-bold">Login</h1>
+                        <p className="text-balance text-muted-foreground">
+                            Enter your email below to login to your account
+                        </p>
                     </div>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-                            <FormField
-                                control={form.control}
-                                name="email"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Email</FormLabel>
-                                        <FormControl>
-                                            <Input type="email" autoComplete="email" placeholder="example@gmail.com" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="password"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Password</FormLabel>
-                                        <FormControl>
-                                            <PasswordInput autoComplete="current-password" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <div className="flex pt-3">
-                                <Button className="w-full" type="submit">Sign In</Button>
+                            <div className="grid gap-4">
+                                <div className="grid gap-2">
+                                    <FormField
+                                        control={form.control}
+                                        name="email"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Email</FormLabel>
+                                                <FormControl>
+                                                    <Input type="email" autoComplete="email" placeholder="example@gmail.com" {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                <div className="grid gap-2">
+                                    <FormField
+                                        control={form.control}
+                                        name="password"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <div className="flex">
+                                                    <FormLabel>Password</FormLabel>
+                                                    <Link
+                                                        href="/forgot-password"
+                                                        className="ml-auto inline-block text-sm underline"
+                                                    >
+                                                        Forgot your password?
+                                                    </Link>
+                                                </div>
+                                                <FormControl>
+                                                    <PasswordInput autoComplete="current-password" {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                <Button type="submit" className="w-full">
+                                    Login
+                                </Button>
+                                <Button variant="outline" className="w-full">
+                                    Login with Google
+                                </Button>
                             </div>
                         </form>
                     </Form>
-                    <div className="flex gap-3 pt-3">
-                        <span className="font-normal text-slate-500">Don't have an account ?</span><Link className="font-semibold" to="/signup">Sign Up</Link>
+                    <div className="mt-4 text-center text-sm">
+                        Don&apos;t have an account?{" "}
+                        <Link to="/signup" className="underline">
+                            Sign up
+                        </Link>
                     </div>
                 </div>
+            </div>
+            <div className="hidden bg-muted lg:block">
+                <img
+                    src={bglogin}
+                    alt="cryptocurrencybg"
+                    className="h-full w-full object-cover brightness-[0.4] grayscale"
+                />
             </div>
         </div>
     )
