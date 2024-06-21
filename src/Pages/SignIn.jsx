@@ -131,6 +131,7 @@ export default function SignIn() {
             </div>
             <div className="hidden bg-muted lg:block">
                 <img
+                    loading="lazy"
                     src={bglogin}
                     alt="cryptocurrencybg"
                     className="h-full w-full object-cover brightness-[0.4] grayscale"

@@ -82,7 +82,7 @@ export default function SeeCoins() {
             <CardsData />
         </div>
         <Error message={error} />
-        <Table className="bg-white rounded-xl">
+        <Table className="rounded-xl">
             <TableCaption>A list of your recent trade</TableCaption>
             <TableHeader>
                 <TableRow>

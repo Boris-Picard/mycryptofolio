@@ -22,7 +22,7 @@ export default function Detailed() {
     const { transactions, setTransactions } = useDeleteDetailedTransaction()
 
     const [data, setData] = useState([])
-    
+
     useEffect(() => {
         setTransactions(coinData)
     }, [coinData, setTransactions])
@@ -50,15 +50,15 @@ export default function Detailed() {
 
     return (<div className="container h-screen p-10">
         <div className="flex mb-3 gap-3 items-center">
-            <img src={data.image} alt={data.name} width={24} height={24} /><h1 className="text-white capitalize text-2xl font-semibold">{data.name}</h1><span className="text-slate-500 font-semibold uppercase self-end">{data.symbol}</span>
+            <img src={data.image} alt={data.name} width={24} height={24} /><h1 className=" capitalize text-2xl font-semibold">{data.name}</h1><span className="text-slate-500 font-semibold uppercase self-end">{data.symbol}</span>
         </div>
         <div className="flex mb-5 ">
-            <h2 className="text-white text-3xl font-semibold">${data.actual_price}</h2>{arrowUpOrDown(data.price_change_24h)}
+            <h2 className="text-3xl font-semibold">${data.actual_price}</h2>{arrowUpOrDown(data.price_change_24h)}
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-5 grid-cols-1 mb-3 gap-3">
             <CardsDetailed />
         </div>
-        <Table className="bg-white rounded-xl">
+        <Table className=" rounded-xl">
             <TableCaption>A list of your recent trade</TableCaption>
             <TableHeader>
                 <TableRow>

@@ -56,9 +56,6 @@ export default function CardsDetailed() {
             </CardHeader>
             <CardContent>
                 <div className="text-2xl font-bold">${totalValue?.toLocaleString()}</div>
-                <div className="flex">
-                    <p className="text-xs text-muted-foreground">+20.1% from last month</p>
-                </div>
             </CardContent>
         </Card>
         <Card>
@@ -68,9 +65,6 @@ export default function CardsDetailed() {
             </CardHeader>
             <CardContent>
                 <div className="text-2xl font-bold flex gap-3">{totalCoins?.toLocaleString()}<span className="uppercase">{symbol}</span></div>
-                <div className="flex">
-                    <p className="text-xs text-muted-foreground">+20.1% from last month</p>
-                </div>
             </CardContent>
         </Card>
         <Card>
@@ -80,9 +74,6 @@ export default function CardsDetailed() {
             </CardHeader>
             <CardContent>
                 <div className="text-2xl font-bold">${totalSpent?.toLocaleString()}</div>
-                <div className="flex">
-                    <p className="text-xs text-muted-foreground">+20.1% from last month</p>
-                </div>
             </CardContent>
         </Card>
         <Card>
@@ -92,9 +83,6 @@ export default function CardsDetailed() {
             </CardHeader>
             <CardContent>
                 <div className="text-2xl font-bold">${averageBuyPrice?.toLocaleString()}</div>
-                <div className="flex">
-                    <p className="text-xs text-muted-foreground">+20.1% from last month</p>
-                </div>
             </CardContent>
         </Card>
         <Card>
@@ -104,9 +92,6 @@ export default function CardsDetailed() {
             </CardHeader>
             <CardContent>
                 <div className="text-2xl font-bold">{UpOrDown(totalGainOrLoss)}</div>
-                <div className="flex">
-                    <p className="text-xs text-muted-foreground">+20.1% from last month</p>
-                </div>
             </CardContent>
         </Card>
     </>)

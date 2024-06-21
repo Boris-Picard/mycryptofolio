@@ -13,7 +13,7 @@ function App() {
   return (
     <Loading>
       <BrowserRouter>
-        <div className="h-screen bg-black">
+        <div className="h-screen ">
           <Navbar />
           <Routes>
             <Route path="/" element={<HomePage />} />
