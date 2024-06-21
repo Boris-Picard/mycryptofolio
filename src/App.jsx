@@ -13,7 +13,7 @@ function App() {
   return (
     <Loading>
       <BrowserRouter>
-        <div className="h-full overflow-auto">
+        <div className="h-full">
           <Navbar />
           <Routes>
             <Route path="/" element={<HomePage />} />

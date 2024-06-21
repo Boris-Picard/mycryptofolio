@@ -58,7 +58,7 @@ export default function Detailed() {
         <div className="grid md:grid-cols-2 lg:grid-cols-5 grid-cols-1 mb-3 gap-3">
             <CardsDetailed />
         </div>
-        <Table className=" rounded-xl">
+        <Table className="rounded-xl overflow-auto">
             <TableCaption>A list of your recent trade</TableCaption>
             <TableHeader>
                 <TableRow>
