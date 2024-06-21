@@ -2,12 +2,7 @@ import {
     TableCell,
     TableRow,
 } from "@/components/ui/table"
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectTriggerFolio,
-} from "@/components/ui/select"
+
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { EllipsisVertical, Plus } from "lucide-react"
@@ -99,9 +94,9 @@ export default function TableData({ data }) {
     return (
         <>
             {transactions.map((coin, i) => {
-                return <TableRow key={i} className="font-semibold">
-                    <TableCell className="font-medium">{coin.rank}</TableCell>
-                    <TableCell><div className="flex gap-2 items-center"><img src={coin.image} alt={coin.name} width={24} height={24} />{coin.name}</div></TableCell>
+                return <TableRow key={i} className="font-medium h-20">
+                    <TableCell>{coin.rank}</TableCell>
+                    <TableCell><div className="flex gap-2 items-center"><img src={coin.image} alt={coin.name} width={34} height={34} className="aspect-square rounded-md object-cover" />{coin.name}</div></TableCell>
                     <TableCell>${coin.currentPrice?.toLocaleString()}</TableCell>
                     <TableCell>{arrowUpOrDown(coin.price_change_24h)}</TableCell>
                     <TableCell>${coin.market_cap?.toLocaleString()}</TableCell>
@@ -119,45 +114,47 @@ export default function TableData({ data }) {
                             <span>{arrowUpOrDown(coin.gainOrLossPercentage)}</span>
                         </div>
                     </TableCell>
-                    <TableCell className="flex gap-3">
-                        <TooltipProvider>
-                            <Tooltip delayDuration={0}>
-                                <TooltipTrigger asChild>
-                                    <div className="cursor-pointer" onClick={() => addTransactionPage(coin.coin.name)} > <Plus /></div>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                    <p>Ajouter une transaction</p>
-                                </TooltipContent>
-                            </Tooltip>
-                        </TooltipProvider>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger>
-                                <TooltipProvider>
-                                    <Tooltip delayDuration={0}>
-                                        <TooltipTrigger asChild>
-                                            <div className="cursor-pointer">
-                                                <EllipsisVertical />
-                                            </div>
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            <p>Plus d'actions</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                </TooltipProvider>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                                <DropdownMenuItem>
-                                    <div className="font-semibold p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => deleteTransaction(coin.coin._id)}>
-                                        Supprimer la monnaie
-                                    </div>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <div className="font-semibold p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => seeTransactions(coin)}>
-                                        Voir les transactions
-                                    </div>
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                    <TableCell>
+                        <div className="flex gap-3 items-center">
+                            <TooltipProvider>
+                                <Tooltip delayDuration={0}>
+                                    <TooltipTrigger asChild>
+                                        <div className="cursor-pointer" onClick={() => addTransactionPage(coin.coin.name)} > <Plus /></div>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>Ajouter une transaction</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
+                            <DropdownMenu>
+                                <DropdownMenuTrigger>
+                                    <TooltipProvider>
+                                        <Tooltip delayDuration={0}>
+                                            <TooltipTrigger asChild>
+                                                <div className="cursor-pointer">
+                                                    <EllipsisVertical />
+                                                </div>
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                <p>Plus d'actions</p>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </TooltipProvider>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent>
+                                    <DropdownMenuItem>
+                                        <div className="font-semibold p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => deleteTransaction(coin.coin._id)}>
+                                            Supprimer la monnaie
+                                        </div>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem>
+                                        <div className="font-semibold p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none hover:bg-slate-100  focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => seeTransactions(coin)}>
+                                            Voir les transactions
+                                        </div>
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        </div>
                     </TableCell>
                 </TableRow>
             })}
