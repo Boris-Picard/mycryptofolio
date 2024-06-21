@@ -14,6 +14,8 @@ import {
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
+import { ModeToggle } from "./DarkMode";
+
 
 export default function Navbar() {
     return (
@@ -113,6 +115,7 @@ export default function Navbar() {
                             <DropdownMenuItem>Logout</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
+                    <ModeToggle />
                 </div>
             </header>
         </div>
