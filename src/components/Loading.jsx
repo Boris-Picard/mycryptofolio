@@ -12,7 +12,7 @@ export default function Loading({ children, page, ...props }) {
     }, [])
 
     return (<>
-        {isLoading ? <div className={`flex items-center ${page === "loading" ? "h-screen w-screen" : ""} dark:bg-black bg-white`}>
+        {isLoading ? <div className={`flex items-center ${page === "loading" ? "h-screen w-screen" : ""} dark:bg-zinc-950 bg-white`}>
             <div className="flex-col gap-4 w-full flex items-center justify-center">
                 <div className="w-28 h-28 border-8 text-4xl animate-spin border-gray-300 flex items-center justify-center border-t-black rounded-full">
                     <img src={mycryptofolio} alt="Loading" width={250} height={150} className="brightness-0 invert-0 dark:brightness-100 dark:invert-100 animate-pulse" />

@@ -415,7 +415,7 @@ export default function FormTemplate() {
                                             <FormItem>
                                                 <FormLabel>Quantité</FormLabel>
                                                 <FormControl>
-                                                    <Input onInput={(e) => setQuantityPriceValue((prev) => ({ ...prev, quantity: e.target.value }))} type="number" placeholder="1.00" {...field} />
+                                                    <Input disabled={steps === 3 ? true : false} onInput={(e) => setQuantityPriceValue((prev) => ({ ...prev, quantity: e.target.value }))} type="number" placeholder="1.00" {...field} />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -433,7 +433,7 @@ export default function FormTemplate() {
                                                     <span onClick={getPriceCoin} className="underline cursor-pointer">Utiliser marché</span>
                                                 </div>
                                                 <FormControl>
-                                                    <Input onInput={(e) => setQuantityPriceValue((prev) => ({ ...prev, price: e.target.value }))} type="number" placeholder="1.00" {...field} />
+                                                    <Input disabled={steps === 3 ? true : false} onInput={(e) => setQuantityPriceValue((prev) => ({ ...prev, price: e.target.value }))} type="number" placeholder="1.00" {...field} />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -448,7 +448,7 @@ export default function FormTemplate() {
                                             <FormItem>
                                                 <FormLabel>Total dépensé</FormLabel>
                                                 <FormControl>
-                                                    <Input type="number" placeholder="1.00" {...field} />
+                                                    <Input disabled={steps === 3 ? true : false} type="number" placeholder="1.00" {...field} />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -466,6 +466,7 @@ export default function FormTemplate() {
                                                     <PopoverTrigger asChild>
                                                         <FormControl>
                                                             <Button
+                                                                disabled={steps === 3 ? true : false}
                                                                 variant={"outline"}
                                                                 className={cn(
                                                                     "w-[240px] pl-3 text-left font-normal",

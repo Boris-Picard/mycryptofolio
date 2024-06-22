@@ -49,10 +49,10 @@ export default function Detailed() {
     };
 
     return (<div className="container h-screen p-10">
-        <div className="flex mb-3 gap-3 items-center">
+        <div className="flex mb-3 gap-3 items-center dark:text-white">
             <img src={data.image} alt={data.name} width={24} height={24} /><h1 className=" capitalize text-2xl font-semibold">{data.name}</h1><span className="text-slate-500 font-semibold uppercase self-end">{data.symbol}</span>
         </div>
-        <div className="flex mb-5 ">
+        <div className="flex mb-5 dark:text-white">
             <h2 className="text-3xl font-semibold">${data.actual_price}</h2>{arrowUpOrDown(data.price_change_24h)}
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-5 grid-cols-1 mb-3 gap-3">

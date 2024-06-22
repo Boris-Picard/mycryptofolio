@@ -30,25 +30,25 @@ export default function Navbar() {
                     </Link>
                     <Link
                         to="/"
-                        className="hover:text-slate-500 transition-colors hover:text-foreground"
+                        className="hover:text-gray-500 transition-colors hover:text-foreground"
                     >
                         AddCoin
                     </Link>
                     <Link
                         to="/seecoins"
-                        className="hover:text-slate-500 transition-colors hover:text-foreground"
+                        className="hover:text-gray-500 transition-colors hover:text-foreground"
                     >
                         SeeCoins
                     </Link>
                     <Link
                         to="/signin"
-                        className="hover:text-slate-500 transition-colors hover:text-foreground"
+                        className="hover:text-gray-500 transition-colors hover:text-foreground"
                     >
                         SignIn
                     </Link>
                     <Link
                         to="/signup"
-                        className="hover:text-slate-500 transition-colors hover:text-foreground"
+                        className="hover:text-gray-500 transition-colors hover:text-foreground"
                     >
                         SignUp
                     </Link>
