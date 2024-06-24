@@ -31,9 +31,12 @@ import bglogin from "../../assets/bglogin.jpg"
 
 import axios from "axios"
 
+import { useAuthStore } from "@/stores/useAuthStore"
+
 export default function SignUp() {
 
     const { toast } = useToast()
+    const { user, setUser } = useAuthStore()
 
     const passwordValidation = new RegExp(
         /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,50}$/
@@ -69,16 +72,22 @@ export default function SignUp() {
                 mail: parsedData.email,
                 password: parsedData.password,
             })
-            console.log(response);
+            console.log(response.data);
+            toast({
+                variant: "success",
+                title: "signIn successfully",
+            })
+            setUser(response.data)
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data.error);
+            toast({
+                variant: "destructive",
+                title: "Somethings went wrong:",
+                description: error.response.data.error,
+            })
         }
-        // toast({
-        //     title: "You submitted the following values:",
-        //     description: JSON.stringify(data),
-        // })
     }
-
+    console.log(user);
     return (
         <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
             <div className="flex items-center justify-center py-12 h-screen">
