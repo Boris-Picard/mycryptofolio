@@ -29,6 +29,7 @@ import { Link } from "react-router-dom"
 
 import bglogin from "../../assets/bglogin.jpg"
 
+import axios from "axios"
 
 export default function SignUp() {
 
@@ -60,12 +61,22 @@ export default function SignUp() {
         },
     })
 
-    const onSubmit = (data) => {
-        console.log(data);
-        toast({
-            title: "You submitted the following values:",
-            description: JSON.stringify(data),
-        })
+    const onSubmit = async (data) => {
+        try {
+            const parsedData = FormSchema.parse(data)
+            console.log(parsedData);
+            const response = await axios.post("http://localhost:3001/api/auth/signup", {
+                mail: parsedData.email,
+                password: parsedData.password,
+            })
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
+        // toast({
+        //     title: "You submitted the following values:",
+        //     description: JSON.stringify(data),
+        // })
     }
 
     return (
