@@ -67,19 +67,16 @@ export default function SignUp() {
     const onSubmit = async (data) => {
         try {
             const parsedData = FormSchema.parse(data)
-            console.log(parsedData);
             const response = await axios.post("http://localhost:3001/api/auth/signup", {
                 mail: parsedData.email,
                 password: parsedData.password,
             })
-            console.log(response.data);
             toast({
                 variant: "success",
                 title: "signIn successfully",
             })
-            setUser(response.data)
+            setUser(response.data.user)
         } catch (error) {
-            console.log(error.response.data.error);
             toast({
                 variant: "destructive",
                 title: "Somethings went wrong:",
