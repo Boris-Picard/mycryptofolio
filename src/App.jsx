@@ -10,7 +10,7 @@ import { useTheme } from "@/context/ThemeProvider.tsx"
 
 import { useEffect } from 'react';
 
-import { useCookies } from 'react-cookie';
+import { CookiesProvider, useCookies } from 'react-cookie';
 import { useAuthStore } from './stores/useAuthStore';
 
 import axios from 'axios';
@@ -21,17 +21,20 @@ function App() {
   const [cookies, removeCookie] = useCookies(['token']);
   const { user, setUser, clearUser } = useAuthStore();
 
+  console.log(user);
+
   useEffect(() => {
     const checkAuth = async () => {
       if (cookies.token) {
         try {
-          // Vérifiez le token avec votre backend
-          const response = await axios.get("http://localhost:3001/api/auth/getUser", {
+          const response = await axios.get(`http://localhost:3001/api/auth/user/${user?.id}`, {
             headers: { Authorization: `Bearer ${cookies.token}` }
           });
-          setUser(response.data.user);
+          console.log(response.data);
+          setUser(response.data);
         } catch (error) {
           // Gérez l'erreur (token invalide, expiré, etc.)
+          console.log(error);
           clearUser();
           removeCookie('token');
         }
@@ -39,33 +42,37 @@ function App() {
     };
 
     checkAuth();
-  }, [cookies.token, setUser, clearUser, removeCookie]);
+  }, []);
+
+  console.log(user);
   return (
-    user ? <div className={`${theme === "dark" ? "bg-zinc-950" : "bg-white"}`}>
-      <Loading page={"loading"}>
-        <BrowserRouter>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/id/:id" element={<HomePage />} />
-            <Route path="/name/:name" element={<HomePage />} />
-            <Route path="/detailed/:id" element={<Detailed />} />
-            <Route path="/seecoins" element={<SeeCoins />} />
-            <Route path="*" element={<HomePage />} />
-          </Routes>
-        </BrowserRouter>
-      </Loading>
-    </div> : <div className={`${theme === "dark" ? "bg-zinc-950" : "bg-white"}`}>
-      <Loading page={"loading"}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="*" element={<SignIn />} />
-          </Routes>
-        </BrowserRouter>
-      </Loading>
-    </div>
+    <CookiesProvider>
+      {cookies.token ? <div className={`${theme === "dark" ? "bg-zinc-950" : "bg-white"}`}>
+        <Loading page={"loading"}>
+          <BrowserRouter>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/id/:id" element={<HomePage />} />
+              <Route path="/name/:name" element={<HomePage />} />
+              <Route path="/detailed/:id" element={<Detailed />} />
+              <Route path="/seecoins" element={<SeeCoins />} />
+              <Route path="*" element={<HomePage />} />
+            </Routes>
+          </BrowserRouter>
+        </Loading>
+      </div> : <div className={`${theme === "dark" ? "bg-zinc-950" : "bg-white"}`}>
+        <Loading page={"loading"}>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="*" element={<SignIn />} />
+            </Routes>
+          </BrowserRouter>
+        </Loading>
+      </div>}
+    </CookiesProvider>
   );
 }
 

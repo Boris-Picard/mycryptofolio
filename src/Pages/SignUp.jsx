@@ -77,6 +77,7 @@ export default function SignUp() {
                 variant: "success",
                 title: "signIn successfully",
             })
+            console.log(response.data);
             setCookie('token', response.data.token, { path: '/', secure: true, sameSite: 'strict' });
             setUser(response.data.user)
             setTimeout(() => {
