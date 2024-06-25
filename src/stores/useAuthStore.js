@@ -1,23 +1,16 @@
 import { create } from "zustand";
-import { useCookies } from "react-cookie";
+import { persist } from "zustand/middleware";
 
-export const useAuthStore = create((set) => ({
-  user: null,
-  setUser: (user) => {
-    set((state) => {
-      state.cookies.set("token", user.token, {
-        path: "/",
-        secure: true,
-        sameSite: "strict",
-      });
-      return { user };
-    });
-  },
-  clearUser: () => {
-    set((state) => {
-      state.cookies.remove("token", { path: "/" });
-      return { user: null };
-    });
-  },
-  setCookies: (cookies) => set({ cookies }),
-}));
+export const useAuthStore = create(
+  persist(
+    (set) => ({
+      user: null,
+      setUser: (user) => set({ user }),
+      clearUser: () => set({ user: null }),
+    }),
+    {
+      name: "auth-storage",
+      getStorage: () => localStorage,
+    }
+  )
+);

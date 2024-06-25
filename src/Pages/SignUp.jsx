@@ -25,7 +25,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 import bglogin from "../../assets/bglogin.jpg"
 
@@ -33,11 +33,13 @@ import axios from "axios"
 
 import { useAuthStore } from "@/stores/useAuthStore"
 
-export default function SignUp() {
+import { useCookies } from 'react-cookie';
 
+export default function SignUp() {
+    const [cookies, setCookie] = useCookies(['token']);
     const { toast } = useToast()
     const { user, setUser } = useAuthStore()
-
+    const navigate = useNavigate()
     const passwordValidation = new RegExp(
         /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,50}$/
     );
@@ -59,8 +61,8 @@ export default function SignUp() {
     const form = useForm({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            email: "",
-            password: "",
+            email: "picard.boris@gmail.com",
+            password: "Password123!",
         },
     })
 
@@ -75,7 +77,11 @@ export default function SignUp() {
                 variant: "success",
                 title: "signIn successfully",
             })
+            setCookie('token', response.data.token, { path: '/', secure: true, sameSite: 'strict' });
             setUser(response.data.user)
+            setTimeout(() => {
+                navigate("/")
+            }, 3000)
         } catch (error) {
             toast({
                 variant: "destructive",

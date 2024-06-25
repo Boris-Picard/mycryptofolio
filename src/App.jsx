@@ -8,30 +8,38 @@ import SignIn from './Pages/SignIn';
 import SignUp from './Pages/SignUp';
 import { useTheme } from "@/context/ThemeProvider.tsx"
 
-import { useAuthStore } from './stores/useAuthStore';
-import { useCookies } from 'react-cookie';
-
 import { useEffect } from 'react';
 
+import { useCookies } from 'react-cookie';
+import { useAuthStore } from './stores/useAuthStore';
+
+import axios from 'axios';
 
 function App() {
   const { theme } = useTheme()
-  const { user, setUser, setCookies } = useAuthStore()
-  const [cookies, setCookie, removeCookie] = useCookies(['token'])
+
+  const [cookies, removeCookie] = useCookies(['token']);
+  const { user, setUser, clearUser } = useAuthStore();
 
   useEffect(() => {
-    // Initialisation des cookies dans Zustand
-    setCookies({ set: setCookie, get: cookies, remove: removeCookie });
+    const checkAuth = async () => {
+      if (cookies.token) {
+        try {
+          // Vérifiez le token avec votre backend
+          const response = await axios.get("http://localhost:3001/api/auth/getUser", {
+            headers: { Authorization: `Bearer ${cookies.token}` }
+          });
+          setUser(response.data.user);
+        } catch (error) {
+          // Gérez l'erreur (token invalide, expiré, etc.)
+          clearUser();
+          removeCookie('token');
+        }
+      }
+    };
 
-    // Si un token existe déjà dans les cookies, le mettre dans Zustand
-    if (cookies.token && !user) {
-      setUser(cookies.token);
-    }
-  }, [cookies, setCookies, setUser, user]);
-
-  console.log(cookies);
-  console.log(user);
-
+    checkAuth();
+  }, [cookies.token, setUser, clearUser, removeCookie]);
   return (
     user ? <div className={`${theme === "dark" ? "bg-zinc-950" : "bg-white"}`}>
       <Loading page={"loading"}>
@@ -43,6 +51,7 @@ function App() {
             <Route path="/name/:name" element={<HomePage />} />
             <Route path="/detailed/:id" element={<Detailed />} />
             <Route path="/seecoins" element={<SeeCoins />} />
+            <Route path="*" element={<HomePage />} />
           </Routes>
         </BrowserRouter>
       </Loading>
@@ -52,7 +61,7 @@ function App() {
           <Routes>
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
-            Z
+            <Route path="*" element={<SignIn />} />
           </Routes>
         </BrowserRouter>
       </Loading>

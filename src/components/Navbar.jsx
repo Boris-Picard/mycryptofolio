@@ -40,18 +40,6 @@ export default function Navbar() {
                     >
                         SeeCoins
                     </Link>
-                    <Link
-                        to="/signin"
-                        className="hover:text-gray-500 transition-colors hover:text-foreground"
-                    >
-                        SignIn
-                    </Link>
-                    <Link
-                        to="/signup"
-                        className="hover:text-gray-500 transition-colors hover:text-foreground"
-                    >
-                        SignUp
-                    </Link>
                 </nav>
                 <Sheet>
                     <SheetTrigger asChild>
@@ -82,18 +70,6 @@ export default function Navbar() {
                                 className="text-muted-foreground transition-colors hover:text-foreground"
                             >
                                 SeeCoins
-                            </Link>
-                            <Link
-                                to="/signin"
-                                className="text-muted-foreground transition-colors hover:text-foreground"
-                            >
-                                SignIn
-                            </Link>
-                            <Link
-                                to="/signup"
-                                className="text-muted-foreground transition-colors hover:text-foreground"
-                            >
-                                SignUp
                             </Link>
                         </nav>
                     </SheetContent>
