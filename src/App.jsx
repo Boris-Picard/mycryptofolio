@@ -19,8 +19,6 @@ function App() {
 
   const { user, setUser, clearUser } = useAuthStore();
 
-  console.log(user);
-
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -36,7 +34,7 @@ function App() {
 
     const refreshToken = async () => {
       try {
-        const response = await axios.post(`http://localhost:3001/api/auth/refresh-token`, {
+        const response = await axios.post(`http://localhost:3001/api/auth/refresh-token`, {}, {
           withCredentials: true,
         });
         setUser(response.data);
@@ -52,7 +50,7 @@ function App() {
     } else {
       checkAuth();
     }
-  }, [setUser, clearUser]);
+  }, []);
 
   return (
     user ? <div className={`${theme === "dark" ? "bg-zinc-950" : "bg-white"}`}>
