@@ -19,12 +19,18 @@ import { Input } from "@/components/ui/input"
 import { useToast } from "@/components/ui/use-toast"
 import { PasswordInput } from "@/components/ui/password-input"
 
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+
+import { useAuthStore } from "@/stores/useAuthStore"
+
+import axios from "axios"
 
 
 export default function SignIn() {
 
     const { toast } = useToast()
+    const { setUser } = useAuthStore()
+    const navigate = useNavigate()
 
     const passwordValidation = new RegExp(
         /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,50}$/
@@ -52,12 +58,30 @@ export default function SignIn() {
         },
     })
 
-    const onSubmit = (data) => {
-        console.log(data);
-        toast({
-            title: "You submitted the following values:",
-            description: JSON.stringify(data),
-        })
+    const onSubmit = async (data) => {
+        try {
+            const parsedData = FormSchema.parse(data)
+            const response = await axios.post("http://localhost:3001/api/auth/signin", {
+                mail: parsedData.email,
+                password: parsedData.password,
+            }, {
+                withCredentials: true
+            })
+            toast({
+                variant: "success",
+                title: "signIn successfully",
+            })
+            setUser(response.data.user)
+            setTimeout(() => {
+                navigate("/")
+            }, 3000)
+        } catch (error) {
+            toast({
+                variant: "destructive",
+                title: "Somethings went wrong:",
+                description: error.response.data.error,
+            })
+        }
     }
 
     return (

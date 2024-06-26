@@ -26,7 +26,6 @@ function App() {
         const response = await axios.get(`http://localhost:3001/api/auth/user`, {
           withCredentials: true,
         });
-        console.log(response.data);
         setUser(response.data);
       } catch (error) {
         // Gérez l'erreur (token invalide, expiré, etc.)
@@ -38,7 +37,6 @@ function App() {
     checkAuth();
   }, [setUser, clearUser]);
 
-  console.log(user);
   return (
     user ? <div className={`${theme === "dark" ? "bg-zinc-950" : "bg-white"}`}>
       <Loading page={"loading"}>
