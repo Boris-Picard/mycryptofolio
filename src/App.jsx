@@ -38,7 +38,7 @@ function App() {
           console.log(error);
           clearUser();
           removeCookie('token');
-        }
+        } 
       }
     };
 

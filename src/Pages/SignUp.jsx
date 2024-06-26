@@ -70,6 +70,8 @@ export default function SignUp() {
             const response = await axios.post("http://localhost:3001/api/auth/signup", {
                 mail: parsedData.email,
                 password: parsedData.password,
+            }, {
+                withCredentials: true
             })
             toast({
                 variant: "success",
