@@ -33,10 +33,8 @@ import axios from "axios"
 
 import { useAuthStore } from "@/stores/useAuthStore"
 
-import { useCookies } from 'react-cookie';
 
 export default function SignUp() {
-    const [cookies, setCookie] = useCookies(['token']);
     const { toast } = useToast()
     const { user, setUser } = useAuthStore()
     const navigate = useNavigate()
@@ -78,7 +76,6 @@ export default function SignUp() {
                 title: "signIn successfully",
             })
             console.log(response.data);
-            setCookie('token', response.data.token, { path: '/', secure: true, sameSite: 'strict' });
             setUser(response.data.user)
             setTimeout(() => {
                 navigate("/")

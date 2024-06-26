@@ -15,21 +15,22 @@ import { useAuthStore } from './stores/useAuthStore';
 
 import axios from 'axios';
 
+import { Navigate } from 'react-router-dom';
+
 function App() {
   const { theme } = useTheme()
 
   const [cookies, removeCookie] = useCookies(['token']);
   const { user, setUser, clearUser } = useAuthStore();
 
-  console.log(user);
-
   useEffect(() => {
     const checkAuth = async () => {
       if (cookies.token) {
         try {
-          const response = await axios.get(`http://localhost:3001/api/auth/user/${user?.id}`, {
+          const response = await axios.get(`http://localhost:3001/api/auth/user/${user?._id}`, {
             headers: { Authorization: `Bearer ${cookies.token}` }
           });
+          console.log(cookies.token);
           console.log(response.data);
           setUser(response.data);
         } catch (error) {
@@ -57,6 +58,8 @@ function App() {
               <Route path="/name/:name" element={<HomePage />} />
               <Route path="/detailed/:id" element={<Detailed />} />
               <Route path="/seecoins" element={<SeeCoins />} />
+              <Route path="/signin" element={<Navigate to="/" replace />} />
+              <Route path="/signup" element={<Navigate to="/" replace />} />
               <Route path="*" element={<HomePage />} />
             </Routes>
           </BrowserRouter>
