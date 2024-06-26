@@ -29,7 +29,7 @@ import axios from "axios"
 export default function SignIn() {
 
     const { toast } = useToast()
-    const { setUser } = useAuthStore()
+    const { setUser, user } = useAuthStore()
     const navigate = useNavigate()
 
     const passwordValidation = new RegExp(
@@ -79,11 +79,11 @@ export default function SignIn() {
             toast({
                 variant: "destructive",
                 title: "Somethings went wrong:",
-                description: error.response.data.error,
+                description: error.response?.data?.error || "Unknown error occurred",
             })
         }
     }
-
+    console.log(user);
     return (
         //                 <img src={mycryptofolio} alt="" width={190} height={150} className="brightness-0 invert-0 object-cover" />
         <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">

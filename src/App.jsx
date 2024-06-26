@@ -19,6 +19,7 @@ function App() {
 
   const { user, setUser, clearUser } = useAuthStore();
 
+console.log(user);
 
   useEffect(() => {
     const checkAuth = async () => {

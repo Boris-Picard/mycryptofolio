@@ -16,8 +16,12 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 import { ModeToggle } from "./DarkMode";
 
+import { useAuthStore } from "@/stores/useAuthStore";
+import { Logout } from "../hooks/Logout";
 
 export default function Navbar() {
+    const { user } = useAuthStore()
+
     return (
         <div className="container sticky top-0 pt-8 z-50">
             <header className="bg-slate-500 dark:bg-zinc-900 flex h-16 items-center gap-4 bg-background px-4 md:px-6 rounded-md bg-opacity-10">
@@ -40,7 +44,9 @@ export default function Navbar() {
                     >
                         SeeCoins
                     </Link>
+                    <Logout />
                 </nav>
+                {user.mail}
                 <Sheet>
                     <SheetTrigger asChild>
                         <Button
