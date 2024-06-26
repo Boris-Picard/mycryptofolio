@@ -19,7 +19,7 @@ function App() {
 
   const { user, setUser, clearUser } = useAuthStore();
 
-console.log(user);
+  console.log(user);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -29,13 +29,29 @@ console.log(user);
         });
         setUser(response.data);
       } catch (error) {
-        // Gérez l'erreur (token invalide, expiré, etc.)
         console.log(error);
         clearUser();
       }
     };
 
-    checkAuth();
+    const refreshToken = async () => {
+      try {
+        const response = await axios.post(`http://localhost:3001/api/auth/refresh-token`, {
+          withCredentials: true,
+        });
+        setUser(response.data);
+      } catch (error) {
+        console.log("Failed to refresh token", error);
+        clearUser();
+      }
+    };
+
+    // Vérifier le token existant
+    if (!user) {
+      refreshToken();
+    } else {
+      checkAuth();
+    }
   }, [setUser, clearUser]);
 
   return (

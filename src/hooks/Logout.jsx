@@ -12,8 +12,7 @@ export const Logout = () => {
       })
       if (response.status === 200) {
         clearUser();
-      }
-      if (response.status !== 200) {
+      } else {
         console.error('logout failed');
       }
     } catch (error) {

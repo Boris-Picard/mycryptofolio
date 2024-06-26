@@ -46,7 +46,7 @@ export default function Navbar() {
                     </Link>
                     <Logout />
                 </nav>
-                {user.mail}
+                <span className="dark:text-white">{user.mail}</span>
                 <Sheet>
                     <SheetTrigger asChild>
                         <Button
