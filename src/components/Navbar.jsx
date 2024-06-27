@@ -17,7 +17,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { ModeToggle } from "./DarkMode";
 
 import { useAuthStore } from "@/stores/useAuthStore";
-import { Logout } from "../hooks/Logout";
+import { Logout } from "../hooks/useLogout";
 
 export default function Navbar() {
     const { user } = useAuthStore()

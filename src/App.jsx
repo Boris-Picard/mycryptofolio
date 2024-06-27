@@ -47,9 +47,11 @@ function App() {
     const startTokenRefreshInterval = () => {
       const intervalId = setInterval(() => {
         refreshToken();
-      }, 30 * 60 * 1000); // Rafraîchir toutes les 30 minutes
+      }, 55 * 60 * 1000); // Rafraîchir toutes les 55 minutes
       return () => clearInterval(intervalId); // Nettoyer l'intervalle lors du démontage du composant
     };
+
+    startTokenRefreshInterval()
 
     // Vérifier le token existant
     if (!user) {
@@ -57,13 +59,7 @@ function App() {
     } else {
       checkAuth();
     }
-    
-    const intervalCleanup = startTokenRefreshInterval();
 
-    // Nettoyer l'intervalle lorsque le composant est démonté
-    return () => {
-      intervalCleanup();
-    };
   }, []);
 
   return (
