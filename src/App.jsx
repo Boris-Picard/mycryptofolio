@@ -25,6 +25,7 @@ function App() {
         const response = await axios.get(`http://localhost:3001/api/auth/user`, {
           withCredentials: true,
         });
+        console.log(response);
         setUser(response.data);
       } catch (error) {
         console.log(error);
@@ -34,10 +35,10 @@ function App() {
 
     const refreshToken = async () => {
       try {
-        const response = await axios.post(`http://localhost:3001/api/auth/refresh-token`, {}, {
+        await axios.post(`http://localhost:3001/api/auth/refresh-token`, {}, {
           withCredentials: true,
         });
-        setUser(response.data);
+        await checkAuth();
       } catch (error) {
         console.log("Failed to refresh token", error);
         clearUser();
