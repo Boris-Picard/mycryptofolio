@@ -40,6 +40,8 @@ import Error from "./ui/error"
 
 import Loading from "./Loading"
 
+import { useAuthStore } from "@/stores/useAuthStore"
+
 export default function FormTemplate() {
 
     const [steps, setSteps] = useState(1)
@@ -55,6 +57,8 @@ export default function FormTemplate() {
 
     const navigate = useNavigate()
     const { id, name } = useParams()
+
+    const { user } = useAuthStore()
 
     useEffect(() => {
         const fetchTransaction = async () => {
@@ -180,6 +184,7 @@ export default function FormTemplate() {
             } else {
                 response = await axios.post("http://localhost:3001/api/coin", {
                     name: parsedData.coin,
+                    userId: user._id
                 })
             }
             setCoinId(response.data._id)
@@ -214,6 +219,7 @@ export default function FormTemplate() {
             } else {
                 await axios.post("http://localhost:3001/api/coin/transaction", {
                     coinId: coinId,
+                    userId: user._id,
                     transactionData: {
                         quantity: parsedData.quantity,
                         price: parsedData.price,

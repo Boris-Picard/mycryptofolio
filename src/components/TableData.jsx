@@ -67,8 +67,7 @@ export default function TableData({ data }) {
     useEffect(() => {
         // Utilisation de reduce pour agréger les données par coin._id
         const aggregated = data.reduce((acc, curr) => {
-            const coinId = curr.coin._id; // Récupération de l'ID du coin actuel
-
+            const coinId = curr._id; // Récupération de l'ID du coin actuel
             // Si l'ID du coin n'existe pas encore dans l'accumulateur, initialiser avec les valeurs de curr
             if (!acc[coinId]) {
                 acc[coinId] = {
