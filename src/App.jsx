@@ -25,7 +25,6 @@ function App() {
         const response = await axios.get(`http://localhost:3001/api/auth/user`, {
           withCredentials: true,
         });
-        console.log(response);
         setUser(response.data);
       } catch (error) {
         console.log(error);
@@ -45,12 +44,26 @@ function App() {
       }
     };
 
+    const startTokenRefreshInterval = () => {
+      const intervalId = setInterval(() => {
+        refreshToken();
+      }, 30 * 60 * 1000); // Rafraîchir toutes les 30 minutes
+      return () => clearInterval(intervalId); // Nettoyer l'intervalle lors du démontage du composant
+    };
+
     // Vérifier le token existant
     if (!user) {
       refreshToken();
     } else {
       checkAuth();
     }
+    
+    const intervalCleanup = startTokenRefreshInterval();
+
+    // Nettoyer l'intervalle lorsque le composant est démonté
+    return () => {
+      intervalCleanup();
+    };
   }, []);
 
   return (
