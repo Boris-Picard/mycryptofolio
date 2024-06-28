@@ -32,7 +32,9 @@ export default function TableData({ data }) {
 
     const deleteTransaction = async (id) => {
         try {
-            await axios.delete(`http://localhost:3001/api/transaction/${id}`)
+            await axios.delete(`http://localhost:3001/api/transaction/${id}`, {
+                withCredentials: true
+            })
             removeTransaction(id)
         } catch (error) {
             console.error("Error deleting transaction", error)
