@@ -64,7 +64,7 @@ export default function FormTemplate() {
         const fetchTransaction = async () => {
             if (id) {
                 try {
-                    const response = await axios.get(`http://localhost:3001/api/transaction/id/${id}`);
+                    const response = await axios.get(`http://localhost:3001/api/transaction/id/${id}`,);
                     setTransaction(response.data.transaction);
                     setCoinId(response.data.transaction.coin._id)
                     setSteps(2)
@@ -73,7 +73,9 @@ export default function FormTemplate() {
                 }
             } else if (name) {
                 try {
-                    const response = await axios.get(`http://localhost:3001/api/transaction/name/${name}`);
+                    const response = await axios.get(`http://localhost:3001/api/transaction/name/${name}`, {
+                        withCredentials: true,
+                    });
                     setTransaction(response.data.coin[0]);
                     setCoinId(response.data.coin[0]._id)
                     setDataStep({ step1: { coin: response.data.coin[0]._id } })
