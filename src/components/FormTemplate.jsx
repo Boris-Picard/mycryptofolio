@@ -184,8 +184,10 @@ export default function FormTemplate() {
             } else {
                 response = await axios.post("http://localhost:3001/api/coin", {
                     name: parsedData.coin,
-                    userId: user._id
-                })
+                },
+                    {
+                        withCredentials: true,
+                    })
             }
             setCoinId(response.data._id)
             // Proceed to the next step
@@ -219,13 +221,14 @@ export default function FormTemplate() {
             } else {
                 await axios.post("http://localhost:3001/api/coin/transaction", {
                     coinId: coinId,
-                    userId: user._id,
                     transactionData: {
                         quantity: parsedData.quantity,
                         price: parsedData.price,
                         spent: parsedData.spent,
                         date: parsedData.date,
                     },
+                }, {
+                    withCredentials: true,
                 });
             }
             setSteps(3);
