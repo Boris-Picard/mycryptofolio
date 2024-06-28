@@ -47,7 +47,7 @@ function App() {
     const startTokenRefreshInterval = () => {
       const intervalId = setInterval(() => {
         refreshToken();
-      }, 55 * 60 * 1000); // Rafraîchir toutes les 55 minutes
+      }, 30 * 60 * 1000); // Rafraîchir toutes les 30 minutes
       return () => clearInterval(intervalId); // Nettoyer l'intervalle lors du démontage du composant
     };
 
