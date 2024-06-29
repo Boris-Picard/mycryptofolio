@@ -2,8 +2,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { Progress } from "./ui/progress"
-
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -42,6 +40,9 @@ import Loading from "./Loading"
 
 import { useAuthStore } from "@/stores/useAuthStore"
 
+
+import { MultiStepMotion } from "@/components/ui/multi-steps-motions";
+
 export default function FormTemplate() {
 
     const [steps, setSteps] = useState(1)
@@ -57,8 +58,6 @@ export default function FormTemplate() {
 
     const navigate = useNavigate()
     const { id, name } = useParams()
-
-    const { user } = useAuthStore()
 
     useEffect(() => {
         const fetchTransaction = async () => {
@@ -346,9 +345,10 @@ export default function FormTemplate() {
                         <span className="font-bold text-5xl">{coinNameImage.name}</span>
                     </div> : ""}
                     {steps === 3 ? <Loading page={"form"} /> : ""}
-                </div>
-                <div className="my-5 w-full">
-                    <Progress value={steps === 1 ? 0 : steps === 2 ? 50 : steps === 3 ? 100 : ""} />
+                    <div className="p-6 flex space-x-10">
+                        <MultiStepMotion step={1} currentStep={steps} />
+                        <MultiStepMotion step={2} currentStep={steps} />
+                    </div>
                 </div>
                 <Form {...(steps === 1 ? firstForm : secondForm)} >
                     <form onSubmit={steps === 1 ? firstForm.handleSubmit(handleFirstStepSubmit) : secondForm.handleSubmit(handleSecondStepSubmit)} className="space-y-4 w-full">
