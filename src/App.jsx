@@ -71,7 +71,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/id/:id" element={<HomePage />} />
             <Route path="/name/:name" element={<HomePage />} />
-            <Route path="/detailed/:id" element={<Detailed />} />
+            <Route path="/detailed" element={<Detailed />} />
             <Route path="/seecoins" element={<SeeCoins />} />
             <Route path="*" element={<HomePage />} />
           </Routes>

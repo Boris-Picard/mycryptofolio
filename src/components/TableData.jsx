@@ -44,9 +44,21 @@ export default function TableData({ data }) {
         navigate(`/name/${coinDataName}`);
     }
 
-    const seeTransactions = (coin) => {
-        let coinData = data.filter(coinId => coinId.coin._id === coin.coin._id);
-        navigate(`/detailed/${coin.coin._id}`, { state: { coinData } })
+    const seeTransactions = async (coin) => {
+        try {
+            const response = await axios.get(`http://localhost:3001/api/coin/detailed/${coin.coin._id}`, {
+                withCredentials: true,
+            })
+            if (!response.data) {
+                return
+            }
+            const [coinResponse] = response.data
+
+            let coinData = data.filter(coinId => coinId.coin._id === coinResponse._id)
+            navigate("/detailed/", { state: { coinData } })
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const arrowUpOrDown = (value) => {

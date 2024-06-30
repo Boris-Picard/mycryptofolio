@@ -18,19 +18,19 @@ import { useDeleteDetailedTransaction } from "@/stores/detailed-transactions.js"
 export default function Detailed() {
     const location = useLocation()
     const { coinData } = location.state
-
+    
     const { transactions, setTransactions } = useDeleteDetailedTransaction()
-
+    
     const [data, setData] = useState([])
-
+    
     useEffect(() => {
         setTransactions(coinData)
     }, [coinData, setTransactions])
-
+    
     useEffect(() => {
         transactions.map(value => setData({ image: value.image, name: value.coin.name, actual_price: value.currentPrice, price_change_24h: value.price_change_24h, symbol: value.symbol }))
     }, [transactions])
-
+    
     const arrowUpOrDown = (value) => {
         if (!value) {
             return

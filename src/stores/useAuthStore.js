@@ -12,8 +12,8 @@ export const useAuthStore = create(
       },
       clearUser: () => {
         set({ user: null });
-        useDeleteDetailedTransaction.clearTransactions();
-        useDeleteTransaction.clearDeleteTransactions();
+        useDeleteDetailedTransaction.getState().clearTransactions();
+        useDeleteTransaction.getState().clearDeleteTransactions();
       },
     }),
     {
