@@ -210,6 +210,8 @@ export default function FormTemplate() {
                     price: parsedData.price,
                     spent: parsedData.spent,
                     date: parsedData.date,
+                }, {
+                    withCredentials: true,
                 })
             } else if (name) {
                 await axios.post(`http://localhost:3001/api/transaction/name/${transaction.name}`, {
@@ -218,16 +220,16 @@ export default function FormTemplate() {
                     spent: parsedData.spent,
                     date: parsedData.date,
                     coinId: coinId,
+                }, {
+                    withCredentials: true,
                 })
             } else {
                 await axios.post("http://localhost:3001/api/coin/transaction", {
                     coinId: coinId,
-                    transactionData: {
-                        quantity: parsedData.quantity,
-                        price: parsedData.price,
-                        spent: parsedData.spent,
-                        date: parsedData.date,
-                    },
+                    quantity: parsedData.quantity,
+                    price: parsedData.price,
+                    spent: parsedData.spent,
+                    date: parsedData.date,
                 }, {
                     withCredentials: true,
                 });

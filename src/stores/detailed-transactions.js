@@ -11,4 +11,5 @@ export const useDeleteDetailedTransaction = create((set) => ({
         (transaction) => transaction._id !== transactionId
       ),
     })),
+    clearTransactions: () => set({ transactions: [] }),  
 }));

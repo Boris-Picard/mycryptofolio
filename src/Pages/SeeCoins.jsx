@@ -17,7 +17,7 @@ export default function SeeCoins() {
     const [transactionsName, setTransactionsName] = useState([])
     const [dataTransactionApi, setDataTransactionApi] = useState([])
     const [error, setError] = useState(null)
-
+    
     useEffect(() => {
         const fetchTransactions = async () => {
             try {
