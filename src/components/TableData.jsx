@@ -55,7 +55,7 @@ export default function TableData({ data }) {
             const [coinResponse] = response.data
 
             let coinData = data.filter(coinId => coinId.coin._id === coinResponse._id)
-            navigate("/detailed/", { state: { coinData } })
+            navigate(`/detailed/${coinResponse._id}`, { state: { coinData } })
         } catch (error) {
             console.log(error);
         }
