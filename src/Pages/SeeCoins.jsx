@@ -24,7 +24,6 @@ export default function SeeCoins() {
                 const response = await axios.get(`http://localhost:3001/api/transaction/portfolio`, {
                     withCredentials: true
                 })
-                console.log(response.data);
                 setTransactions(response.data)
                 const coinNames = response.data.map((coin) => coin.coin.name)
                 setTransactionsName(coinNames)
