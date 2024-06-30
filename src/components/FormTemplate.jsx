@@ -38,9 +38,6 @@ import Error from "./ui/error"
 
 import Loading from "./Loading"
 
-import { useAuthStore } from "@/stores/useAuthStore"
-
-
 import { MultiStepMotion } from "@/components/ui/multi-steps-motions";
 
 export default function FormTemplate() {
@@ -63,7 +60,9 @@ export default function FormTemplate() {
         const fetchTransaction = async () => {
             if (id) {
                 try {
-                    const response = await axios.get(`http://localhost:3001/api/transaction/id/${id}`,);
+                    const response = await axios.get(`http://localhost:3001/api/transaction/id/${id}`, {
+                        withCredentials: true,
+                    });
                     setTransaction(response.data.transaction);
                     setCoinId(response.data.transaction.coin._id)
                     setSteps(2)
