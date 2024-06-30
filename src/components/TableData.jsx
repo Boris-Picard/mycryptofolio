@@ -49,8 +49,8 @@ export default function TableData({ data }) {
             const response = await axios.get(`http://localhost:3001/api/coin/detailed/${coin.coin._id}`, {
                 withCredentials: true,
             })
-            if (!response.data) {
-                return
+            if (response.status !== 200) {
+                navigate("/")
             }
             const [coinResponse] = response.data
 

@@ -15,22 +15,40 @@ import { useEffect, useState } from "react"
 
 import { useDeleteDetailedTransaction } from "@/stores/detailed-transactions.js";
 
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
+
 export default function Detailed() {
     const location = useLocation()
     const { coinData } = location.state
-    
+    const navigate = useNavigate()
     const { transactions, setTransactions } = useDeleteDetailedTransaction()
-    
+
     const [data, setData] = useState([])
-    
+
     useEffect(() => {
-        setTransactions(coinData)
-    }, [coinData, setTransactions])
-    
+        const fetchCoinData = async () => {
+            try {
+                const [coinResponse] = coinData
+                const response = await axios.get(`http://localhost:3001/api/coin/detailed/${coinResponse.coin._id}`, {
+                    withCredentials: true,
+                })
+                if (response.status !== 200) {
+                    navigate("/")
+                } else {
+                    setTransactions(coinData)
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchCoinData()
+    }, [coinData, setTransactions, navigate])
+
     useEffect(() => {
         transactions.map(value => setData({ image: value.image, name: value.coin.name, actual_price: value.currentPrice, price_change_24h: value.price_change_24h, symbol: value.symbol }))
     }, [transactions])
-    
+
     const arrowUpOrDown = (value) => {
         if (!value) {
             return
