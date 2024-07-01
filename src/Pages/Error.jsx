@@ -1,9 +1,11 @@
 import mycryptofolio from "../../assets/mycryptofolio.png"
 import { Link } from "react-router-dom"
+import Navbar from "@/components/Navbar"
 
 export default function ErrorPage() {
 
     return <>
+        <Navbar />
         <div className="container">
             <div className="flex justify-center items-center h-screen flex-col space-y-3">
                 <img src={mycryptofolio} alt="logo website myscryptofolio" className="brightness-0 dark:brightness-100" width={200} height={200} />
