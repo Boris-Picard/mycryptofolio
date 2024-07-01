@@ -180,6 +180,8 @@ export default function FormTemplate() {
             if (id && transaction && transaction.coin.name) {
                 response = await axios.put(`http://localhost:3001/api/coin/${transaction.coin._id}`, {
                     name: parsedData.coin
+                }, {
+                    withCredentials: true,
                 })
             } else {
                 response = await axios.post("http://localhost:3001/api/coin", {
