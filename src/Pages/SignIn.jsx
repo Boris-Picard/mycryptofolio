@@ -71,9 +71,8 @@ export default function SignIn() {
                 variant: "success",
                 title: "signIn successfully",
             })
-            setUser(response.data.user)
             setTimeout(() => {
-                navigate("/")
+                setUser(response.data.user)
             }, 3000)
         } catch (error) {
             toast({
@@ -83,7 +82,7 @@ export default function SignIn() {
             })
         }
     }
-    console.log(user);
+
     return (
         //                 <img src={mycryptofolio} alt="" width={190} height={150} className="brightness-0 invert-0 object-cover" />
         <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
