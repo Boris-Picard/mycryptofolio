@@ -6,6 +6,7 @@ import Detailed from "./Pages/Detailed"
 import Loading from './components/Loading';
 import SignIn from './Pages/SignIn';
 import SignUp from './Pages/SignUp';
+import ErrorPage from './Pages/Error';
 import { useTheme } from "@/context/ThemeProvider.tsx"
 
 import { useEffect } from 'react';
@@ -73,6 +74,7 @@ function App() {
             <Route path="/name/:name" element={<HomePage />} />
             <Route path="/detailed/:id" element={<Detailed />} />
             <Route path="/seecoins" element={<SeeCoins />} />
+            <Route path="/error" element={<ErrorPage />} />
             <Route path="*" element={<HomePage />} />
           </Routes>
         </BrowserRouter>
