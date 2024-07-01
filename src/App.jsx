@@ -6,7 +6,6 @@ import Detailed from "./Pages/Detailed"
 import Loading from './components/Loading';
 import SignIn from './Pages/SignIn';
 import SignUp from './Pages/SignUp';
-import ErrorPage from './Pages/Error';
 import { useTheme } from "@/context/ThemeProvider.tsx"
 
 import { useEffect } from 'react';
@@ -14,6 +13,8 @@ import { useEffect } from 'react';
 import { useAuthStore } from './stores/useAuthStore';
 
 import axios from 'axios';
+import ErrorPage from './Pages/Error';
+import ErrorBoundary from './components/ErrorBoundary.jsx'
 
 function App() {
   const { theme } = useTheme()
@@ -64,29 +65,30 @@ function App() {
   }, []);
 
   return (
-    user ? <div className={`${theme === "dark" ? "bg-zinc-950" : "bg-white"}`}>
+    <div className={`${theme === "dark" ? "bg-zinc-950" : "bg-white"}`}>
       <Loading page={"loading"}>
         <BrowserRouter>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/id/:id" element={<HomePage />} />
-            <Route path="/name/:name" element={<HomePage />} />
-            <Route path="/detailed/:id" element={<Detailed />} />
-            <Route path="/seecoins" element={<SeeCoins />} />
-            <Route path="/error" element={<ErrorPage />} />
-            <Route path="*" element={<HomePage />} />
-          </Routes>
-        </BrowserRouter>
-      </Loading>
-    </div> : <div className={`${theme === "dark" ? "bg-zinc-950" : "bg-white"}`}>
-      <Loading page={"loading"}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="*" element={<SignIn />} />
-          </Routes>
+          <ErrorBoundary>
+            {user ? (
+              <>
+                <Navbar />
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/id/:id" element={<HomePage />} />
+                  <Route path="/name/:name" element={<HomePage />} />
+                  <Route path="/detailed/:id" element={<Detailed />} />
+                  <Route path="/seecoins" element={<SeeCoins />} />
+                  <Route path="*" element={<ErrorPage />} />
+                </Routes>
+              </>
+            ) : (
+              <Routes>
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="*" element={<SignIn />} />
+              </Routes>
+            )}
+          </ErrorBoundary>
         </BrowserRouter>
       </Loading>
     </div>
