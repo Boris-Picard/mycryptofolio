@@ -3,19 +3,21 @@ import { useToast } from "@/components/ui/use-toast"
 import { Button } from "./ui/button";
 
 const CookieHandler = () => {
-    const { toast } = useToast()
+    const { toast, dismiss } = useToast()
 
     const handleAccept = () => {
         localStorage.setItem("cookieConsent", 'accepted')
+        dismiss()
     }
 
     const handleDecline = () => {
         localStorage.setItem("cookieConsent", 'declined')
+        dismiss()
     }
 
     useEffect(() => {
         const consent = localStorage.getItem('cookieConsent');
-        if (!consent) {
+        if (consent === null) {
             toast({
                 title: "This website uses cookies to ensure you get the best experience on our website.",
                 description: (
@@ -29,8 +31,8 @@ const CookieHandler = () => {
                             </Button>
                         </div>
                     </div>
-                ),
-                duration: Infinity,
+                ), 
+                duration: null,
             })
         }
     }, [toast]);
