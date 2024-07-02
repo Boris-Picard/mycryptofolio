@@ -1,38 +1,37 @@
 import { useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast"
+import { Button } from "./ui/button";
 
 const CookieHandler = () => {
-    const { toast, dismiss } = useToast()
+    const { toast } = useToast()
 
     const handleAccept = () => {
         localStorage.setItem("cookieConsent", 'accepted')
-        dismiss()
     }
 
     const handleDecline = () => {
         localStorage.setItem("cookieConsent", 'declined')
-        dismiss()
     }
 
     useEffect(() => {
         const consent = localStorage.getItem('cookieConsent');
         if (!consent) {
             toast({
+                title: "This website uses cookies to ensure you get the best experience on our website.",
                 description: (
                     <div className="flex flex-col items-center">
-                        <p>This website uses cookies to ensure you get the best experience on our website.</p>
                         <div className="mt-4">
-                            <button className="mr-2 bg-blue-500 text-white px-4 py-2 rounded" onClick={handleAccept}>
+                            <Button className="mr-2" onClick={handleAccept}>
                                 Accept
-                            </button>
-                            <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={handleDecline}>
+                            </Button>
+                            <Button variant='destructive' onClick={handleDecline}>
                                 Decline
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 ),
-                duration: null,
-            });
+                duration: Infinity,
+            })
         }
     }, [toast]);
 

@@ -69,28 +69,28 @@ function App() {
     <div className={`${theme === "dark" ? "bg-zinc-950" : "bg-white"}`}>
       <Loading page={"loading"}>
         <BrowserRouter>
-          <CookieHandler />
-          <ErrorBoundary>
-            {user ? (
-              <>
-                <Navbar />
+            <CookieHandler />
+            <ErrorBoundary>
+              {user ? (
+                <>
+                  <Navbar />
+                  <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/id/:id" element={<HomePage />} />
+                    <Route path="/name/:name" element={<HomePage />} />
+                    <Route path="/detailed/:id" element={<Detailed />} />
+                    <Route path="/seecoins" element={<SeeCoins />} />
+                    <Route path="*" element={<ErrorPage />} />
+                  </Routes>
+                </>
+              ) : (
                 <Routes>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/id/:id" element={<HomePage />} />
-                  <Route path="/name/:name" element={<HomePage />} />
-                  <Route path="/detailed/:id" element={<Detailed />} />
-                  <Route path="/seecoins" element={<SeeCoins />} />
-                  <Route path="*" element={<ErrorPage />} />
+                  <Route path="/signin" element={<SignIn />} />
+                  <Route path="/signup" element={<SignUp />} />
+                  <Route path="*" element={<SignIn />} />
                 </Routes>
-              </>
-            ) : (
-              <Routes>
-                <Route path="/signin" element={<SignIn />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="*" element={<SignIn />} />
-              </Routes>
-            )}
-          </ErrorBoundary>
+              )}
+            </ErrorBoundary>
         </BrowserRouter>
       </Loading>
     </div>
