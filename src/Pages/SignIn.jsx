@@ -71,9 +71,9 @@ export default function SignIn() {
                 variant: "success",
                 title: "signIn successfully",
             })
-            setTimeout(() => {
-                setUser(response.data.user)
-            }, 3000)
+            // setTimeout(() => {
+            //     setUser(response.data.user)
+            // }, 3000)
         } catch (error) {
             toast({
                 variant: "destructive",

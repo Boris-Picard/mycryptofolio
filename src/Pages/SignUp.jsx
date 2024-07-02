@@ -31,13 +31,15 @@ import bglogin from "../../assets/bglogin.jpg"
 
 import axios from "axios"
 
-import { useAuthStore } from "@/stores/useAuthStore"
+// import { useAuthStore } from "@/stores/useAuthStore"
+import { useState } from "react"
 
 
 export default function SignUp() {
+    const [isValid, setIsValid] = useState(false)
+
     const { toast } = useToast()
-    const { setUser } = useAuthStore()
-    const navigate = useNavigate()
+    // const { setUser } = useAuthStore()
     const passwordValidation = new RegExp(
         /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,50}$/
     );
@@ -77,9 +79,9 @@ export default function SignUp() {
                 variant: "success",
                 title: "signIn successfully",
             })
-            setTimeout(() => {
-                setUser(response.data.user)
-            }, 3000)
+            // setTimeout(() => {
+            //     setUser(response.data.user)
+            // }, 3000)
         } catch (error) {
             toast({
                 variant: "destructive",

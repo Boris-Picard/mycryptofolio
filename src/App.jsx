@@ -16,6 +16,7 @@ import axios from 'axios';
 import ErrorPage from './Pages/Error';
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 import CookieHandler from './components/CookieHandler';
+import VerifyEmail from './Pages/VerifyEmail';
 
 function App() {
   const { theme } = useTheme()
@@ -91,6 +92,7 @@ function App() {
               <Routes>
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
+                <Route path="/verify-email" element={<VerifyEmail />} />
                 <Route path="*" element={<SignIn />} />
               </Routes>
             )}
