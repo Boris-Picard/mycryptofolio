@@ -15,6 +15,7 @@ import { useAuthStore } from './stores/useAuthStore';
 import axios from 'axios';
 import ErrorPage from './Pages/Error';
 import ErrorBoundary from './components/ErrorBoundary.jsx'
+import CookieHandler from './components/CookieHandler';
 
 function App() {
   const { theme } = useTheme()
@@ -68,6 +69,7 @@ function App() {
     <div className={`${theme === "dark" ? "bg-zinc-950" : "bg-white"}`}>
       <Loading page={"loading"}>
         <BrowserRouter>
+          <CookieHandler />
           <ErrorBoundary>
             {user ? (
               <>
