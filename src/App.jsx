@@ -23,6 +23,7 @@ function App() {
   const { user, setUser, clearUser } = useAuthStore();
 
   useEffect(() => {
+    let intervalId
     const checkAuth = async () => {
       try {
         const response = await axios.get(`http://localhost:3001/api/auth/user`, {
@@ -48,49 +49,52 @@ function App() {
     };
 
     const startTokenRefreshInterval = () => {
-      const intervalId = setInterval(() => {
+      intervalId = setInterval(() => {
         refreshToken();
       }, 30 * 60 * 1000); // Rafraîchir toutes les 30 minutes
       return () => clearInterval(intervalId); // Nettoyer l'intervalle lors du démontage du composant
     };
 
-    startTokenRefreshInterval()
-
     // Vérifier le token existant
-    if (!user) {
-      refreshToken();
-    } else {
-      checkAuth();
+    const initalize = async () => {
+      if (!user) {
+        await refreshToken();
+      } else {
+        await checkAuth();
+      }
+      startTokenRefreshInterval()
     }
+    initalize()
 
+    return () => clearInterval(intervalId)
   }, []);
 
   return (
     <div className={`${theme === "dark" ? "bg-zinc-950" : "bg-white"}`}>
       <Loading page={"loading"}>
         <BrowserRouter>
-            <CookieHandler />
-            <ErrorBoundary>
-              {user ? (
-                <>
-                  <Navbar />
-                  <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/id/:id" element={<HomePage />} />
-                    <Route path="/name/:name" element={<HomePage />} />
-                    <Route path="/detailed/:id" element={<Detailed />} />
-                    <Route path="/seecoins" element={<SeeCoins />} />
-                    <Route path="*" element={<ErrorPage />} />
-                  </Routes>
-                </>
-              ) : (
+          <CookieHandler />
+          <ErrorBoundary>
+            {user ? (
+              <>
+                <Navbar />
                 <Routes>
-                  <Route path="/signin" element={<SignIn />} />
-                  <Route path="/signup" element={<SignUp />} />
-                  <Route path="*" element={<SignIn />} />
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/id/:id" element={<HomePage />} />
+                  <Route path="/name/:name" element={<HomePage />} />
+                  <Route path="/detailed/:id" element={<Detailed />} />
+                  <Route path="/seecoins" element={<SeeCoins />} />
+                  <Route path="*" element={<ErrorPage />} />
                 </Routes>
-              )}
-            </ErrorBoundary>
+              </>
+            ) : (
+              <Routes>
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="*" element={<SignIn />} />
+              </Routes>
+            )}
+          </ErrorBoundary>
         </BrowserRouter>
       </Loading>
     </div>
