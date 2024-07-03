@@ -15,26 +15,17 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/components/ui/use-toast"
-import { PasswordInput } from "@/components/ui/password-input"
 
 import { Link, useNavigate } from "react-router-dom"
-
-import { useAuthStore } from "@/stores/useAuthStore"
 
 import axios from "axios"
 
 import { useState } from "react"
 
-export default function SignIn() {
+export default function ForgotPassword() {
     const [loading, setLoading] = useState(false)
 
     const { toast } = useToast()
-    const { setUser, user } = useAuthStore()
-    const navigate = useNavigate()
-
-    const passwordValidation = new RegExp(
-        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,50}$/
-    );
 
     const FormSchema = z.object({
         email: z.string()
@@ -42,19 +33,12 @@ export default function SignIn() {
                 message: "Email must be at least 2 characters.",
             })
             .email({ message: "Email is Invalid" }),
-        password: z.string()
-            .min(8, { message: "Password must be at least 8 characters." })
-            .max(50, { message: "Password must be at most 50 characters." })
-            .regex(passwordValidation, {
-                message: 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
-            })
     })
 
     const form = useForm({
         resolver: zodResolver(FormSchema),
         defaultValues: {
             email: "picard.boris@gmail.com",
-            password: "Password123!",
         },
     })
 
@@ -62,22 +46,15 @@ export default function SignIn() {
         setLoading(true)
         try {
             const parsedData = FormSchema.parse(data)
-            const response = await axios.post("http://localhost:3001/api/auth/signin", {
-                mail: parsedData.email,
-                password: parsedData.password,
-            }, {
-                withCredentials: true
-            })
+            // const response = await axios.post("http://localhost:3001/api/auth/signin", {
+            //     mail: parsedData.email,
+            // })
 
             setTimeout(() => {
                 toast({
                     variant: "success",
                     title: "signIn successfully",
                 })
-
-                setUser(response.data.user)
-                navigate("/")
-
                 setLoading(false)
             }, 3000)
         } catch (error) {
@@ -97,9 +74,9 @@ export default function SignIn() {
             <div className="flex items-center justify-center py-12 h-screen">
                 <div className="mx-auto grid w-[350px] gap-6">
                     <div className="grid gap-2 text-center">
-                        <h1 className="text-3xl font-bold dark:text-white">Sign In</h1>
+                        <h1 className="text-3xl font-bold dark:text-white">Reset Password</h1>
                         <p className="text-balance text-gray-500 dark:text-gray-400">
-                            Enter your email below to login to your account
+                            Enter your email below to reset your password
                         </p>
                     </div>
                     <Form {...form}>
@@ -121,36 +98,12 @@ export default function SignIn() {
                                         )}
                                     />
                                 </div>
-                                <div className="grid gap-2 dark:text-white">
-                                    <FormField
-                                        control={form.control}
-                                        name="password"
-                                        disabled={loading}
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <div className="flex">
-                                                    <FormLabel>Password</FormLabel>
-                                                    <Link
-                                                        to="/forgot-password"
-                                                        className="ml-auto inline-block text-sm underline"
-                                                    >
-                                                        Forgot your password?
-                                                    </Link>
-                                                </div>
-                                                <FormControl>
-                                                    <PasswordInput autoComplete="current-password" {...field} />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
                                 {!loading ? <>
                                     <Button type="submit" className="w-full">
-                                        Sign in
+                                        Reset Password
                                     </Button>
                                     <Button variant="outline" className="w-full">
-                                        Sign in with Google
+                                        Reset with Google
                                     </Button>
                                 </> : <Button disabled={true}>
                                     <svg className="animate-spin h-5 w-5 mr-3 border-gray-200 border-2 border-t-blue-600 rounded-full" viewBox="0 0 24 24">
@@ -162,9 +115,8 @@ export default function SignIn() {
                         </form>
                     </Form>
                     <div className="mt-4 text-center text-sm dark:text-white text-gray-800">
-                        Don&apos;t have an account?{" "}
-                        <Link to="/signup" className="underline">
-                            Sign up
+                        <Link to="/signin" className="underline">
+                            Back to sign in page
                         </Link>
                     </div>
                 </div>
@@ -178,8 +130,8 @@ export default function SignIn() {
                 />
             </div>
         </div>
-    )
 
+    )
 }
 
 
