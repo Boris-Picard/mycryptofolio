@@ -34,14 +34,13 @@ import axios from "axios"
 // import { useAuthStore } from "@/stores/useAuthStore"
 import { useState } from "react"
 
-
 export default function SignUp() {
     const [verified, setVerified] = useState(false)
     const [isExist, setIsExist] = useState(false)
     const [sendMail, setSendMail] = useState(false)
 
     const { toast } = useToast()
-    // const { setUser } = useAuthStore()
+
     const passwordValidation = new RegExp(
         /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,50}$/
     );
@@ -83,9 +82,6 @@ export default function SignUp() {
             })
             setVerified(response.data.verified)
             setIsExist(true)
-            // setTimeout(() => {
-            //     setUser(response.data.user)
-            // }, 3000)
         } catch (error) {
             const isExist = true;
             const verified = error.response?.data.verified || false;
@@ -112,6 +108,27 @@ export default function SignUp() {
             }
         }
     }
+
+    const resendMail = async () => {
+        const email = form.getValues('email')
+        try {
+            const response = axios.post('http://localhost:3001/api/auth/resend-email', {
+                mail: email
+            })
+            toast({
+                variant: "success",
+                title: response.data.message,
+            });
+            setSendMail(true)
+        } catch (error) {
+            toast({
+                variant: "destructive",
+                title: "Failed to resend verification email",
+                description: error.response?.data?.error || "An error occurred",
+            });
+        }
+    }
+
 
     return (
         !verified && !isExist ? <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
@@ -201,7 +218,7 @@ export default function SignUp() {
                     <p className="text-slate-500 text-center">
                         Si vous n'avez pas reçu de mail ou que vous n'arrivez pas à valider votre compte
                     </p>
-                    {!sendMail ? <Button className="dark:bg-black dark:text-white dark:hover:bg-zinc-700" onClick={() => setSendMail(true)}>
+                    {!sendMail ? <Button className="dark:bg-black dark:text-white dark:hover:bg-zinc-700" onClick={resendMail}>
                         Cliquez ici
                     </Button> : <Button className="dark:bg-black dark:text-white dark:hover:bg-zinc-700" disabled={true}>
                         <svg className="animate-spin h-5 w-5 mr-3 border-gray-200 border-2 border-t-blue-600 rounded-full" viewBox="0 0 24 24">
