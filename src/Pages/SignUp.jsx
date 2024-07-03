@@ -25,7 +25,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 import bglogin from "../../assets/bglogin.jpg"
 
@@ -93,7 +93,6 @@ export default function SignUp() {
                 toast({
                     variant: "destructive",
                     title: error.response.data.error,
-                    description: "And user already verified",
                 });
             } else if (isExist && !verified) {
                 toast({
@@ -112,7 +111,7 @@ export default function SignUp() {
     const resendMail = async () => {
         const email = form.getValues('email')
         try {
-            const response = axios.post('http://localhost:3001/api/auth/resend-email', {
+            const response = await axios.post('http://localhost:3001/api/auth/resend-email', {
                 mail: email
             })
             toast({
