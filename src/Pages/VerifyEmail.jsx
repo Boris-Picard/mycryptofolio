@@ -3,10 +3,12 @@ import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import { useToast } from "@/components/ui/use-toast"
 import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 export default function VerifyEmail() {
     const location = useLocation()
     const { toast } = useToast()
+    const navigate = useNavigate()
 
     const [isVerified, setIsVerified] = useState(false)
     const [error, setError] = useState("")
@@ -23,6 +25,9 @@ export default function VerifyEmail() {
                     variant: "success",
                     title: response.data.message,
                 })
+                setTimeout(() => {
+                    navigate("/signin")
+                }, 4000)
             } catch (error) {
                 setIsVerified(false);
                 toast({

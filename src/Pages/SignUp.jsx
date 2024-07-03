@@ -31,13 +31,13 @@ import bglogin from "../../assets/bglogin.jpg"
 
 import axios from "axios"
 
-// import { useAuthStore } from "@/stores/useAuthStore"
 import { useState } from "react"
 
 export default function SignUp() {
     const [verified, setVerified] = useState(false)
     const [isExist, setIsExist] = useState(false)
     const [sendMail, setSendMail] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const { toast } = useToast()
 
@@ -68,6 +68,7 @@ export default function SignUp() {
     })
 
     const onSubmit = async (data) => {
+        setLoading(true)
         try {
             const parsedData = FormSchema.parse(data)
             const response = await axios.post("http://localhost:3001/api/auth/signup", {
@@ -76,35 +77,49 @@ export default function SignUp() {
             }, {
                 withCredentials: true
             })
-            toast({
-                variant: "success",
-                title: response.data.message,
-            })
-            setVerified(response.data.verified)
-            setIsExist(true)
+            console.log(response.data);
+            setTimeout(() => {
+                setVerified(response.data.verified)
+                setIsExist(true)
+
+                toast({
+                    variant: "success",
+                    title: response.data.message,
+                })
+
+                setLoading(false)
+            }, 3000)
         } catch (error) {
             const isExist = true;
             const verified = error.response?.data.verified || false;
 
-            setIsExist(isExist);
-            setVerified(verified);
+            setTimeout(() => {
+                setIsExist(isExist);
+                setVerified(verified);
 
-            if (isExist && verified) {
-                toast({
-                    variant: "destructive",
-                    title: error.response.data.error,
-                });
-            } else if (isExist && !verified) {
-                toast({
-                    variant: "destructive",
-                    title: "Account is not verified",
-                });
-            } else {
-                toast({
-                    variant: "destructive",
-                    title: error.response.data.error,
-                });
-            }
+                if (isExist && verified) {
+                    toast({
+                        variant: "destructive",
+                        title: error.response.data.error,
+                    });
+                } else if (isExist && !verified && error.response.status !== 429) {
+                    toast({
+                        variant: "destructive",
+                        title: "Account is not verified",
+                    });
+                } else if (error.response.status === 429) {
+                    toast({
+                        variant: "destructive",
+                        title: error.response.data.error || error.response.data,
+                    });
+                } else {
+                    toast({
+                        variant: "destructive",
+                        title: error.response.data.error,
+                    });
+                }
+                setLoading(false)
+            }, 3000)
         }
     }
 
@@ -123,11 +138,10 @@ export default function SignUp() {
             toast({
                 variant: "destructive",
                 title: "Failed to resend verification email",
-                description: error.response?.data?.error || "An error occurred",
+                description: error.response?.data?.error || error.response?.data || "An error occurred",
             });
         }
     }
-
 
     return (
         !verified && !isExist ? <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
@@ -184,12 +198,19 @@ export default function SignUp() {
                                         )}
                                     />
                                 </div>
-                                <Button type="submit" className="w-full">
-                                    Sign up
-                                </Button>
-                                <Button variant="outline" className="w-full">
-                                    Sign up with Google
-                                </Button>
+                                {!loading ? <>
+                                    <Button type="submit" className="w-full">
+                                        Sign up
+                                    </Button>
+                                    <Button variant="outline" className="w-full">
+                                        Sign up with Google
+                                    </Button>
+                                </> : <Button disabled={true}>
+                                    <svg className="animate-spin h-5 w-5 mr-3 border-gray-200 border-2 border-t-blue-600 rounded-full" viewBox="0 0 24 24">
+                                        ...
+                                    </svg>
+                                    Processing...
+                                </Button>}
                             </div>
                         </form>
                     </Form>
@@ -289,12 +310,19 @@ export default function SignUp() {
                                         )}
                                     />
                                 </div>
-                                <Button type="submit" className="w-full">
-                                    Sign up
-                                </Button>
-                                <Button variant="outline" className="w-full">
-                                    Sign up with Google
-                                </Button>
+                                {!loading ? <>
+                                    <Button type="submit" className="w-full">
+                                        Sign up
+                                    </Button>
+                                    <Button variant="outline" className="w-full">
+                                        Sign up with Google
+                                    </Button>
+                                </> : <Button disabled={true}>
+                                    <svg className="animate-spin h-5 w-5 mr-3 border-gray-200 border-2 border-t-blue-600 rounded-full" viewBox="0 0 24 24">
+                                        ...
+                                    </svg>
+                                    Processing...
+                                </Button>}
                             </div>
                         </form>
                     </Form>

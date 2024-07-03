@@ -73,6 +73,7 @@ export default function SignIn() {
             })
             setTimeout(() => {
                 setUser(response.data.user)
+                navigate("/")
             }, 3000)
         } catch (error) {
             toast({
