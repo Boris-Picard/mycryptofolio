@@ -87,21 +87,32 @@ export default function SignUp() {
             //     setUser(response.data.user)
             // }, 3000)
         } catch (error) {
-            setVerified(error.response.data.verified)
-            if (!error.response.data.verified) {
-                setIsExist(true)
+            const isExist = true;
+            const verified = error.response?.data.verified || false;
+
+            setIsExist(isExist);
+            setVerified(verified);
+
+            if (isExist && verified) {
+                toast({
+                    variant: "destructive",
+                    title: error.response.data.error,
+                    description: "And user already verified",
+                });
+            } else if (isExist && !verified) {
+                toast({
+                    variant: "destructive",
+                    title: "Account is not verified",
+                });
             } else {
-                setIsExist(false)
+                toast({
+                    variant: "destructive",
+                    title: error.response.data.error,
+                });
             }
-            toast({
-                variant: "destructive",
-                title: "Somethings went wrong:",
-                description: error.response.data.error,
-            })
         }
     }
-    console.log(verified);
-    console.log(isExist);
+
     return (
         !verified && !isExist ? <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
             <div className="flex items-center justify-center py-12 h-screen">
@@ -208,9 +219,87 @@ export default function SignUp() {
                     className="h-full w-full object-cover brightness-[0.4] grayscale"
                 />
             </div>
-        </div > : ""
+        </div > : <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
+            <div className="flex items-center justify-center py-12 h-screen">
+                <div className="mx-auto grid w-[350px] gap-6">
+                    <div className="grid gap-2 text-center">
+                        <h1 className="text-3xl font-bold dark:text-white">Sign Up</h1>
+                        <p className="text-balance text-gray-500 dark:text-gray-400">
+                            Enter your email below to create your account
+                        </p>
+                    </div>
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+                            <div className="grid gap-4">
+                                <div className="grid gap-2 dark:text-white">
+                                    <FormField
+                                        control={form.control}
+                                        name="email"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Email</FormLabel>
+                                                <FormControl>
+                                                    <Input type="email" autoComplete="email" placeholder="example@gmail.com" {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                <div className="grid gap-2 dark:text-white">
+                                    <FormField
+                                        control={form.control}
+                                        name="password"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <div className="flex gap-2 items-center">
+                                                    <FormLabel>Password</FormLabel>
+                                                    <TooltipProvider>
+                                                        <Tooltip delayDuration={0}>
+                                                            <TooltipTrigger asChild>
+                                                                <Info width={20} height={20} />
+                                                            </TooltipTrigger>
+                                                            <TooltipContent>
+                                                                <p>Password must be between 8 and 50 characters and must contain one uppercase letter, one lowercase letter, one number, and one special character.</p>
+                                                            </TooltipContent>
+                                                        </Tooltip>
+                                                    </TooltipProvider>
+                                                </div>
+                                                <FormControl>
+                                                    <PasswordInput autoComplete="new-password" {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                <Button type="submit" className="w-full">
+                                    Sign up
+                                </Button>
+                                <Button variant="outline" className="w-full">
+                                    Sign up with Google
+                                </Button>
+                            </div>
+                        </form>
+                    </Form>
+                    <div className="mt-4 text-center text-sm dark:text-white">
+                        Already have an account?{" "}
+                        <Link to="/signin" className="underline">
+                            Sign in
+                        </Link>
+                    </div>
+                </div>
+            </div>
+            <div className="hidden bg-muted lg:block">
+                <img
+                    loading="lazy"
+                    src={bglogin}
+                    alt="cryptocurrencybg"
+                    className="h-full w-full object-cover brightness-[0.4] grayscale"
+                />
+            </div>
+        </div>
     )
-
 }
 
 
