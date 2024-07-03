@@ -2,8 +2,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import mycryptofolio from "../../assets/mycryptofolio.png"
-
 import bglogin from "../../assets/bglogin.jpg"
 
 import { Button } from "@/components/ui/button"
@@ -25,8 +23,10 @@ import { useAuthStore } from "@/stores/useAuthStore"
 
 import axios from "axios"
 
+import { useState } from "react"
 
 export default function SignIn() {
+    const [loading, setLoading] = useState(false)
 
     const { toast } = useToast()
     const { setUser, user } = useAuthStore()
@@ -59,6 +59,7 @@ export default function SignIn() {
     })
 
     const onSubmit = async (data) => {
+        setLoading(true)
         try {
             const parsedData = FormSchema.parse(data)
             const response = await axios.post("http://localhost:3001/api/auth/signin", {
@@ -67,25 +68,31 @@ export default function SignIn() {
             }, {
                 withCredentials: true
             })
-            toast({
-                variant: "success",
-                title: "signIn successfully",
-            })
+
             setTimeout(() => {
+                toast({
+                    variant: "success",
+                    title: "signIn successfully",
+                })
+
                 setUser(response.data.user)
                 navigate("/")
+
+                setLoading(false)
             }, 3000)
         } catch (error) {
-            toast({
-                variant: "destructive",
-                title: "Somethings went wrong:",
-                description: error.response?.data?.error || "Unknown error occurred",
-            })
+            setTimeout(() => {
+                toast({
+                    variant: "destructive",
+                    title: "Somethings went wrong:",
+                    description: error.response?.data?.error || "Unknown error occurred",
+                })
+                setLoading(false)
+            }, 3000)
         }
     }
 
     return (
-        //                 <img src={mycryptofolio} alt="" width={190} height={150} className="brightness-0 invert-0 object-cover" />
         <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
             <div className="flex items-center justify-center py-12 h-screen">
                 <div className="mx-auto grid w-[350px] gap-6">
@@ -102,6 +109,7 @@ export default function SignIn() {
                                     <FormField
                                         control={form.control}
                                         name="email"
+                                        disabled={loading}
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>Email</FormLabel>
@@ -117,6 +125,7 @@ export default function SignIn() {
                                     <FormField
                                         control={form.control}
                                         name="password"
+                                        disabled={loading}
                                         render={({ field }) => (
                                             <FormItem>
                                                 <div className="flex">
@@ -136,12 +145,19 @@ export default function SignIn() {
                                         )}
                                     />
                                 </div>
-                                <Button type="submit" className="w-full">
-                                    Sign in
-                                </Button>
-                                <Button variant="outline" className="w-full">
-                                    Sign in with Google
-                                </Button>
+                                {!loading ? <>
+                                    <Button type="submit" className="w-full">
+                                        Sign in
+                                    </Button>
+                                    <Button variant="outline" className="w-full">
+                                        Sign in with Google
+                                    </Button>
+                                </> : <Button disabled={true}>
+                                    <svg className="animate-spin h-5 w-5 mr-3 border-gray-200 border-2 border-t-blue-600 rounded-full" viewBox="0 0 24 24">
+                                        ...
+                                    </svg>
+                                    Processing...
+                                </Button>}
                             </div>
                         </form>
                     </Form>

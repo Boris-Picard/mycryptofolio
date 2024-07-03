@@ -2,8 +2,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import mycryptofolio from "../../assets/mycryptofolio.png"
-
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -160,6 +158,7 @@ export default function SignUp() {
                                     <FormField
                                         control={form.control}
                                         name="email"
+                                        disabled={loading}
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>Email</FormLabel>
@@ -175,6 +174,7 @@ export default function SignUp() {
                                     <FormField
                                         control={form.control}
                                         name="password"
+                                        disabled={loading}
                                         render={({ field }) => (
                                             <FormItem>
                                                 <div className="flex gap-2 items-center">
@@ -272,6 +272,7 @@ export default function SignUp() {
                                     <FormField
                                         control={form.control}
                                         name="email"
+                                        disabled={loading}
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>Email</FormLabel>
@@ -287,6 +288,7 @@ export default function SignUp() {
                                     <FormField
                                         control={form.control}
                                         name="password"
+                                        disabled={loading}
                                         render={({ field }) => (
                                             <FormItem>
                                                 <div className="flex gap-2 items-center">
