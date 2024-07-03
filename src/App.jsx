@@ -18,6 +18,7 @@ import ErrorBoundary from './components/ErrorBoundary.jsx'
 import CookieHandler from './components/CookieHandler';
 import VerifyEmail from './Pages/VerifyEmail';
 import ForgotPassword from './Pages/ForgotPassword';
+import ResetPassword from './Pages/ResetPassword';
 
 function App() {
   const { theme } = useTheme()
@@ -95,6 +96,7 @@ function App() {
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/verify-email" element={<VerifyEmail />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="*" element={<SignIn />} />
               </Routes>
             )}
