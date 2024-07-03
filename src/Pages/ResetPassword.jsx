@@ -13,7 +13,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { useToast } from "@/components/ui/use-toast";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -22,9 +22,12 @@ import axios from "axios";
 
 import { useState } from "react";
 
+import { useLocation } from "react-router-dom";
+
 export default function ResetPassword() {
     const [loading, setLoading] = useState(false);
 
+    const location = useLocation()
     const { toast } = useToast();
     const { navigate } = useNavigate()
 
@@ -55,32 +58,36 @@ export default function ResetPassword() {
         resolver: zodResolver(FormSchema),
         defaultValues: {
             password: "Azerty123!",
-            confirmPassword: "Azerty123@",
+            confirmPassword: "Azerty123!",
         },
     });
 
     const onSubmit = async (data) => {
         setLoading(true);
+        const query = new URLSearchParams(location.search);
+        const token = query.get('token');
         try {
             const parsedData = FormSchema.parse(data);
-            const response = await axios.post("http://localhost:3001/api/auth/reset-password", {
+            const response = await axios.post(`http://localhost:3001/api/auth/reset-password?token=${token}`, {
                 password: parsedData.password,
             });
-            console.log(response.data);
+
+            toast({
+                variant: "success",
+                title: response.data.message,
+            });
+
             setTimeout(() => {
-                toast({
-                    variant: "success",
-                    title: response.data.message,
-                });
                 setLoading(false);
             }, 3000);
         } catch (error) {
+            toast({
+                variant: "destructive",
+                title: "Something went wrong:",
+                description: error.response?.data?.error || "Unknown error occurred",
+            });
+
             setTimeout(() => {
-                toast({
-                    variant: "destructive",
-                    title: "Something went wrong:",
-                    description: error.response?.data?.error || "Unknown error occurred",
-                });
                 setLoading(false);
             }, 3000);
         }
@@ -92,6 +99,9 @@ export default function ResetPassword() {
                 <div className="mx-auto grid w-[350px] gap-6">
                     <div className="grid gap-2 text-center">
                         <h1 className="text-3xl font-bold dark:text-white">Reset Password</h1>
+                        <p className="text-balance font-semibold text-red-500">
+                            You have 15 minutes to reset your password
+                        </p>
                         <p className="text-balance text-gray-500 dark:text-gray-400">
                             Enter your new password below to reset your password
                         </p>
@@ -108,7 +118,7 @@ export default function ResetPassword() {
                                             <FormItem>
                                                 <FormLabel>New Password</FormLabel>
                                                 <FormControl>
-                                                    <Input type="password" placeholder="Enter new password" {...field} />
+                                                    <PasswordInput autoComplete="current-password" placeholder="Enter new password" {...field} />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -122,7 +132,7 @@ export default function ResetPassword() {
                                             <FormItem>
                                                 <FormLabel>Confirm Password</FormLabel>
                                                 <FormControl>
-                                                    <Input type="password" placeholder="Confirm new password" {...field} />
+                                                    <PasswordInput autoComplete="current-password" placeholder="Confirm new password" {...field} />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>

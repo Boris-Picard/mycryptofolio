@@ -75,15 +75,17 @@ export default function SignUp() {
             }, {
                 withCredentials: true
             })
-            console.log(response.data);
+
+            toast({
+                variant: "success",
+                title: response.data.message,
+            })
+
             setTimeout(() => {
                 setVerified(response.data.verified)
                 setIsExist(true)
 
-                toast({
-                    variant: "success",
-                    title: response.data.message,
-                })
+                
 
                 setLoading(false)
             }, 3000)
@@ -91,31 +93,33 @@ export default function SignUp() {
             const isExist = true;
             const verified = error.response?.data.verified || false;
 
+            if (isExist && verified) {
+                toast({
+                    variant: "destructive",
+                    title: error.response.data.error,
+                });
+            } else if (isExist && !verified && error.response.status !== 429) {
+                toast({
+                    variant: "destructive",
+                    title: "Account is not verified",
+                });
+            } else if (error.response.status === 429) {
+                toast({
+                    variant: "destructive",
+                    title: error.response.data.error || error.response.data,
+                });
+            } else {
+                toast({
+                    variant: "destructive",
+                    title: error.response.data.error,
+                });
+            }
+            
             setTimeout(() => {
                 setIsExist(isExist);
                 setVerified(verified);
 
-                if (isExist && verified) {
-                    toast({
-                        variant: "destructive",
-                        title: error.response.data.error,
-                    });
-                } else if (isExist && !verified && error.response.status !== 429) {
-                    toast({
-                        variant: "destructive",
-                        title: "Account is not verified",
-                    });
-                } else if (error.response.status === 429) {
-                    toast({
-                        variant: "destructive",
-                        title: error.response.data.error || error.response.data,
-                    });
-                } else {
-                    toast({
-                        variant: "destructive",
-                        title: error.response.data.error,
-                    });
-                }
+                
                 setLoading(false)
             }, 3000)
         }

@@ -29,7 +29,7 @@ export default function SignIn() {
     const [loading, setLoading] = useState(false)
 
     const { toast } = useToast()
-    const { setUser, user } = useAuthStore()
+    const { setUser } = useAuthStore()
     const navigate = useNavigate()
 
     const passwordValidation = new RegExp(
@@ -69,11 +69,12 @@ export default function SignIn() {
                 withCredentials: true
             })
 
+            toast({
+                variant: "success",
+                title: "signIn successfully",
+            })
+
             setTimeout(() => {
-                toast({
-                    variant: "success",
-                    title: "signIn successfully",
-                })
 
                 setUser(response.data.user)
                 navigate("/")
@@ -81,12 +82,14 @@ export default function SignIn() {
                 setLoading(false)
             }, 3000)
         } catch (error) {
+
+            toast({
+                variant: "destructive",
+                title: "Somethings went wrong:",
+                description: error.response?.data?.error || "Unknown error occurred",
+            })
+            
             setTimeout(() => {
-                toast({
-                    variant: "destructive",
-                    title: "Somethings went wrong:",
-                    description: error.response?.data?.error || "Unknown error occurred",
-                })
                 setLoading(false)
             }, 3000)
         }
@@ -179,7 +182,6 @@ export default function SignIn() {
             </div>
         </div>
     )
-
 }
 
 
