@@ -36,7 +36,9 @@ import { useState } from "react"
 
 
 export default function SignUp() {
-    const [isSignUp, setIsSignUp] = useState(false)
+    const [verified, setVerified] = useState(false)
+    const [isExist, setIsExist] = useState(false)
+    const [sendMail, setSendMail] = useState(false)
 
     const { toast } = useToast()
     // const { setUser } = useAuthStore()
@@ -77,13 +79,20 @@ export default function SignUp() {
             })
             toast({
                 variant: "success",
-                title: "signIn successfully",
+                title: response.data.message,
             })
-            setIsSignUp(true)
+            setVerified(response.data.verified)
+            setIsExist(true)
             // setTimeout(() => {
             //     setUser(response.data.user)
             // }, 3000)
         } catch (error) {
+            setVerified(error.response.data.verified)
+            if (!error.response.data.verified) {
+                setIsExist(true)
+            } else {
+                setIsExist(false)
+            }
             toast({
                 variant: "destructive",
                 title: "Somethings went wrong:",
@@ -91,9 +100,10 @@ export default function SignUp() {
             })
         }
     }
-
+    console.log(verified);
+    console.log(isExist);
     return (
-        !isSignUp ? <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
+        !verified && !isExist ? <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
             <div className="flex items-center justify-center py-12 h-screen">
                 <div className="mx-auto grid w-[350px] gap-6">
                     <div className="grid gap-2 text-center">
@@ -172,17 +182,22 @@ export default function SignUp() {
                     className="h-full w-full object-cover brightness-[0.4] grayscale"
                 />
             </div>
-        </div> : <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
-            <div className="flex items-center justify-center py-12 h-screen bg-gray-100">
+        </div> : !verified && isExist ? <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
+            <div className="flex items-center justify-center py-12 h-screen bg-gray-100 dark:bg-zinc-950">
                 <div className="flex flex-col space-y-6 items-center p-8 bg-white rounded-lg shadow-xl">
                     <h1 className="font-bold text-4xl">Vérifiez votre boîte mail.</h1>
                     <h2 className="text-lg text-gray-700">Vous avez 15 minutes pour valider votre compte.</h2>
                     <p className="text-slate-500 text-center">
                         Si vous n'avez pas reçu de mail ou que vous n'arrivez pas à valider votre compte
                     </p>
-                    <Button>
+                    {!sendMail ? <Button className="dark:bg-black dark:text-white dark:hover:bg-zinc-700" onClick={() => setSendMail(true)}>
                         Cliquez ici
-                    </Button>
+                    </Button> : <Button className="dark:bg-black dark:text-white dark:hover:bg-zinc-700" disabled={true}>
+                        <svg className="animate-spin h-5 w-5 mr-3 border-gray-200 border-2 border-t-blue-600 rounded-full" viewBox="0 0 24 24">
+                            ...
+                        </svg>
+                        Processing...
+                    </Button>}
                 </div>
             </div>
             <div className="hidden bg-muted lg:block">
@@ -193,7 +208,7 @@ export default function SignUp() {
                     className="h-full w-full object-cover brightness-[0.4] grayscale"
                 />
             </div>
-        </div>
+        </div > : ""
     )
 
 }
