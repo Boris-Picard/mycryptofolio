@@ -57,8 +57,8 @@ export default function ResetPassword() {
     const form = useForm({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            password: "Azerty123!",
-            confirmPassword: "Azerty123!",
+            password: "Password123@",
+            confirmPassword: "Password123@",
         },
     });
 
@@ -71,7 +71,7 @@ export default function ResetPassword() {
             const response = await axios.post(`http://localhost:3001/api/auth/reset-password?token=${token}`, {
                 password: parsedData.password,
             });
-
+            
             toast({
                 variant: "success",
                 title: response.data.message,

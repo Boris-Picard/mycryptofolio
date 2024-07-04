@@ -49,21 +49,22 @@ export default function ForgotPassword() {
             const response = await axios.post("http://localhost:3001/api/auth/forgot-password", {
                 mail: parsedData.email,
             })
-            console.log(response.data);
+            toast({
+                variant: "success",
+                title: response.data.message,
+            })
+
             setTimeout(() => {
-                toast({
-                    variant: "success",
-                    title: response.data.message,
-                })
                 setLoading(false)
             }, 3000)
         } catch (error) {
+            toast({
+                variant: "destructive",
+                title: "Somethings went wrong:",
+                description: error.response?.data?.error || "Unknown error occurred",
+            })
+
             setTimeout(() => {
-                toast({
-                    variant: "destructive",
-                    title: "Somethings went wrong:",
-                    description: error.response?.data?.error || "Unknown error occurred",
-                })
                 setLoading(false)
             }, 3000)
         }
