@@ -26,10 +26,11 @@ import { useLocation } from "react-router-dom";
 
 export default function ResetPassword() {
     const [loading, setLoading] = useState(false);
+    const [count, setCount] = useState(3)
 
     const location = useLocation()
     const { toast } = useToast();
-    const { navigate } = useNavigate()
+    const navigate = useNavigate()
 
     const passwordValidation = new RegExp(
         /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,50}$/
@@ -71,21 +72,30 @@ export default function ResetPassword() {
             const response = await axios.post(`http://localhost:3001/api/auth/reset-password?token=${token}`, {
                 password: parsedData.password,
             });
-            
+
             toast({
                 variant: "success",
                 title: response.data.message,
             });
 
+            setCount(count - 1)
+
             setTimeout(() => {
+                navigate("/signin")
                 setLoading(false);
             }, 3000);
         } catch (error) {
             toast({
                 variant: "destructive",
                 title: "Something went wrong:",
-                description: error.response?.data?.error || "Unknown error occurred",
+                description: error.response?.data?.error || error.response.data || "Unknown error occurred",
             });
+
+            if (error.response.status === 429) {
+                setCount(0)
+            } else {
+                setCount(count - 1)
+            }
 
             setTimeout(() => {
                 setLoading(false);
@@ -103,7 +113,7 @@ export default function ResetPassword() {
                             You have 15 minutes to reset your password
                         </p>
                         <p className="text-balance text-gray-500 dark:text-gray-400">
-                            Enter your new password below to reset your password
+                            Enter your new password below to reset your password. You have {count} attempts.
                         </p>
                     </div>
                     <Form {...form}>
