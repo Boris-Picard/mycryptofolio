@@ -54,7 +54,7 @@ export default function SignIn() {
         resolver: zodResolver(FormSchema),
         defaultValues: {
             email: "picard.boris@gmail.com",
-            password: "Password123!",
+            password: "",
         },
     })
 

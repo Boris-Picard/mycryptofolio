@@ -57,8 +57,8 @@ export default function ResetPassword() {
     const form = useForm({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            password: "Password123@",
-            confirmPassword: "Password123@",
+            password: "",
+            confirmPassword: "",
         },
     });
 
