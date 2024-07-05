@@ -91,7 +91,7 @@ export default function FormTemplate() {
     useEffect(() => {
         const fetchList = async () => {
             try {
-                const response = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
+                const response = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc?x_cg_demo_api_key=${import.meta.env.VITE_API_KEY}`)
                 setSelectData(response.data)
             } catch (error) {
                 console.log("Error fetching CoinGecko list :", error)
@@ -279,7 +279,7 @@ export default function FormTemplate() {
             return
         }
         try {
-            const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinName}?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
+            const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinName}?x_cg_demo_api_key=${import.meta.env.VITE_API_KEY}`)
             const price = response.data.market_data.current_price.usd
             secondForm.setValue('price', price)
             setQuantityPriceValue((prev) => ({ ...prev, price: price }))
@@ -297,7 +297,7 @@ export default function FormTemplate() {
                 return
             }
             try {
-                const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinName}?x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
+                const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinName}?x_cg_demo_api_key=${import.meta.env.VITE_API_KEY}`)
                 const nameData = response.data.name
                 const imageData = response.data.image.small
                 setCoinNameImage({ name: nameData, image: imageData })
@@ -325,7 +325,7 @@ export default function FormTemplate() {
     useEffect(() => {
         const getQuery = async () => {
             try {
-                const response = await axios.get(`https://api.coingecko.com/api/v3/search?query=${searchText}&x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
+                const response = await axios.get(`https://api.coingecko.com/api/v3/search?query=${searchText}&x_cg_demo_api_key=${import.meta.env.VITE_API_KEY}`)
                 setQueryData(response.data.coins);
             } catch (error) {
                 console.log(error);

@@ -27,7 +27,7 @@ function App() {
 
   const { user, setUser, clearUser } = useAuthStore();
 
-  const toast = useToast()
+  const { toast } = useToast()
 
   useEffect(() => {
     let intervalId

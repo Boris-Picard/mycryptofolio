@@ -39,7 +39,7 @@ export default function TableDetailed() {
                 }
                 toast({
                     variant: "success",
-                    title: "Transaction successfully",
+                    title: "Transaction successfully deleted",
                 })
             }
         } catch (error) {

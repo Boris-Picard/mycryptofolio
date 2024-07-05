@@ -38,7 +38,7 @@ export default function SeeCoins() {
     useEffect(() => {
         const fetchCryptoCoin = async () => {
             try {
-                const response = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${transactionsName}&x_cg_demo_api_key=CG-1t8kdBZJMA1YUmpjF5nypF6R`)
+                const response = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${transactionsName}&x_cg_demo_api_key=${import.meta.env.VITE_API_KEY}`)
                 setDataTransactionApi(response.data)
             } catch (error) {
                 setError(error)
@@ -46,6 +46,7 @@ export default function SeeCoins() {
         }
         fetchCryptoCoin()
     }, [transactionsName])
+
 
     useEffect(() => {
         const getCoinsValue = () => {
