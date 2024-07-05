@@ -176,25 +176,19 @@ export default function FormTemplate() {
             const parsedData = FormSchemaFirstStep.parse(data);
             // Store the parsed data
             setDataStep((prev) => ({ ...prev, step1: parsedData }));
-            let response;
+            let response
             if (id && transaction && transaction.coin.name) {
                 response = await axios.put(`http://localhost:3001/api/coin/${transaction.coin._id}`, {
                     name: parsedData.coin
                 }, {
                     withCredentials: true,
                 })
-            } else {
-                response = await axios.post("http://localhost:3001/api/coin", {
-                    name: parsedData.coin,
-                },
-                    {
-                        withCredentials: true,
-                    })
+                setCoinId(response.data._id)
             }
-            setCoinId(response.data._id)
             // Proceed to the next step
             setSteps(2);
         } catch (error) {
+            console.log(error.response);
             setError(error.response.data.error)
             console.log("Form data is invalid", error.message);
         }
@@ -225,8 +219,8 @@ export default function FormTemplate() {
                     withCredentials: true,
                 })
             } else {
-                await axios.post("http://localhost:3001/api/coin/transaction", {
-                    coinId: coinId,
+                await axios.post("http://localhost:3001/api/coin/createTransaction", {
+                    name: dataStep.step1.coin,
                     quantity: parsedData.quantity,
                     price: parsedData.price,
                     spent: parsedData.spent,
@@ -240,6 +234,7 @@ export default function FormTemplate() {
                 navigate('/seecoins');
             }, 2000);
         } catch (error) {
+            console.log(error.response);
             setError(error.response.data.error)
             console.log("Form data is invalid", error.message);
         }

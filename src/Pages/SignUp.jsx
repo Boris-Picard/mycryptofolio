@@ -85,7 +85,7 @@ export default function SignUp() {
                 setVerified(response.data.verified)
                 setIsExist(true)
 
-                
+
 
                 setLoading(false)
             }, 3000)
@@ -114,12 +114,12 @@ export default function SignUp() {
                     title: error.response.data.error,
                 });
             }
-            
+
             setTimeout(() => {
                 setIsExist(isExist);
                 setVerified(verified);
 
-                
+
                 setLoading(false)
             }, 3000)
         }
