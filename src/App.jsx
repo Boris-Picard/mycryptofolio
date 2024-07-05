@@ -57,6 +57,8 @@ function App() {
       }, 30 * 60 * 1000); // Rafraîchir toutes les 30 minutes
       return () => clearInterval(intervalId); // Nettoyer l'intervalle lors du démontage du composant
     };
+    
+    startTokenRefreshInterval()
 
     // Vérifier le token existant
     const initalize = async () => {
@@ -65,11 +67,9 @@ function App() {
       } else {
         await checkAuth();
       }
-      startTokenRefreshInterval()
     }
     initalize()
 
-    return () => clearInterval(intervalId)
   }, []);
 
   return (
