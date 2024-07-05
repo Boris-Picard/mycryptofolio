@@ -19,6 +19,7 @@ import CookieHandler from './components/CookieHandler';
 import VerifyEmail from './Pages/VerifyEmail';
 import ForgotPassword from './Pages/ForgotPassword';
 import ResetPassword from './Pages/ResetPassword';
+import Footer from './components/Footer';
 
 function App() {
   const { theme } = useTheme()
@@ -57,7 +58,7 @@ function App() {
       }, 30 * 60 * 1000); // Rafraîchir toutes les 30 minutes
       return () => clearInterval(intervalId); // Nettoyer l'intervalle lors du démontage du composant
     };
-    
+
     startTokenRefreshInterval()
 
     // Vérifier le token existant
@@ -78,28 +79,29 @@ function App() {
         <BrowserRouter>
           <CookieHandler />
           <ErrorBoundary>
-            {user ? (
-              <>
-                <Navbar />
+              {user ? (
+                <>
+                  <Navbar />
+                  <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/id/:id" element={<HomePage />} />
+                    <Route path="/name/:name" element={<HomePage />} />
+                    <Route path="/detailed/:id" element={<Detailed />} />
+                    <Route path="/seecoins" element={<SeeCoins />} />
+                    <Route path="*" element={<ErrorPage />} />
+                  </Routes>
+                </>
+              ) : (
                 <Routes>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/id/:id" element={<HomePage />} />
-                  <Route path="/name/:name" element={<HomePage />} />
-                  <Route path="/detailed/:id" element={<Detailed />} />
-                  <Route path="/seecoins" element={<SeeCoins />} />
-                  <Route path="*" element={<ErrorPage />} />
+                  <Route path="/signin" element={<SignIn />} />
+                  <Route path="/signup" element={<SignUp />} />
+                  <Route path="/verify-email" element={<VerifyEmail />} />
+                  <Route path="/forgot-password" element={<ForgotPassword />} />
+                  <Route path="/reset-password" element={<ResetPassword />} />
+                  <Route path="*" element={<SignIn />} />
                 </Routes>
-              </>
-            ) : (
-              <Routes>
-                <Route path="/signin" element={<SignIn />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/verify-email" element={<VerifyEmail />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
-                <Route path="*" element={<SignIn />} />
-              </Routes>
-            )}
+              )}
+            <Footer/>
           </ErrorBoundary>
         </BrowserRouter>
       </Loading>
