@@ -41,7 +41,7 @@ function App() {
         toast({
           variant: "destructive",
           title: "Somethings went wrong:",
-          description: error.response.data || error.response.message,
+          description: error.response?.data || error.response?.message || "Unknown error occurred",
         })
         clearUser();
       }
@@ -57,9 +57,8 @@ function App() {
         toast({
           variant: "destructive",
           title: "Somethings went wrong:",
-          description: error.response.data || error.response.message,
+          description: error.response?.data || error.response?.message || "Unknown error occurred",
         })
-        console.log("Failed to refresh token", error);
         clearUser();
       }
     };

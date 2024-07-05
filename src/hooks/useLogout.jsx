@@ -14,6 +14,10 @@ export const Logout = () => {
         withCredentials: true,
       })
       if (response.status === 200) {
+        toast({
+          variant: "success",
+          description: "Logout successfully",
+        })
         clearUser();
       } else {
         toast({
@@ -26,7 +30,7 @@ export const Logout = () => {
       toast({
         variant: "destructive",
         title: "Somethings went wrong:",
-        description: error.response.data || error.message,
+        description: error.response?.data || error.message || "Unknow error occured",
       })
     }
   };
