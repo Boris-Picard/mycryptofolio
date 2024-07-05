@@ -16,6 +16,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import { useDeleteDetailedTransaction } from "@/stores/detailed-transactions.js";
+import { useToast } from "./ui/use-toast";
 
 export default function TableDetailed() {
     const { transactions, removeTransaction } = useDeleteDetailedTransaction()
@@ -23,6 +24,8 @@ export default function TableDetailed() {
     const updateTransaction = async (id) => {
         navigate(`/id/${id}`)
     }
+
+    const { toast } = useToast()
 
     const deleteTransaction = async (id) => {
         try {
@@ -34,9 +37,16 @@ export default function TableDetailed() {
                 if (transactions.length === 1) {
                     navigate("/seecoins");
                 }
+                toast({
+                    variant: "success",
+                    title: "Transaction successfully",
+                })
             }
         } catch (error) {
-            console.error(error)
+            toast({
+                variant: "destructive",
+                title: error.response.data || error.message,
+            })
         }
     }
 

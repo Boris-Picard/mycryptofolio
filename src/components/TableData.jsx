@@ -24,11 +24,14 @@ import {
 
 
 import { useDeleteTransaction } from "@/stores/delete-transaction"
+import { useToast } from "./ui/use-toast"
 
 export default function TableData({ data }) {
     const navigate = useNavigate()
 
     const { transactions, addTransaction, removeTransaction } = useDeleteTransaction()
+
+    const { toast } = useToast()
 
     const deleteTransaction = async (id) => {
         try {
@@ -36,8 +39,15 @@ export default function TableData({ data }) {
                 withCredentials: true
             })
             removeTransaction(id)
+            toast({
+                variant: "success",
+                title: "Deleted coin & transactions successfully",
+            })
         } catch (error) {
-            console.error("Error deleting transaction", error)
+            toast({
+                variant: "destructive",
+                title: error.response.data || error.message,
+            })
         }
     }
     const addTransactionPage = (coinDataName) => {
