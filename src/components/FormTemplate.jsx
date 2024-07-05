@@ -313,6 +313,10 @@ export default function FormTemplate() {
         getQuery()
     }, [searchText])
 
+    const handleGoBack = () => {
+        navigate(-1);
+    };
+
     const arrowUpOrDown = (value) => {
         if (!value) {
             return
@@ -511,12 +515,15 @@ export default function FormTemplate() {
                                 </div>
                                 <div className="md:col-span-1 col-span-2">
                                     {steps === 2 && !id && !name ? <Button variant="outline" type="button" onClick={() => setSteps(steps - 1)} disabled={steps === 3} className="w-full">Revenir en arrière</Button> : ""}
+                                    {steps === 2 && name ? <Button variant="outline" type="button" onClick={handleGoBack} disabled={steps === 3} className="w-full">Revenir en name</Button> : ""}
                                 </div>
-                                <div className={`${steps === 2 && !id && !name ? "md:col-span-1 col-span-2" : "md:col-span-2 col-span-2"}`}>
+                                <div className={`${steps === 2 && !id && !name ? "md:col-span-1 col-span-2" : "md:col-span-1 col-span-2"}`}>
                                     {steps === 2 &&
                                         <Button type="submit" className="w-full">
                                             {id ? "Modifier la transaction" : "Ajouter une transaction"}
                                         </Button>}
+                                </div>
+                                <div className="col-span-2">
                                     {steps === 3 && <Button type="submit" disabled={true} className="w-full">
                                         <svg className="animate-spin h-5 w-5 mr-3 border-gray-200 border-2 border-t-blue-600 rounded-full" viewBox="0 0 24 24">
                                         </svg>
