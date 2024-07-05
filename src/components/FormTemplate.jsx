@@ -515,7 +515,8 @@ export default function FormTemplate() {
                                 </div>
                                 <div className="md:col-span-1 col-span-2">
                                     {steps === 2 && !id && !name ? <Button variant="outline" type="button" onClick={() => setSteps(steps - 1)} disabled={steps === 3} className="w-full">Revenir en arrière</Button> : ""}
-                                    {steps === 2 && name ? <Button variant="outline" type="button" onClick={handleGoBack} disabled={steps === 3} className="w-full">Revenir en name</Button> : ""}
+                                    {steps === 2 && name ? <Button variant="outline" type="button" onClick={handleGoBack} disabled={steps === 3} className="w-full">Revenir en arrière</Button> : ""}
+                                    {steps === 2 && id ? <Button variant="outline" type="button" onClick={handleGoBack} disabled={steps === 3} className="w-full">Revenir en arrière</Button> : ""}
                                 </div>
                                 <div className={`${steps === 2 && !id && !name ? "md:col-span-1 col-span-2" : "md:col-span-1 col-span-2"}`}>
                                     {steps === 2 &&
