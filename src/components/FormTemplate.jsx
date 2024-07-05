@@ -39,6 +39,7 @@ import Error from "./ui/error"
 import Loading from "./Loading"
 
 import { MultiStepMotion } from "@/components/ui/multi-steps-motions";
+import { useToast } from "./ui/use-toast"
 
 export default function FormTemplate() {
 
@@ -55,6 +56,7 @@ export default function FormTemplate() {
 
     const navigate = useNavigate()
     const { id, name } = useParams()
+    const { toast } = useToast()
 
     useEffect(() => {
         const fetchTransaction = async () => {
@@ -185,12 +187,13 @@ export default function FormTemplate() {
                 })
                 setCoinId(response.data._id)
             }
-            // Proceed to the next step
             setSteps(2);
         } catch (error) {
-            console.log(error.response);
+            toast({
+                variant: "destructive",
+                title: error.response?.data || error.message,
+            })
             setError(error.response.data.error)
-            console.log("Form data is invalid", error.message);
         }
     };
 
@@ -229,14 +232,32 @@ export default function FormTemplate() {
                     withCredentials: true,
                 });
             }
-            setSteps(3);
+
+            if (id) {
+                toast({
+                    variant: "success",
+                    title: "Transaction updated successfully",
+                })
+            } else {
+                toast({
+                    variant: "success",
+                    title: "Added transaction successfully",
+                })
+            }
+
             setTimeout(() => {
                 navigate('/seecoins');
             }, 2000);
+
+            setSteps(3);
         } catch (error) {
-            console.log(error.response);
+
+            toast({
+                variant: "destructive",
+                title: error.response.data || error.message,
+            })
+
             setError(error.response.data.error)
-            console.log("Form data is invalid", error.message);
         }
     };
 
