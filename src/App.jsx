@@ -20,11 +20,14 @@ import VerifyEmail from './Pages/VerifyEmail';
 import ForgotPassword from './Pages/ForgotPassword';
 import ResetPassword from './Pages/ResetPassword';
 import Footer from './components/Footer';
+import { useToast } from './components/ui/use-toast';
 
 function App() {
   const { theme } = useTheme()
 
   const { user, setUser, clearUser } = useAuthStore();
+
+  const toast = useToast()
 
   useEffect(() => {
     let intervalId
@@ -35,7 +38,11 @@ function App() {
         });
         setUser(response.data);
       } catch (error) {
-        console.log(error);
+        toast({
+          variant: "destructive",
+          title: "Somethings went wrong:",
+          description: error.response.data || error.response.message,
+        })
         clearUser();
       }
     };
@@ -47,6 +54,11 @@ function App() {
         });
         await checkAuth();
       } catch (error) {
+        toast({
+          variant: "destructive",
+          title: "Somethings went wrong:",
+          description: error.response.data || error.response.message,
+        })
         console.log("Failed to refresh token", error);
         clearUser();
       }
@@ -79,29 +91,29 @@ function App() {
         <BrowserRouter>
           <CookieHandler />
           <ErrorBoundary>
-              {user ? (
-                <>
-                  <Navbar />
-                  <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/id/:id" element={<HomePage />} />
-                    <Route path="/name/:name" element={<HomePage />} />
-                    <Route path="/detailed/:id" element={<Detailed />} />
-                    <Route path="/seecoins" element={<SeeCoins />} />
-                    <Route path="*" element={<ErrorPage />} />
-                  </Routes>
-                </>
-              ) : (
+            {user ? (
+              <>
+                <Navbar />
                 <Routes>
-                  <Route path="/signin" element={<SignIn />} />
-                  <Route path="/signup" element={<SignUp />} />
-                  <Route path="/verify-email" element={<VerifyEmail />} />
-                  <Route path="/forgot-password" element={<ForgotPassword />} />
-                  <Route path="/reset-password" element={<ResetPassword />} />
-                  <Route path="*" element={<SignIn />} />
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/id/:id" element={<HomePage />} />
+                  <Route path="/name/:name" element={<HomePage />} />
+                  <Route path="/detailed/:id" element={<Detailed />} />
+                  <Route path="/seecoins" element={<SeeCoins />} />
+                  <Route path="*" element={<ErrorPage />} />
                 </Routes>
-              )}
-            <Footer/>
+              </>
+            ) : (
+              <Routes>
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/verify-email" element={<VerifyEmail />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
+                <Route path="*" element={<SignIn />} />
+              </Routes>
+            )}
+            <Footer />
           </ErrorBoundary>
         </BrowserRouter>
       </Loading>
