@@ -80,12 +80,12 @@ export default function SeeCoins() {
         getCoinsValue();
     }, [dataTransactionApi]); // S'exécute lorsque dataTransactionApi change
 
-    return (<div className="container p-10">
+    return (<div className="container min-h-full md:p-10">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 mb-3 gap-3">
             <CardsData />
         </div>
         <Error message={error} />
-        <Table className="rounded-xl overflow-auto">
+        <Table>
             <TableCaption>A list of your recent trades</TableCaption>
             <TableHeader>
                 <TableRow>

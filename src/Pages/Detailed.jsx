@@ -66,7 +66,7 @@ export default function Detailed() {
         );
     };
 
-    return (<div className="container md:p-10">
+    return (<div className="container min-h-full md:p-10">
         <div className="flex mb-3 gap-3 items-center dark:text-white">
             <img src={data.image} alt={data.name} width={24} height={24} /><h1 className=" capitalize text-2xl font-semibold">{data.name}</h1><span className="text-slate-500 font-semibold uppercase self-end">{data.symbol}</span>
         </div>
