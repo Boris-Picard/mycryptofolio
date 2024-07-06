@@ -12,15 +12,22 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet"
 
 import { ModeToggle } from "./DarkMode";
 
 import { useAuthStore } from "@/stores/useAuthStore";
 import { Logout } from "../hooks/useLogout";
+import { useState } from "react";
 
 export default function Navbar() {
     const { user } = useAuthStore()
+
+    const [open, setOpen] = useState(false);
+
+    const handleLinkClick = () => {
+        setOpen(false);
+    };
 
     return (
         <div className="container sticky top-0 pt-8 z-50">
@@ -47,7 +54,7 @@ export default function Navbar() {
                     <Logout />
                 </nav>
                 <span className="dark:text-white">{user.mail}</span>
-                <Sheet>
+                <Sheet open={open} onOpenChange={setOpen}>
                     <SheetTrigger asChild>
                         <Button
                             variant="outline"
@@ -58,6 +65,8 @@ export default function Navbar() {
                         </Button>
                     </SheetTrigger>
                     <SheetContent side="left">
+                        {/* <SheetTitle></SheetTitle> */}
+                        {/* <SheetDescription></SheetDescription> */}
                         <nav className="grid gap-6 text-lg font-medium">
                             <Link
                                 to="/"
@@ -68,12 +77,14 @@ export default function Navbar() {
                             <Link
                                 to="/"
                                 className="text-muted-foreground transition-colors hover:text-foreground"
+                                onClick={handleLinkClick}
                             >
                                 AddCoin
                             </Link>
                             <Link
                                 to="/seecoins"
                                 className="text-muted-foreground transition-colors hover:text-foreground"
+                                onClick={handleLinkClick}
                             >
                                 SeeCoins
                             </Link>
