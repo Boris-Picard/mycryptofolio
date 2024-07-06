@@ -3,10 +3,10 @@ import { useToast } from "@/components/ui/use-toast";
 import { useAuthStore } from "@/stores/useAuthStore";
 import axios from "axios";
 
-export const Logout = () => {
+export const useLogout = () => {
   const { clearUser } = useAuthStore();
 
-  const {toast} = useToast()
+  const { toast } = useToast()
 
   const handleLogout = async () => {
     try {
@@ -35,5 +35,5 @@ export const Logout = () => {
     }
   };
 
-  return <Button onClick={handleLogout}>Se déconnecter</Button>;
+  return { handleLogout };
 };

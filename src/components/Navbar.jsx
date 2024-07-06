@@ -17,13 +17,15 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from 
 import { ModeToggle } from "./DarkMode";
 
 import { useAuthStore } from "@/stores/useAuthStore";
-import { Logout } from "../hooks/useLogout";
+import { useLogout } from "../hooks/useLogout";
 import { useState } from "react";
 
 export default function Navbar() {
     const { user } = useAuthStore()
 
     const [open, setOpen] = useState(false);
+
+    const { handleLogout } = useLogout()
 
     const handleLinkClick = () => {
         setOpen(false);
@@ -51,9 +53,7 @@ export default function Navbar() {
                     >
                         SeeCoins
                     </Link>
-                    <Logout />
                 </nav>
-                <span className="dark:text-white">{user.mail}</span>
                 <Sheet open={open} onOpenChange={setOpen}>
                     <SheetTrigger asChild>
                         <Button
@@ -100,12 +100,12 @@ export default function Navbar() {
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                            <DropdownMenuLabel>{user.mail}</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem>Settings</DropdownMenuItem>
                             <DropdownMenuItem>Support</DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>Logout</DropdownMenuItem>
+                            <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                     <ModeToggle />
