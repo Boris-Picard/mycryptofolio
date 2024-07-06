@@ -85,7 +85,7 @@ function App() {
   }, []);
 
   return (
-    <div className={`${theme === "dark" ? "bg-zinc-950" : "bg-white"}`}>
+    <div className={`overflow-auto h-screen ${theme === "dark" ? "bg-zinc-950" : "bg-white"}`}>
       <Loading page={"loading"}>
         <BrowserRouter>
           <CookieHandler />

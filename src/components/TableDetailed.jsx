@@ -66,7 +66,7 @@ export default function TableDetailed() {
     return (
         <>
             {transactions.map((coin, i) => {
-                return <TableRow key={i} className="font-semibold h-20">
+                return <TableRow key={i} className="font-semibold h-20 ">
                     <TableCell className="font-medium">${coin.currentPrice?.toLocaleString()}</TableCell>
                     <TableCell>
                         <span>{coin.quantity?.toLocaleString()}</span> <span className="uppercase font-semibold text-slate-500">{coin.symbol}</span>

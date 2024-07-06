@@ -66,7 +66,7 @@ export default function Detailed() {
         );
     };
 
-    return (<div className="container h-screen p-10">
+    return (<div className="container md:p-10">
         <div className="flex mb-3 gap-3 items-center dark:text-white">
             <img src={data.image} alt={data.name} width={24} height={24} /><h1 className=" capitalize text-2xl font-semibold">{data.name}</h1><span className="text-slate-500 font-semibold uppercase self-end">{data.symbol}</span>
         </div>
@@ -76,22 +76,24 @@ export default function Detailed() {
         <div className="grid md:grid-cols-2 lg:grid-cols-5 grid-cols-1 mb-3 gap-3">
             <CardsDetailed />
         </div>
-        <Table className="rounded-xl overflow-auto">
-            <TableCaption>A list of your recent trade</TableCaption>
-            <TableHeader>
-                <TableRow>
-                    <TableHead>Cours</TableHead>
-                    <TableHead>Quantité</TableHead>
-                    <TableHead>Date & Heure</TableHead>
-                    <TableHead>Coût</TableHead>
-                    <TableHead>Prix par coin</TableHead>
-                    <TableHead>Pertes et profits</TableHead>
-                    <TableHead>Actions</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                <TableDetailed />
-            </TableBody>
-        </Table>
+        <div>
+            <Table>
+                <TableCaption>A list of your recent trades</TableCaption>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>Cours</TableHead>
+                        <TableHead>Quantité</TableHead>
+                        <TableHead>Date & Heure</TableHead>
+                        <TableHead>Coût</TableHead>
+                        <TableHead>Prix par coin</TableHead>
+                        <TableHead >Pertes et profits</TableHead>
+                        <TableHead>Actions</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody >
+                    <TableDetailed />
+                </TableBody>
+            </Table>
+        </div>
     </div>)
 }

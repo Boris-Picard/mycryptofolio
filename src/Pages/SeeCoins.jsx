@@ -86,7 +86,7 @@ export default function SeeCoins() {
         </div>
         <Error message={error} />
         <Table className="rounded-xl overflow-auto">
-            <TableCaption>A list of your recent trade</TableCaption>
+            <TableCaption>A list of your recent trades</TableCaption>
             <TableHeader>
                 <TableRow>
                     <TableHead>#</TableHead>
