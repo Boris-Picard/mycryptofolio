@@ -51,7 +51,7 @@ export default function CardsDetailed() {
     return (<>
         <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Valeur des participations</CardTitle>
+                <CardTitle className="text-sm font-medium">Holdings Value</CardTitle>
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -60,7 +60,7 @@ export default function CardsDetailed() {
         </Card>
         <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Participations</CardTitle>
+                <CardTitle className="text-sm font-medium">Holdings</CardTitle>
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -69,7 +69,7 @@ export default function CardsDetailed() {
         </Card>
         <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Coût total</CardTitle>
+                <CardTitle className="text-sm font-medium">Total Cost</CardTitle>
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -78,7 +78,7 @@ export default function CardsDetailed() {
         </Card>
         <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Coût net moyen</CardTitle>
+                <CardTitle className="text-sm font-medium">Average Net Cost</CardTitle>
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -87,7 +87,7 @@ export default function CardsDetailed() {
         </Card>
         <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Total des profits et pertes</CardTitle>
+                <CardTitle className="text-sm font-medium">Total Profit / Loss</CardTitle>
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>

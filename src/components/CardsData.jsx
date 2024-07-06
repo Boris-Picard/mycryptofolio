@@ -89,7 +89,7 @@ export default function CardsData() {
         {transactions.length > 0 ? <>
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Solde actuel</CardTitle>
+                    <CardTitle className="text-sm font-medium">Current Balance</CardTitle>
                     <DollarSign className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
@@ -98,25 +98,25 @@ export default function CardsData() {
             </Card>
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Changement 24h</CardTitle>
+                    <CardTitle className="text-sm font-medium">24h Portfolio Change</CardTitle>
                     <DollarSign className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
                     <div className="text-2xl font-bold">{UpOrDown(valueInDollars)}</div>
                     <div className="flex">
-                        <p className="text-xs text-muted-foreground">Portefeuille sur 24h </p>{arrowUpOrDown(valueInPercent)}
+                        <p className="text-xs text-muted-foreground">Last 24h </p>{arrowUpOrDown(valueInPercent)}
                     </div>
                 </CardContent>
             </Card>
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Profits et pertes</CardTitle>
+                    <CardTitle className="text-sm font-medium">PNL</CardTitle>
                     <DollarSign className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
                     <div className="text-2xl font-bold">{UpOrDown(totalGain)}</div>
                     <div className="flex">
-                        <p className="text-xs text-muted-foreground">Total des profits et pertes </p>{arrowUpOrDown(totalWinOrLoss)}
+                        <p className="text-xs text-muted-foreground">Total Profit / Loss </p>{arrowUpOrDown(totalWinOrLoss)}
                     </div>
                 </CardContent>
             </Card>
@@ -127,7 +127,7 @@ export default function CardsData() {
                 </CardHeader>
                 <CardContent>
                     <div className="flex">
-                        <p className="text-xs text-muted-foreground">Meilleur Gagnant {UpOrDown(bestWinnerValue)}</p>
+                        <p className="text-xs text-muted-foreground">Top Gainer {UpOrDown(bestWinnerValue)}</p>
                     </div>
                 </CardContent>
             </Card>

@@ -145,7 +145,7 @@ export default function TableData({ data }) {
                                         <div className="cursor-pointer" onClick={() => addTransactionPage(coin.coin.name)} > <Plus /></div>
                                     </TooltipTrigger>
                                     <TooltipContent>
-                                        <p>Ajouter une transaction</p>
+                                        <p>Add transaction</p>
                                     </TooltipContent>
                                 </Tooltip>
                             </TooltipProvider>
@@ -159,7 +159,7 @@ export default function TableData({ data }) {
                                                 </div>
                                             </TooltipTrigger>
                                             <TooltipContent>
-                                                <p>Plus d'actions</p>
+                                                <p>More actions</p>
                                             </TooltipContent>
                                         </Tooltip>
                                     </TooltipProvider>
@@ -167,12 +167,12 @@ export default function TableData({ data }) {
                                 <DropdownMenuContent>
                                     <DropdownMenuItem>
                                         <div className="font-semibold p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => deleteTransaction(coin.coin._id)}>
-                                            Supprimer la monnaie
+                                            Remove coin
                                         </div>
                                     </DropdownMenuItem>
                                     <DropdownMenuItem>
                                         <div className="font-semibold p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => seeTransactions(coin)}>
-                                            Voir les transactions
+                                            View transactions
                                         </div>
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>

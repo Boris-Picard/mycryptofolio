@@ -81,7 +81,7 @@ export default function TableDetailed() {
                                 <Tooltip delayDuration={0}>
                                     <TooltipTrigger><SquarePen className="w-5 h-5 cursor-pointer" onClick={() => updateTransaction(coin._id)} /></TooltipTrigger>
                                     <TooltipContent>
-                                        <p>Modifier la transaction</p>
+                                        <p>Edit transaction</p>
                                     </TooltipContent>
                                 </Tooltip>
                             </TooltipProvider>
@@ -89,7 +89,7 @@ export default function TableDetailed() {
                                 <Tooltip delayDuration={0}>
                                     <TooltipTrigger><Trash2 className="w-5 h-5 cursor-pointer" onClick={() => deleteTransaction(coin._id)} /></TooltipTrigger>
                                     <TooltipContent>
-                                        <p>Supprimer la transaction</p>
+                                        <p>Remove transaction</p>
                                     </TooltipContent>
                                 </Tooltip>
                             </TooltipProvider>

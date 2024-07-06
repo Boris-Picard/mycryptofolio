@@ -81,12 +81,12 @@ export default function Detailed() {
                 <TableCaption>A list of your recent trades</TableCaption>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Cours</TableHead>
-                        <TableHead>Quantité</TableHead>
-                        <TableHead>Date & Heure</TableHead>
-                        <TableHead>Coût</TableHead>
-                        <TableHead>Prix par coin</TableHead>
-                        <TableHead >Pertes et profits</TableHead>
+                        <TableHead>Price</TableHead>
+                        <TableHead>Quantity</TableHead>
+                        <TableHead>Date</TableHead>
+                        <TableHead>Cost</TableHead>
+                        <TableHead>Price per tokens</TableHead>
+                        <TableHead >PNL</TableHead>
                         <TableHead>Actions</TableHead>
                     </TableRow>
                 </TableHeader>

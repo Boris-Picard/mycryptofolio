@@ -90,13 +90,13 @@ export default function Portfolio() {
             <TableHeader>
                 <TableRow>
                     <TableHead>#</TableHead>
-                    <TableHead>Monnaie</TableHead>
-                    <TableHead>Cours</TableHead>
+                    <TableHead>Coin</TableHead>
+                    <TableHead>Price</TableHead>
                     <TableHead>24h</TableHead>
-                    <TableHead>Capitalisation boursière</TableHead>
+                    <TableHead>Market Cap</TableHead>
                     <TableHead>Ath</TableHead>
-                    <TableHead>Participations</TableHead>
-                    <TableHead>Pertes et profits</TableHead>
+                    <TableHead>Holdings</TableHead>
+                    <TableHead>PNL</TableHead>
                     <TableHead>Actions</TableHead>
                 </TableRow>
             </TableHeader>
