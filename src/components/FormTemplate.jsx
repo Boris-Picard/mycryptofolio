@@ -419,7 +419,7 @@ export default function FormTemplate() {
                                                                 <div className="flex items-center">
                                                                     <span className="mr-3 font-semibold">{coin.market_cap_rank}</span>
                                                                     <img src={coin.image} className="mr-2" width={24} height={24} />
-                                                                    <div className="flex gap-2">
+                                                                    <div className="flex gap-2 items-center">
                                                                         <span className="font-bold">{coin.name}</span>
                                                                         <span className="uppercase font-normal text-slate-500">{coin.symbol}</span>
                                                                         <span className="font-semibold">${coin.current_price.toLocaleString()}</span>

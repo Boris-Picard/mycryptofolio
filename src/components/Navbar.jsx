@@ -34,8 +34,8 @@ export default function Navbar() {
     };
 
     return (
-        <div className="container sticky top-0 pt-8 z-50">
-            <header className="bg-slate-500 dark:bg-zinc-900 flex h-16 items-center gap-4 bg-background px-4 md:px-6 rounded-xl bg-opacity-10">
+        <div className="container sticky top-0 pt-8 px-10 z-50">
+            <header className="bg-slate-500 flex h-16 items-center gap-4 bg-background px-4 md:px-6 rounded-xl bg-opacity-10 backdrop-blur">
                 <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6 dark:text-white text-black w-full">
                     <Link
                         to="/"
@@ -96,7 +96,7 @@ export default function Navbar() {
                 <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4 justify-end">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="secondary" size="icon" className="rounded-full">
+                            <Button variant="secondary" size="icon" className="rounded-full bg-white">
                                 <CircleUser className="h-5 w-5" />
                                 <span className="sr-only">Toggle user menu</span>
                             </Button>
