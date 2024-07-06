@@ -75,12 +75,14 @@ export default function CardsData() {
         const direction = value.toString().startsWith("-") ? "down" : "up";
         return (
             <div className="flex">
-                <svg fill="currentColor" className={`w-5 h-5 ${direction === "down" ? "text-red-500" : "text-green-500"}`} viewBox="0 0 24 24">
-                    <path
-                        d={direction === "up" ? "M7 14l5-5 5 5H7z" : " M7 10l5 5 5-5H7z"}
-                    />
-                </svg>
-                <span className={`font-semibold text-xs ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{value.toLocaleString()} %</span>
+                <div className={`flex rounded-lg p-1 ${direction === "up" ? "dark:bg-[#111E13] bg-[#EAF7EC]" : "dark:bg-[#241011] bg-[#FDE9EA]"}`}>
+                    <svg fill="currentColor" className={`w-5 h-5 ${direction === "down" ? "text-red-500" : "text-green-500"}`} viewBox="0 0 24 24">
+                        <path
+                            d={direction === "up" ? "M7 14l5-5 5 5H7z" : " M7 10l5 5 5-5H7z"}
+                        />
+                    </svg>
+                    <span className={`font-semibold text-xs ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{value.toLocaleString()} %</span>
+                </div>
             </div>
         );
     };
@@ -103,7 +105,7 @@ export default function CardsData() {
                 </CardHeader>
                 <CardContent>
                     <div className="text-2xl font-bold">{UpOrDown(valueInDollars)}</div>
-                    <div className="flex">
+                    <div className="flex items-center space-x-2">
                         <p className="text-xs text-muted-foreground">Last 24h </p>{arrowUpOrDown(valueInPercent)}
                     </div>
                 </CardContent>
@@ -115,7 +117,7 @@ export default function CardsData() {
                 </CardHeader>
                 <CardContent>
                     <div className="text-2xl font-bold">{UpOrDown(totalGain)}</div>
-                    <div className="flex">
+                    <div className="flex items-center space-x-2">
                         <p className="text-xs text-muted-foreground">Total Profit / Loss </p>{arrowUpOrDown(totalWinOrLoss)}
                     </div>
                 </CardContent>

@@ -345,12 +345,14 @@ export default function FormTemplate() {
         const direction = value.toString().startsWith("-") ? "down" : "up";
         return (
             <div className={`flex ${direction === "down" ? "text-red-500" : "text-green-500"}`}>
-                <svg fill="currentColor" className="w-5 h-5" viewBox="0 0 24 24">
-                    <path
-                        d={direction === "up" ? "M7 14l5-5 5 5H7z" : " M7 10l5 5 5-5H7z"}
-                    />
-                </svg>
-                <span>{value.toLocaleString()} %</span>
+                <div className={`flex rounded-lg items-center p-1 ${direction === "up" ? "dark:bg-[#111E13] bg-[#EAF7EC]" : "dark:bg-[#241011] bg-[#FDE9EA]"}`}>
+                    <svg fill="currentColor" className="w-5 h-5" viewBox="0 0 24 24">
+                        <path
+                            d={direction === "up" ? "M7 14l5-5 5 5H7z" : " M7 10l5 5 5-5H7z"}
+                        />
+                    </svg>
+                    <span>{value.toLocaleString()} %</span>
+                </div>
             </div>
         );
     };

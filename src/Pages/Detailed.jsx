@@ -56,12 +56,14 @@ export default function Detailed() {
         const direction = value.toString().startsWith("-") ? "down" : "up";
         return (
             <div className={`flex font-semibold items-center ${direction === "down" ? "text-red-500" : "text-green-500"}`}>
-                <svg fill="currentColor" className="w-8 h-8" viewBox="0 0 24 24">
-                    <path
-                        d={direction === "up" ? "M7 14l5-5 5 5H7z" : " M7 10l5 5 5-5H7z"}
-                    />
-                </svg>
-                <span>{value.toFixed(1)} %</span>
+                <div className={`flex rounded-lg items-center p-1 ${direction === "up" ? "dark:bg-[#111E13] bg-[#EAF7EC]" : "dark:bg-[#241011] bg-[#FDE9EA]"}`}>
+                    <svg fill="currentColor" className="w-8 h-8" viewBox="0 0 24 24">
+                        <path
+                            d={direction === "up" ? "M7 14l5-5 5 5H7z" : " M7 10l5 5 5-5H7z"}
+                        />
+                    </svg>
+                    <span>{value.toFixed(1)} %</span>
+                </div>
             </div>
         );
     };
@@ -70,7 +72,7 @@ export default function Detailed() {
         <div className="flex mb-3 gap-3 items-center dark:text-white">
             <img src={data.image} alt={data.name} width={24} height={24} /><h1 className=" capitalize text-2xl font-semibold">{data.name}</h1><span className="text-slate-500 font-semibold uppercase self-end">{data.symbol}</span>
         </div>
-        <div className="flex mb-5 dark:text-white">
+        <div className="flex mb-5 dark:text-white space-x-2">
             <h2 className="text-3xl font-semibold">${data.actual_price}</h2>{arrowUpOrDown(data.price_change_24h)}
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-5 grid-cols-1 mb-3 gap-3">
