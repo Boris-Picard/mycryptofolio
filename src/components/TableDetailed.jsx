@@ -30,12 +30,12 @@ export default function TableDetailed() {
     const deleteTransaction = async (id) => {
         try {
             if (id) {
-                await axios.delete(`http://localhost:3001/api/transaction/id/delete/${id}`, {
+                await axios.delete(`${import.meta.env.VITE_API_SERVER}/api/transaction/id/delete/${id}`, {
                     withCredentials: true,
                 })
                 removeTransaction(id)
                 if (transactions.length === 1) {
-                    navigate("/seecoins");
+                    navigate("/portfolio");
                 }
                 toast({
                     variant: "success",

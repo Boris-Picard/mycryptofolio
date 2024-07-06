@@ -21,7 +21,7 @@ export default function Portfolio() {
     useEffect(() => {
         const fetchTransactions = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/api/transaction/portfolio`, {
+                const response = await axios.get(`${import.meta.env.VITE_API_SERVER}/api/transaction/portfolio`, {
                     withCredentials: true
                 })
                 setTransactions(response.data)

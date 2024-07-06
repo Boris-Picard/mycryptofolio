@@ -33,7 +33,7 @@ function App() {
     let intervalId
     const checkAuth = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/auth/user`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_SERVER}/api/auth/user`, {
           withCredentials: true,
         });
         setUser(response.data);
@@ -49,7 +49,7 @@ function App() {
 
     const refreshToken = async () => {
       try {
-        await axios.post(`http://localhost:3001/api/auth/refresh-token`, {}, {
+        await axios.post(`${import.meta.env.VITE_API_SERVER}/api/auth/refresh-token`, {}, {
           withCredentials: true,
         });
         await checkAuth();

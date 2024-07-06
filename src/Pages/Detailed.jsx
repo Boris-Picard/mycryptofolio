@@ -30,7 +30,7 @@ export default function Detailed() {
         const fetchCoinData = async () => {
             try {
                 const [coinResponse] = coinData
-                const response = await axios.get(`http://localhost:3001/api/coin/detailed/${coinResponse.coin._id}`, {
+                const response = await axios.get(`${import.meta.env.VITE_API_SERVER}/api/coin/detailed/${coinResponse.coin._id}`, {
                     withCredentials: true,
                 })
                 if (response.status !== 200) {

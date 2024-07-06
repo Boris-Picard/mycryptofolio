@@ -62,7 +62,7 @@ export default function FormTemplate() {
         const fetchTransaction = async () => {
             if (id) {
                 try {
-                    const response = await axios.get(`http://localhost:3001/api/transaction/id/${id}`, {
+                    const response = await axios.get(`${import.meta.env.VITE_API_SERVER}/api/transaction/id/${id}`, {
                         withCredentials: true,
                     });
                     setTransaction(response.data.transaction);
@@ -73,7 +73,7 @@ export default function FormTemplate() {
                 }
             } else if (name) {
                 try {
-                    const response = await axios.get(`http://localhost:3001/api/transaction/name/${name}`, {
+                    const response = await axios.get(`${import.meta.env.VITE_API_SERVER}/api/transaction/name/${name}`, {
                         withCredentials: true,
                     });
                     setTransaction(response.data.coin[0]);
@@ -180,7 +180,7 @@ export default function FormTemplate() {
             setDataStep((prev) => ({ ...prev, step1: parsedData }));
             let response
             if (id && transaction && transaction.coin.name) {
-                response = await axios.put(`http://localhost:3001/api/coin/${transaction.coin._id}`, {
+                response = await axios.put(`${import.meta.env.VITE_API_SERVER}/api/coin/${transaction.coin._id}`, {
                     name: parsedData.coin
                 }, {
                     withCredentials: true,
@@ -203,7 +203,7 @@ export default function FormTemplate() {
             const parsedData = FormSchemaSecondStep.parse(data);
             setDataStep((prev) => ({ ...prev, step2: parsedData }));
             if (id) {
-                await axios.put(`http://localhost:3001/api/transaction/id/${transaction._id}`, {
+                await axios.put(`${import.meta.env.VITE_API_SERVER}/api/transaction/id/${transaction._id}`, {
                     quantity: parsedData.quantity,
                     price: parsedData.price,
                     spent: parsedData.spent,
@@ -212,7 +212,7 @@ export default function FormTemplate() {
                     withCredentials: true,
                 })
             } else if (name) {
-                await axios.post(`http://localhost:3001/api/transaction/name/${transaction.name}`, {
+                await axios.post(`${import.meta.env.VITE_API_SERVER}/api/transaction/name/${transaction.name}`, {
                     quantity: parsedData.quantity,
                     price: parsedData.price,
                     spent: parsedData.spent,
@@ -222,7 +222,7 @@ export default function FormTemplate() {
                     withCredentials: true,
                 })
             } else {
-                await axios.post("http://localhost:3001/api/coin/createTransaction", {
+                await axios.post(`${import.meta.env.VITE_API_SERVER}/api/coin/createTransaction`, {
                     name: dataStep.step1.coin,
                     quantity: parsedData.quantity,
                     price: parsedData.price,
@@ -246,7 +246,7 @@ export default function FormTemplate() {
             }
 
             setTimeout(() => {
-                navigate('/seecoins');
+                navigate('/portfolio');
             }, 2000);
 
             setSteps(3);

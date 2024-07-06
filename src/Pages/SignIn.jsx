@@ -62,7 +62,7 @@ export default function SignIn() {
         setLoading(true)
         try {
             const parsedData = FormSchema.parse(data)
-            const response = await axios.post("http://localhost:3001/api/auth/signin", {
+            const response = await axios.post(`${import.meta.env.VITE_API_SERVER}/api/auth/signin`, {
                 mail: parsedData.email,
                 password: parsedData.password,
             }, {

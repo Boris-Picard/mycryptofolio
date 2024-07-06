@@ -10,7 +10,7 @@ export const useLogout = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.delete('http://localhost:3001/api/auth/logout', {
+      const response = await axios.delete(`${import.meta.env.VITE_API_SERVER}/api/auth/logout`, {
         withCredentials: true,
       })
       if (response.status === 200) {

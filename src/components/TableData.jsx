@@ -35,7 +35,7 @@ export default function TableData({ data }) {
 
     const deleteTransaction = async (id) => {
         try {
-            await axios.delete(`http://localhost:3001/api/transaction/${id}`, {
+            await axios.delete(`${import.meta.env.VITE_API_SERVER}/api/transaction/${id}`, {
                 withCredentials: true
             })
             removeTransaction(id)
@@ -56,7 +56,7 @@ export default function TableData({ data }) {
 
     const seeTransactions = async (coin) => {
         try {
-            const response = await axios.get(`http://localhost:3001/api/coin/detailed/${coin.coin._id}`, {
+            const response = await axios.get(`${import.meta.env.VITE_API_SERVER}/api/coin/detailed/${coin.coin._id}`, {
                 withCredentials: true,
             })
             if (response.status !== 200) {

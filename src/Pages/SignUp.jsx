@@ -69,7 +69,7 @@ export default function SignUp() {
         setLoading(true)
         try {
             const parsedData = FormSchema.parse(data)
-            const response = await axios.post("http://localhost:3001/api/auth/signup", {
+            const response = await axios.post(`${import.meta.env.VITE_API_SERVER}/api/auth/signup`, {
                 mail: parsedData.email,
                 password: parsedData.password,
             }, {
@@ -128,7 +128,7 @@ export default function SignUp() {
     const resendMail = async () => {
         const email = form.getValues('email')
         try {
-            const response = await axios.post('http://localhost:3001/api/auth/resend-email', {
+            const response = await axios.post(`${import.meta.env.VITE_API_SERVER}/api/auth/resend-email`, {
                 mail: email
             })
             toast({

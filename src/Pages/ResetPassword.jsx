@@ -69,7 +69,7 @@ export default function ResetPassword() {
         const token = query.get('token');
         try {
             const parsedData = FormSchema.parse(data);
-            const response = await axios.post(`http://localhost:3001/api/auth/reset-password?token=${token}`, {
+            const response = await axios.post(`${import.meta.env.VITE_API_SERVER}/api/auth/reset-password?token=${token}`, {
                 password: parsedData.password,
             });
 

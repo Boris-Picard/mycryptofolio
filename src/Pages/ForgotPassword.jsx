@@ -46,7 +46,7 @@ export default function ForgotPassword() {
         setLoading(true)
         try {
             const parsedData = FormSchema.parse(data)
-            const response = await axios.post("http://localhost:3001/api/auth/forgot-password", {
+            const response = await axios.post(`${import.meta.env.VITE_API_SERVER}/api/auth/forgot-password`, {
                 mail: parsedData.email,
             })
             toast({
