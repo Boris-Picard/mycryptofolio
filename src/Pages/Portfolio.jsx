@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/table"
 import CardsData from "@/components/CardsData";
 
-export default function SeeCoins() {
+export default function Portfolio() {
     const [transactions, setTransactions] = useState([])
     const [transactionsName, setTransactionsName] = useState([])
     const [dataTransactionApi, setDataTransactionApi] = useState([])

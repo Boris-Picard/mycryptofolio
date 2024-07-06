@@ -20,6 +20,8 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import { useLogout } from "../hooks/useLogout";
 import { useState } from "react";
 
+import { CircleAlert } from "lucide-react";
+
 export default function Navbar() {
     const { user } = useAuthStore()
 
@@ -34,7 +36,7 @@ export default function Navbar() {
     return (
         <div className="container sticky top-0 pt-8 z-50">
             <header className="bg-slate-500 dark:bg-zinc-900 flex h-16 items-center gap-4 bg-background px-4 md:px-6 rounded-md bg-opacity-10">
-                <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6 dark:text-white text-black">
+                <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6 dark:text-white text-black w-full">
                     <Link
                         to="/"
                         className="flex items-center gap-2 text-lg font-semibold md:text-base"
@@ -45,13 +47,13 @@ export default function Navbar() {
                         to="/"
                         className="hover:text-gray-500 transition-colors hover:text-foreground"
                     >
-                        AddCoin
+                        Add New Coin
                     </Link>
                     <Link
-                        to="/seecoins"
+                        to="/portfolio"
                         className="hover:text-gray-500 transition-colors hover:text-foreground"
                     >
-                        SeeCoins
+                        View Portfolio
                     </Link>
                 </nav>
                 <Sheet open={open} onOpenChange={setOpen}>
@@ -79,14 +81,14 @@ export default function Navbar() {
                                 className="text-muted-foreground transition-colors hover:text-foreground"
                                 onClick={handleLinkClick}
                             >
-                                AddCoin
+                                Add New Coin
                             </Link>
                             <Link
-                                to="/seecoins"
+                                to="/portfolio"
                                 className="text-muted-foreground transition-colors hover:text-foreground"
                                 onClick={handleLinkClick}
                             >
-                                SeeCoins
+                                View Portfolio
                             </Link>
                         </nav>
                     </SheetContent>
@@ -102,10 +104,10 @@ export default function Navbar() {
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>{user.mail}</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>Settings</DropdownMenuItem>
-                            <DropdownMenuItem>Support</DropdownMenuItem>
+                            <DropdownMenuItem>Settings <span className="ml-3 text-yellow-500"><CircleAlert /></span></DropdownMenuItem>
+                            <DropdownMenuItem>Support <span className="ml-3 text-yellow-500"><CircleAlert /></span></DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+                            <DropdownMenuItem className="cursor-pointer" onClick={handleLogout}>Logout</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                     <ModeToggle />

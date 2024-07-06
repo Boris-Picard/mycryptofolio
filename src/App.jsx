@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HomePage from './Pages/HomePage';
-import SeeCoins from "./Pages/SeeCoins"
+import Portfolio from "./Pages/Portfolio"
 import Detailed from "./Pages/Detailed"
 import Loading from './components/Loading';
 import SignIn from './Pages/SignIn';
@@ -98,7 +98,7 @@ function App() {
                   <Route path="/id/:id" element={<HomePage />} />
                   <Route path="/name/:name" element={<HomePage />} />
                   <Route path="/detailed/:id" element={<Detailed />} />
-                  <Route path="/seecoins" element={<SeeCoins />} />
+                  <Route path="/portfolio" element={<Portfolio />} />
                   <Route path="*" element={<ErrorPage />} />
                 </Routes>
               </>
