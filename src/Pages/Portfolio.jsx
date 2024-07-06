@@ -17,7 +17,7 @@ export default function Portfolio() {
     const [transactionsName, setTransactionsName] = useState([])
     const [dataTransactionApi, setDataTransactionApi] = useState([])
     const [error, setError] = useState(null)
-    
+
     useEffect(() => {
         const fetchTransactions = async () => {
             try {
@@ -85,24 +85,25 @@ export default function Portfolio() {
             <CardsData />
         </div>
         <Error message={error} />
-        <Table>
-            <TableCaption>A list of your recent trades</TableCaption>
-            <TableHeader>
-                <TableRow>
-                    <TableHead>#</TableHead>
-                    <TableHead>Coin</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead>24h</TableHead>
-                    <TableHead>Market Cap</TableHead>
-                    <TableHead>Ath</TableHead>
-                    <TableHead>Holdings</TableHead>
-                    <TableHead>PNL</TableHead>
-                    <TableHead>Actions</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                <TableData data={transactions} />
-            </TableBody>
-        </Table>
+        <div className="mt-10">
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>#</TableHead>
+                        <TableHead>Coin</TableHead>
+                        <TableHead>Price</TableHead>
+                        <TableHead>24h</TableHead>
+                        <TableHead>Market Cap</TableHead>
+                        <TableHead>Ath</TableHead>
+                        <TableHead>Holdings</TableHead>
+                        <TableHead>PNL</TableHead>
+                        <TableHead>Actions</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    <TableData data={transactions} />
+                </TableBody>
+            </Table>
+        </div>
     </div>)
 }

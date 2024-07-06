@@ -79,23 +79,24 @@ export default function Detailed() {
             <CardsDetailed />
         </div>
         <div>
-            <Table>
-                <TableCaption>A list of your recent trades</TableCaption>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>Price</TableHead>
-                        <TableHead>Quantity</TableHead>
-                        <TableHead>Date</TableHead>
-                        <TableHead>Cost</TableHead>
-                        <TableHead>Price per tokens</TableHead>
-                        <TableHead >PNL</TableHead>
-                        <TableHead>Actions</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody >
-                    <TableDetailed />
-                </TableBody>
-            </Table>
+            <div className="mt-10">
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Price</TableHead>
+                            <TableHead>Quantity</TableHead>
+                            <TableHead>Date</TableHead>
+                            <TableHead>Cost</TableHead>
+                            <TableHead>Price per tokens</TableHead>
+                            <TableHead >PNL</TableHead>
+                            <TableHead>Actions</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody >
+                        <TableDetailed />
+                    </TableBody>
+                </Table>
+            </div>
         </div>
     </div>)
 }

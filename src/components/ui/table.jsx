@@ -3,17 +3,17 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 const Table = React.forwardRef(({ className, ...props }, ref) => (
-  <div className="relative w-full overflow-auto">
+  <div className="relative w-full overflow-auto rounded-xl shadow-lg dark:shadow-none">
     <table
       ref={ref}
-      className={cn("w-full caption-bottom text-sm dark:bg-zinc-950 bg-white", className)}
+      className={cn("w-full caption-bottom text-sm dark:bg-zinc-900 rounded-xl bg-slate-50", className)}
       {...props} />
   </div>
 ))
 Table.displayName = "Table"
 
 const TableHeader = React.forwardRef(({ className, ...props }, ref) => (
-  <thead ref={ref} className={cn("[&_tr]:border-b", className)} {...props} />
+  <thead ref={ref} className={cn(className)} {...props} />
 ))
 TableHeader.displayName = "TableHeader"
 
@@ -40,7 +40,7 @@ const TableRow = React.forwardRef(({ className, ...props }, ref) => (
   <tr
     ref={ref}
     className={cn(
-      "border-b transition-colors hover:bg-slate-100/50 data-[state=selected]:bg-slate-100 dark:hover:bg-zinc-900 dark:data-[state=selected]:bg-slate-800 dark:text-white text-black",
+      "transition-colors  hover:bg-slate-100 data-[state=selected]:bg-slate-100 dark:hover:bg-zinc-800 dark:data-[state=selected]:bg-slate-800 dark:text-white text-black ",
       className
     )}
     {...props} />
