@@ -46,7 +46,8 @@ export default function TableData({ data }) {
         } catch (error) {
             toast({
                 variant: "destructive",
-                title: error.response.data || error.message,
+                title: error.message,
+                description: error.response.data.error,
             })
         }
     }
@@ -67,7 +68,11 @@ export default function TableData({ data }) {
             let coinData = data.filter(coinId => coinId.coin._id === coinResponse._id)
             navigate(`/detailed/${coinResponse._id}`, { state: { coinData } })
         } catch (error) {
-            console.log(error);
+            toast({
+                variant: "destructive",
+                title: error.message,
+                description: error.response.data.error,
+            })
         }
     }
 
