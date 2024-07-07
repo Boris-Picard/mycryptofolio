@@ -372,7 +372,7 @@ export default function FormTemplate() {
 
     return (<>
         <div className="flex h-full mt-10 items-center justify-center">
-            <div className="flex w-full md:w-1/2 flex-col justify-center items-center shadow-lg p-6 rounded-xl bg-slate-200">
+            <div className="flex w-full md:w-1/2 flex-col justify-center items-center shadow-lg p-6 rounded-xl dark:bg-zinc-900 dark:text-white bg-slate-50">
                 <div className="flex flex-col space-y-3 items-center">
                     {steps === 1 ? <><h1 className="font-bold text-5xl"> Welcome.</h1> <h2 className="font-bold text-3xl">
                         Select a Coin
