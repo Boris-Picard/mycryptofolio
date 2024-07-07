@@ -59,8 +59,8 @@ export default function FormTemplate() {
     const { id, name } = useParams()
     const { toast } = useToast()
 
-    const {data} = useFetchCoins()
-    
+    const { data: data, error: errorList } = useFetchCoins()
+
 
     useEffect(() => {
         const fetchTransaction = async () => {
@@ -348,6 +348,10 @@ export default function FormTemplate() {
             </div>
         );
     };
+
+    if (errorList) {
+        return <div>Error fetching data: {error.message}</div>;
+    }
 
     return (
         <div className="flex h-full items-center justify-center">
