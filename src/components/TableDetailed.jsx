@@ -62,7 +62,7 @@ export default function TableDetailed() {
             <span className={`font-semibold ${direction === "down" ? "text-red-500" : "text-green-500"}`}>{formattedValue}</span>
         );
     };
-
+    
     return (
         <>
             {transactions.map((coin, i) => {

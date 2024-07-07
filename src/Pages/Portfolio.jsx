@@ -5,12 +5,13 @@ import Error from "@/components/ui/error";
 import {
     Table,
     TableBody,
-    TableCaption,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
 import CardsData from "@/components/CardsData";
+
+import CsvButton from "@/components/CsvButton";
 
 export default function Portfolio() {
     const [transactions, setTransactions] = useState([])
@@ -86,6 +87,9 @@ export default function Portfolio() {
         </div>
         <Error message={error} />
         <div className="mt-10">
+            <div className="flex justify-end mb-3">
+                <CsvButton csvdata={transactions} />
+            </div>
             <Table>
                 <TableHeader>
                     <TableRow>

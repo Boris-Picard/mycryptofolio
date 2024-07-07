@@ -27,6 +27,8 @@ import { useDeleteDetailedTransaction } from "@/stores/detailed-transactions.js"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
+import CsvButton from "@/components/CsvButton"
+
 export default function Detailed() {
     const location = useLocation()
     const { coinData } = location.state
@@ -102,6 +104,9 @@ export default function Detailed() {
         </div>
         <div>
             <div className="mt-10">
+                <div className="flex justify-end mb-3">
+                    <CsvButton csvdata={transactions} />
+                </div>
                 <Table>
                     <TableHeader>
                         <TableRow>
