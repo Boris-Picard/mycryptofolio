@@ -61,7 +61,6 @@ export default function FormTemplate() {
 
     const { data: data, error: errorList } = useFetchCoins()
 
-
     useEffect(() => {
         const fetchTransaction = async () => {
             if (id) {
@@ -371,14 +370,14 @@ export default function FormTemplate() {
         return <div>Error fetching data: {error.message}</div>;
     }
 
-    return (
-        <div className="flex h-full items-center justify-center">
-            <div className="flex w-full md:w-1/2 flex-col justify-center items-center shadow-lg p-6 rounded-md bg-slate-200">
+    return (<>
+        <div className="flex h-full mt-10 items-center justify-center">
+            <div className="flex w-full md:w-1/2 flex-col justify-center items-center shadow-lg p-6 rounded-xl bg-slate-200">
                 <div className="flex flex-col space-y-3 items-center">
                     {steps === 1 ? <><h1 className="font-bold text-5xl"> Welcome.</h1> <h2 className="font-bold text-3xl">
-                        Séléctionner un Coin
+                        Select a Coin
                     </h2></> : ""}
-                    {name ? <h2 className="font-bold text-3xl">Ajouter une transaction </h2> : id ? <h2 className="font-bold text-3xl">Modifier la transaction </h2> : ""}
+                    {name ? <h2 className="font-bold text-5xl">Add transaction </h2> : id ? <h2 className="font-bold text-5xl">Edit transaction </h2> : ""}
                     {steps === 2 ? <div className="flex gap-2 w-full justify-center py-6">
                         <img src={coinNameImage.image} alt={coinNameImage.name} width={54} height={54} className="object-contain" />
                         <span className="font-bold text-5xl">{coinNameImage.name}</span>
@@ -410,7 +409,7 @@ export default function FormTemplate() {
                                                 </FormControl>
                                                 <SelectContent>
                                                     <div className="flex p-4">
-                                                        <Input placeholder="Rechercher un token (CoinGecko data)" value={searchText} onChange={handleSearch} />
+                                                        <Input placeholder="Search a token (CoinGecko data)" value={searchText} onChange={handleSearch} />
                                                     </div>
                                                     <div className="flex pl-8 py-3 font-normal text-slate-500">
                                                         {queryData.length > 0 ? "Searched tokens" : "Top 100 Tokens"}
@@ -463,7 +462,7 @@ export default function FormTemplate() {
                                         name="quantity"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Quantité</FormLabel>
+                                                <FormLabel>Quantity</FormLabel>
                                                 <FormControl>
                                                     <Input disabled={steps === 3 ? true : false} onInput={(e) => setQuantityPriceValue((prev) => ({ ...prev, quantity: e.target.value }))} type="number" placeholder="1.00" {...field} />
                                                 </FormControl>
@@ -479,7 +478,7 @@ export default function FormTemplate() {
                                         render={({ field }) => (
                                             <FormItem>
                                                 <div className="flex justify-between items-center">
-                                                    <FormLabel>Prix par monnaie</FormLabel>
+                                                    <FormLabel>Price per coin</FormLabel>
                                                     <span onClick={getPriceCoin} className="underline cursor-pointer">Utiliser marché</span>
                                                 </div>
                                                 <FormControl>
@@ -496,7 +495,7 @@ export default function FormTemplate() {
                                         name="spent"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Total dépensé</FormLabel>
+                                                <FormLabel>Total spent</FormLabel>
                                                 <FormControl>
                                                     <Input disabled={steps === 3 ? true : false} type="number" placeholder="1.00" {...field} />
                                                 </FormControl>
@@ -551,14 +550,14 @@ export default function FormTemplate() {
                                     />
                                 </div>
                                 <div className="md:col-span-1 col-span-2">
-                                    {steps === 2 && !id && !name ? <Button variant="outline" type="button" onClick={() => setSteps(steps - 1)} disabled={steps === 3} className="w-full">Revenir en arrière</Button> : ""}
-                                    {steps === 2 && name ? <Button variant="outline" type="button" onClick={handleGoBack} disabled={steps === 3} className="w-full">Revenir en arrière</Button> : ""}
-                                    {steps === 2 && id ? <Button variant="outline" type="button" onClick={handleGoBack} disabled={steps === 3} className="w-full">Revenir en arrière</Button> : ""}
+                                    {steps === 2 && !id && !name ? <Button variant="outline" type="button" onClick={() => setSteps(steps - 1)} disabled={steps === 3} className="w-full">Back</Button> : ""}
+                                    {steps === 2 && name ? <Button variant="outline" type="button" onClick={handleGoBack} disabled={steps === 3} className="w-full">Back</Button> : ""}
+                                    {steps === 2 && id ? <Button variant="outline" type="button" onClick={handleGoBack} disabled={steps === 3} className="w-full">Back</Button> : ""}
                                 </div>
                                 <div className={`${steps === 2 && !id && !name ? "md:col-span-1 col-span-2" : "md:col-span-1 col-span-2"}`}>
                                     {steps === 2 &&
                                         <Button type="submit" className="w-full">
-                                            {id ? "Modifier la transaction" : "Ajouter une transaction"}
+                                            Save
                                         </Button>}
                                 </div>
                                 <div className="col-span-2">
@@ -574,6 +573,7 @@ export default function FormTemplate() {
                 </Form >
             </div>
         </div >
+    </>
     )
 }
 
