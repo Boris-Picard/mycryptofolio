@@ -41,6 +41,8 @@ import Loading from "./Loading"
 import { MultiStepMotion } from "@/components/ui/multi-steps-motions";
 import { useToast } from "./ui/use-toast"
 
+import useFetchCoins from "@/hooks/useFetchCoins"
+
 export default function FormTemplate() {
 
     const [steps, setSteps] = useState(1)
@@ -48,7 +50,6 @@ export default function FormTemplate() {
     const [coinId, setCoinId] = useState(null)
     const [error, setError] = useState(null)
     const [transaction, setTransaction] = useState([])
-    const [selectData, setSelectData] = useState([])
     const [searchText, setSearchText] = useState("")
     const [queryData, setQueryData] = useState([])
     const [quantityPriceValue, setQuantityPriceValue] = useState([{ quantity: 0, price: 0 }])
@@ -57,6 +58,9 @@ export default function FormTemplate() {
     const navigate = useNavigate()
     const { id, name } = useParams()
     const { toast } = useToast()
+
+    const {data} = useFetchCoins()
+    
 
     useEffect(() => {
         const fetchTransaction = async () => {
@@ -87,18 +91,6 @@ export default function FormTemplate() {
         };
         fetchTransaction();
     }, [id, name]);
-
-    useEffect(() => {
-        const fetchList = async () => {
-            try {
-                const response = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc?x_cg_demo_api_key=${import.meta.env.VITE_API_KEY}`)
-                setSelectData(response.data)
-            } catch (error) {
-                console.log("Error fetching CoinGecko list :", error)
-            }
-        }
-        fetchList()
-    }, [])
 
     // Validation schema for the first form step
     const FormSchemaFirstStep = z.object({
@@ -414,7 +406,7 @@ export default function FormTemplate() {
                                                                 </div>
                                                             </SelectItem>
                                                         )) :
-                                                        selectData.map((coin) => (
+                                                        data.map((coin) => (
                                                             <SelectItem key={coin.symbol} value={coin.id}>
                                                                 <div className="flex items-center">
                                                                     <span className="mr-3 font-semibold">{coin.market_cap_rank}</span>
