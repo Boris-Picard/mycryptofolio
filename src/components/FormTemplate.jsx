@@ -86,6 +86,11 @@ export default function FormTemplate() {
                     setSteps(2)
                 } catch (error) {
                     console.error("Error fetching transaction", error);
+                    toast({
+                        variant: "destructive",
+                        title: error?.message,
+                        description: error?.response?.data?.error,
+                    })
                 }
             }
         };
@@ -181,11 +186,12 @@ export default function FormTemplate() {
             }
             setSteps(2);
         } catch (error) {
+            setError(error.response.data.error)
             toast({
                 variant: "destructive",
-                title: error.response?.data || error.message,
+                title: error?.message,
+                description: error?.response?.data?.error,
             })
-            setError(error.response.data.error)
         }
     };
 
@@ -246,7 +252,8 @@ export default function FormTemplate() {
 
             toast({
                 variant: "destructive",
-                title: error.response.data || error.message,
+                title: error?.message,
+                description: error?.response?.data?.message,
             })
 
             setError(error.response.data.error)
@@ -276,7 +283,11 @@ export default function FormTemplate() {
             secondForm.setValue('price', price)
             setQuantityPriceValue((prev) => ({ ...prev, price: price }))
         } catch (error) {
-            console.log(error);
+            toast({
+                variant: "destructive",
+                title: error?.message,
+                description: error?.response?.data?.message,
+            })
         }
     }
 
@@ -285,7 +296,6 @@ export default function FormTemplate() {
         const getCoinNameImage = async () => {
             const coinName = transaction?.name || transaction.coin?.name || dataStep?.step1?.coin;
             if (!coinName) {
-                console.log('No coin name provided.');
                 return
             }
             try {
@@ -294,7 +304,11 @@ export default function FormTemplate() {
                 const imageData = response.data.image.small
                 setCoinNameImage({ name: nameData, image: imageData })
             } catch (error) {
-                console.error(error);
+                toast({
+                    variant: "destructive",
+                    title: error?.message,
+                    description: error?.response?.data?.message,
+                })
             }
         }
         getCoinNameImage()
@@ -320,7 +334,11 @@ export default function FormTemplate() {
                 const response = await axios.get(`https://api.coingecko.com/api/v3/search?query=${searchText}&x_cg_demo_api_key=${import.meta.env.VITE_API_KEY}`)
                 setQueryData(response.data.coins);
             } catch (error) {
-                console.log(error);
+                toast({
+                    variant: "destructive",
+                    title: error?.message,
+                    description: error?.response?.data?.message,
+                })
             }
         }
         getQuery()

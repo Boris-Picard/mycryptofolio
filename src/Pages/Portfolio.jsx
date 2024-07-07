@@ -12,12 +12,15 @@ import {
 import CardsData from "@/components/CardsData";
 
 import CsvButton from "@/components/CsvButton";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function Portfolio() {
     const [transactions, setTransactions] = useState([])
     const [transactionsName, setTransactionsName] = useState([])
     const [dataTransactionApi, setDataTransactionApi] = useState([])
     const [error, setError] = useState(null)
+
+    const { toast } = useToast()
 
     useEffect(() => {
         const fetchTransactions = async () => {
@@ -30,7 +33,11 @@ export default function Portfolio() {
                 setTransactionsName(coinNames)
             } catch (error) {
                 setError(error.response.data.error)
-                console.error("Error fetching transactions:", error)
+                toast({
+                    variant: "destructive",
+                    title: error?.message,
+                    description: error?.response?.data?.message,
+                })
             }
         }
         fetchTransactions()
@@ -43,6 +50,11 @@ export default function Portfolio() {
                 setDataTransactionApi(response.data)
             } catch (error) {
                 setError(error)
+                toast({
+                    variant: "destructive",
+                    title: error?.message,
+                    description: error?.response?.data?.message,
+                })
             }
         }
         fetchCryptoCoin()

@@ -46,8 +46,8 @@ export default function TableData({ data }) {
         } catch (error) {
             toast({
                 variant: "destructive",
-                title: error.message,
-                description: error.response.data.error,
+                title: error?.message,
+                description: error?.response?.data?.message,
             })
         }
     }
@@ -70,8 +70,8 @@ export default function TableData({ data }) {
         } catch (error) {
             toast({
                 variant: "destructive",
-                title: error.message,
-                description: error.response.data.error,
+                title: error?.message,
+                description: error?.response?.data?.message,
             })
         }
     }

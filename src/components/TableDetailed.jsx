@@ -45,7 +45,8 @@ export default function TableDetailed() {
         } catch (error) {
             toast({
                 variant: "destructive",
-                title: error.response.data || error.message,
+                title: error?.message,
+                description: error?.response?.data?.message,
             })
         }
     }

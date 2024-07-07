@@ -28,12 +28,15 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
 import CsvButton from "@/components/CsvButton"
+import { useToast } from "@/components/ui/use-toast"
 
 export default function Detailed() {
     const location = useLocation()
     const { coinData } = location.state
     const navigate = useNavigate()
     const { transactions, setTransactions } = useDeleteDetailedTransaction()
+
+    const { toast } = useToast()
 
     const [data, setData] = useState([])
 
@@ -50,7 +53,11 @@ export default function Detailed() {
                     setTransactions(coinData)
                 }
             } catch (error) {
-                console.log(error);
+                toast({
+                    variant: "destructive",
+                    title: error?.message,
+                    description: error?.response?.data?.message,
+                })
             }
         }
         fetchCoinData()

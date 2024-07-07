@@ -29,7 +29,7 @@ export const useLogout = () => {
       toast({
         variant: "destructive",
         title: "Somethings went wrong:",
-        description: error.response?.data || error.message || "Unknow error occured",
+        description: error?.response?.data || error?.message || "Unknow error occured",
       })
     }
   };
