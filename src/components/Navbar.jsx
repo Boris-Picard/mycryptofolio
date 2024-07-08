@@ -22,6 +22,8 @@ import { useState } from "react";
 
 import { CircleAlert } from "lucide-react";
 
+import mycryptofolio from "../../assets/mycryptofolio.png"
+
 export default function Navbar() {
     const { user } = useAuthStore()
 
@@ -41,7 +43,7 @@ export default function Navbar() {
                         to="/"
                         className="flex items-center gap-2 text-lg font-semibold md:text-base"
                     >
-                        <Package2 className="h-6 w-6" />
+                        <img src={mycryptofolio} alt="logo" width={50} height={50} className="brightness-0 dark:brightness-100"/>
                     </Link>
                     <Link
                         to="/"
@@ -74,7 +76,7 @@ export default function Navbar() {
                                 to="/"
                                 className="flex items-center gap-2 text-lg font-semibold md:text-base"
                             >
-                                <Package2 className="h-6 w-6" />
+                                <img src={mycryptofolio} alt="logo" width={50} height={50} className="brightness-0 dark:brightness-100"/>
                             </Link>
                             <Link
                                 to="/"
