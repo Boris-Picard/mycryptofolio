@@ -22,9 +22,22 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+
 
 import { useDeleteTransaction } from "@/stores/delete-transaction"
 import { useToast } from "./ui/use-toast"
+
+import { Button } from "./ui/button"
 
 export default function TableData({ data }) {
     const navigate = useNavigate()
@@ -156,34 +169,54 @@ export default function TableData({ data }) {
                                     </TooltipContent>
                                 </Tooltip>
                             </TooltipProvider>
-                            <DropdownMenu>
-                                <DropdownMenuTrigger>
-                                    <TooltipProvider>
-                                        <Tooltip delayDuration={0}>
-                                            <TooltipTrigger asChild>
-                                                <div className="cursor-pointer">
-                                                    <EllipsisVertical />
+                            <Dialog>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger>
+                                        <TooltipProvider>
+                                            <Tooltip delayDuration={0}>
+                                                <TooltipTrigger asChild>
+                                                    <div className="cursor-pointer">
+                                                        <EllipsisVertical />
+                                                    </div>
+                                                </TooltipTrigger>
+                                                <TooltipContent>
+                                                    <p>More actions</p>
+                                                </TooltipContent>
+                                            </Tooltip>
+                                        </TooltipProvider>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent>
+                                        <DropdownMenuItem >
+                                            <DialogTrigger asChild>
+                                                <div className="font-semibold p-4 cursor-pointer relative flex w-full select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none dark:focus:bg-slate-800 dark:focus:text-slate-50">
+                                                    Remove coin
                                                 </div>
-                                            </TooltipTrigger>
-                                            <TooltipContent>
-                                                <p>More actions</p>
-                                            </TooltipContent>
-                                        </Tooltip>
-                                    </TooltipProvider>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent>
-                                    <DropdownMenuItem>
-                                        <div className="font-semibold p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => deleteTransaction(coin.coin._id)}>
-                                            Remove coin
-                                        </div>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                        <div className="font-semibold p-4 cursor-pointer relative flex w-full  select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => seeTransactions(coin)}>
-                                            View transactions
-                                        </div>
-                                    </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
+                                            </DialogTrigger>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem >
+                                            <div className="font-semibold p-4 cursor-pointer relative flex w-full select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none dark:focus:bg-slate-800 dark:focus:text-slate-50" onClick={() => seeTransactions(coin)}>
+                                                View transactions
+                                            </div>
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                                <DialogContent className="sm:max-w-[425px]">
+                                    <DialogHeader>
+                                        <DialogTitle>Delete Coin</DialogTitle>
+                                        <DialogDescription>
+                                            Are you sure you want to delete this coin? This action will permanently remove the coin and all associated transactions from your account. Please confirm to proceed or cancel to go back.
+                                        </DialogDescription>
+                                    </DialogHeader>
+                                    <DialogFooter>
+                                        <DialogClose asChild>
+                                            <Button>Cancel</Button>
+                                        </DialogClose>
+                                        <DialogClose asChild>
+                                            <Button variant="destructive" onClick={() => deleteTransaction(coin.coin._id)}>Confirm</Button>
+                                        </DialogClose>
+                                    </DialogFooter>
+                                </DialogContent>
+                            </Dialog>
                         </div>
                     </TableCell>
                 </TableRow >
