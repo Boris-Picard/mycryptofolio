@@ -17,6 +17,8 @@ export default function VerifyEmail() {
         const mailVerification = async () => {
             const query = new URLSearchParams(location.search);
             const token = query.get('token');
+            console.log(query);
+            console.log(token);
             try {
                 const response = await axios.get(`${import.meta.env.VITE_API_SERVER}/api/auth/verify-email?token=${token}`)
                 console.log(response);
