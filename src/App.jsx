@@ -41,7 +41,7 @@ function App() {
         toast({
           variant: "destructive",
           title: "Somethings went wrong:",
-          description: error.response?.data || error.response?.message || "Unknown error occurred",
+          description: error.response.data.error || error.message || "Unknown error occurred",
         })
         clearUser();
       }
@@ -57,7 +57,7 @@ function App() {
         toast({
           variant: "destructive",
           title: "Somethings went wrong:",
-          description: error.response?.data || error.response?.message || "Unknown error occurred",
+          description: error.response.data.error || error.message || "Unknown error occurred",
         })
         clearUser();
       }
