@@ -19,7 +19,6 @@ export default function VerifyEmail() {
             const token = query.get('token');
             try {
                 const response = await axios.get(`${import.meta.env.VITE_API_SERVER}/api/auth/verify-email?token=${token}`)
-                console.log(response);
                 setIsVerified(response.data.verified)
                 toast({
                     variant: "success",
@@ -38,7 +37,7 @@ export default function VerifyEmail() {
             }
         }
         mailVerification()
-    }, [])
+    }, [location.search, navigate])
 
     return isVerified ? <div className="w-full">
         <div className="flex items-center justify-center py-12 h-screen bg-gray-100 dark:bg-zinc-950">
