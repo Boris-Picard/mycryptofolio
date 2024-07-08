@@ -60,7 +60,7 @@ export default function SignUp() {
     const form = useForm({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            email: "picard.boris@gmail.com",
+            email: "",
             password: "",
         },
     })
