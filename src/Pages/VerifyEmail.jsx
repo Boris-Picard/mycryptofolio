@@ -32,7 +32,7 @@ export default function VerifyEmail() {
                 setIsVerified(false);
                 toast({
                     variant: "destructive",
-                    title: error.response.data.error || error.response.data,
+                    title: error.response.data.message || error.response.data,
                 })
                 setError(error.response.data.error || error.response.data)
             }
