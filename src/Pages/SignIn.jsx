@@ -86,7 +86,7 @@ export default function SignIn() {
             toast({
                 variant: "destructive",
                 title: "Somethings went wrong:",
-                description: error.response?.data || "Unknown error occurred",
+                description: error.response.data.error || error.response.data || "Unknown error occurred",
             })
 
             setTimeout(() => {
