@@ -2,7 +2,7 @@ import path from "path";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
-export default defineConfig(({ command }) => {
+export default defineConfig(() => {
   return {
     plugins: [react()],
     resolve: {
@@ -13,7 +13,7 @@ export default defineConfig(({ command }) => {
     server: {
       proxy: {
         "/api": {
-          target: command === "serve" ? "http://localhost:3001" : "https://api.mycryptofolio.site",
+          target: "https://mycryptofolio.site",
           changeOrigin: true,
           secure: false,
           rewrite: (path) => path.replace(/^\/api/, ""),
