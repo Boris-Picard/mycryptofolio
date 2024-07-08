@@ -15,7 +15,7 @@ export default defineConfig(() => {
         "/api": {
           target: "https://mycryptofolio-backend.onrender.com",
           changeOrigin: true,
-          secure: false,
+          secure: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
         },
       },
