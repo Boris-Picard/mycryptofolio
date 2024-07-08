@@ -29,7 +29,6 @@ export default function CardsData() {
         const totalQuantity = transactions.reduce((acc, transaction) => acc + transaction.quantity, 0)
 
         const actualPricePerCoin = totalAmount / totalQuantity;
-
         // Calcul du prix il y a 24 heures
         const price24hAgo = actualPricePerCoin / (1 + priceChange24h / 100);
 
