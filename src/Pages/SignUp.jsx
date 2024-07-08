@@ -206,9 +206,9 @@ export default function SignUp() {
                                     <Button type="submit" className="w-full">
                                         Sign up
                                     </Button>
-                                    <Button variant="outline" className="w-full">
+                                    {/* <Button variant="outline" className="w-full">
                                         Sign up with Google
-                                    </Button>
+                                    </Button> */}
                                 </> : <Button disabled={true}>
                                     <svg className="animate-spin h-5 w-5 mr-3 border-gray-200 border-2 border-t-blue-600 rounded-full" viewBox="0 0 24 24">
                                         ...
