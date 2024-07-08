@@ -12,13 +12,11 @@ export default function VerifyEmail() {
 
     const [isVerified, setIsVerified] = useState(false)
     const [error, setError] = useState("")
-    console.log(location);
+    
     useEffect(() => {
         const mailVerification = async () => {
             const query = new URLSearchParams(location.search);
             const token = query.get('token');
-            console.log(query);
-            console.log(token);
             try {
                 const response = await axios.get(`${import.meta.env.VITE_API_SERVER}/api/auth/verify-email?token=${token}`)
                 console.log(response);
