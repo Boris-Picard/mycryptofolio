@@ -35,7 +35,7 @@ export default function Navbar() {
 
     return (
         <div className="container sticky top-0 pt-8 px-10 z-50">
-            <header className="bg-slate-500 flex h-16 items-center gap-4 bg-background px-4 md:px-6 rounded-xl bg-opacity-10 backdrop-blur">
+            <header className="bg-slate-500 flex h-16 items-center gap-4 bg-background px-4 md:px-6 rounded-xl bg-opacity-10 backdrop-blur border-slate-200 dark:border-slate-800 border">
                 <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6 dark:text-white text-black w-full">
                     <Link
                         to="/"
