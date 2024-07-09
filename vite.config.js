@@ -13,7 +13,7 @@ export default defineConfig(() => {
     server: {
       proxy: {
         "/api": {
-          target: "https://mycryptofolio-backend.onrender.com",
+          target: import.meta.env.VITE_API_SERVER,
           changeOrigin: true,
           secure: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
