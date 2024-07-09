@@ -1,55 +1,58 @@
-# Multi-Step Form Project
+# myCryptoFolio - Frontend
 
-## Overview
-
-This project aims to deepen understanding and practice using Zod and React Hook Form. It serves as a training exercise to effectively implement form validation and management in React applications. The project features a multi-step form to guide users through a sequential input process, enhancing user experience and form organization.
-
-## Objectives
-
-- **Learn Integration of Zod:** Integrate Zod for schema-based form validation, ensuring data integrity and consistent validation rules across the application.
-- **Utilize React Hook Form:** Understand and utilize React Hook Form for efficient form handling in React, enabling cleaner and more maintainable form logic.
-- **Create Robust Forms:** Practice creating robust, user-friendly forms with validation, focusing on enhancing user experience through clear error messages and smooth navigation between form steps.
+myCryptoFolio is a web application built with React that allows users to track their cryptocurrency investments in real-time.
 
 ## Features
+- **Real-Time Data:** Fetches data for over 14,000 cryptocurrencies from the CoinGecko API.
+- **Portfolio Management:** Add, edit, and delete transactions for each cryptocurrency.
+- **Dynamic Calculations:** Automatically calculates the total cost, current value, profits, and losses for each coin and the entire portfolio.
+- **User Authentication:** Secure user registration and login with JWT tokens.
+- **Responsive Design:** Styled using Tailwind CSS and Shadcn for component design.
 
-- **Multi-Step Form:** Implement a multi-step form to collect data in a sequential manner, making the form-filling process more intuitive for users.
-- **Zod Validation:** Use Zod to define and enforce validation schemas for each step of the form, ensuring data collected at each step meets the required criteria.
-- **React Hook Form Integration:** Leverage React Hook Form to manage form state and handle form submissions efficiently, reducing boilerplate code and enhancing form performance.
+## Technologies Used
+- **React**
+- **Tailwind CSS**
+- **Shadcn**
+- **Axios**
+- **Zustand**
+- **React Hook Form**
+- **Zod**
 
-## Steps in the Form
+## Installation
 
-1. **Step 1:** Select a Coin
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/boris-picard/mycryptofolio.git
+    cd mycryptofolio
+    ```
 
-   - Users are prompted to select a coin from a predefined list.
-   - Validation ensures a coin is selected before proceeding to the next step.
+2. Install dependencies:
+    ```bash
+    npm install
+    ```
 
-2. **Step 2:** Enter Transaction Details
-   - Users input quantity, price per coin, total spent, and transaction date.
-   - Validation checks for numerical input and ensures the date is not in the future.
+3. Create a `.env` file with the following content:
+    ```plaintext
+    VITE_API_SERVER=http://localhost:3001/api
+    ```
 
-## How to Run the Project
+4. Run the development server:
+    ```bash
+    npm start
+    ```
 
-1. **Clone the Repository:**
+5. Open your browser and navigate to `http://localhost:5173`.
 
-   ```bash
-   git clone https://github.com/your-username/form-template.git
-   ```
+## Scripts
 
-2. **Install Dependencies:**
+- `npm start`: Starts the development server.
+- `npm build`: Builds the app for production.
+- `npm test`: Runs the test suite using Jest.
 
-   ```bash
-   cd form-template
-   npm install
-   ```
+## Contributing
 
-3. **Run the Development Server:**
+Contributions are welcome! Please create a pull request with your changes.
 
-   ```bash
-   npm start
-   ```
+## License
 
-Open in Browser:
-Open your browser and navigate to http://localhost:3000 to view the multi-step form in action.
-
-**Conclusion**
-This project is a comprehensive exercise to practice and improve skills in form validation and management in React. By implementing a multi-step form with Zod and React Hook Form, the project demonstrates the creation of structured, user-friendly, and well-validated forms.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
