@@ -3,10 +3,6 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 export default defineConfig(({ mode }) => {
-  // Déterminer le serveur API en fonction du mode
-  const apiServer = mode === 'production'
-    ? import.meta.env.VITE_API_SERVER_PROD
-    : import.meta.env.VITE_API_SERVER_DEV;
 
   return {
     plugins: [react()],
@@ -18,7 +14,7 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         "/api": {
-          target: apiServer,
+          target: mode === "production" ? "https://mycryptofolio-backend.onrender.com" : "http://localhost:3001",
           changeOrigin: true,
           secure: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
