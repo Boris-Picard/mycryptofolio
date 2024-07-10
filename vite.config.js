@@ -2,7 +2,8 @@ import path from "path";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
-export default defineConfig(() => {
+export default defineConfig(({ mode }) => {
+
   return {
     plugins: [react()],
     resolve: {
@@ -13,7 +14,7 @@ export default defineConfig(() => {
     server: {
       proxy: {
         "/api": {
-          target: import.meta.env.VITE_API_SERVER,
+          target: mode === "production" ? "https://mycryptofolio-backend.onrender.com" : "http://localhost:3001",
           changeOrigin: true,
           secure: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
