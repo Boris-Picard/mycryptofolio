@@ -97,11 +97,11 @@ export default function Portfolio() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 mb-3 gap-3">
             <CardsData />
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 ">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 gap-3 mb-3">
             <PieChartComponent />
         </div>
         <Error message={error} />
-        <div className="mt-10">
+        <div>
             <div className="flex justify-end mb-3">
                 <CsvButton csvdata={transactions} />
             </div>

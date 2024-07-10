@@ -48,7 +48,7 @@ export default function TableData({ data }) {
     const { toast } = useToast()
 
     const { setDataChart, removeDataChart } = useChartStore()
-    
+
     const deleteTransaction = async (id) => {
         try {
             await axios.delete(`${import.meta.env.VITE_API_SERVER}/api/transaction/${id}`, {
@@ -145,9 +145,9 @@ export default function TableData({ data }) {
             const total = transactions.reduce((acc, coin) => acc + coin.actualValue, 0);
 
             const updatedCoins = transactions.map((coin, index) => {
-                const percentage = (coin.actualValue / total) * 100;
+                const percentage = parseFloat(((coin.actualValue / total) * 100).toFixed(1));
                 const color = colors[index % colors.length];
-                return { _id: coin.coin._id, name: coin.name, portfolioPercentage: percentage, fill: color };
+                return { _id: coin.coin._id, name: coin.coin.name, portfolioPercentage: percentage, fill: color };
             });
 
             setDataChart(updatedCoins);
