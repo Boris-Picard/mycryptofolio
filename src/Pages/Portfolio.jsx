@@ -13,6 +13,7 @@ import CardsData from "@/components/CardsData";
 
 import CsvButton from "@/components/CsvButton";
 import { useToast } from "@/components/ui/use-toast";
+import PieChartComponent from "@/components/PieChart";
 
 export default function Portfolio() {
     const [transactions, setTransactions] = useState([])
@@ -60,7 +61,6 @@ export default function Portfolio() {
         fetchCryptoCoin()
     }, [transactionsName])
 
-
     useEffect(() => {
         const getCoinsValue = () => {
             // Itère sur les transactions
@@ -97,8 +97,11 @@ export default function Portfolio() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 mb-3 gap-3">
             <CardsData />
         </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 gap-3 mb-3">
+            <PieChartComponent />
+        </div>
         <Error message={error} />
-        <div className="mt-10">
+        <div>
             <div className="flex justify-end mb-3">
                 <CsvButton csvdata={transactions} />
             </div>
