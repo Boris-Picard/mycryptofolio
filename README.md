@@ -13,6 +13,7 @@ myCryptoFolio is a web application built with React that allows users to track t
 - **React**
 - **Tailwind CSS**
 - **Shadcn**
+- **Recharts**
 - **Axios**
 - **Zustand**
 - **React Hook Form**
