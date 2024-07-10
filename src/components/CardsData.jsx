@@ -31,10 +31,10 @@ export default function CardsData() {
         const actualPricePerCoin = totalAmount / totalQuantity;
         // Calcul du prix il y a 24 heures
         const price24hAgo = actualPricePerCoin / (1 + priceChange24h / 100);
-
+        
         // Calcul de la valeur du portefeuille il y a 24 heures
         const value24hAgo = totalQuantity * price24hAgo;
-
+        
         // Calcul de la différence en dollars
         const differenceInDollars = totalAmount - value24hAgo;
 

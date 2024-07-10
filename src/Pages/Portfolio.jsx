@@ -14,7 +14,6 @@ import CardsData from "@/components/CardsData";
 import CsvButton from "@/components/CsvButton";
 import { useToast } from "@/components/ui/use-toast";
 import PieChartComponent from "@/components/PieChart";
-import { AreaChartData } from "@/components/AreaChart";
 
 export default function Portfolio() {
     const [transactions, setTransactions] = useState([])
@@ -100,7 +99,6 @@ export default function Portfolio() {
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 gap-3 mb-3">
             <PieChartComponent />
-            <AreaChartData />
         </div>
         <Error message={error} />
         <div>
