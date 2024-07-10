@@ -14,7 +14,7 @@ import CardsData from "@/components/CardsData";
 import CsvButton from "@/components/CsvButton";
 import { useToast } from "@/components/ui/use-toast";
 import PieChartComponent from "@/components/PieChart";
-import { AreaChartData } from "@/components/AreChart";
+import { AreaChartData } from "@/components/AreaChart";
 
 export default function Portfolio() {
     const [transactions, setTransactions] = useState([])
