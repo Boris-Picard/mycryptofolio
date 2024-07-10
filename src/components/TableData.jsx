@@ -221,7 +221,7 @@ export default function TableData({ data }) {
                                         </DropdownMenuItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
-                                <DialogContent className="sm:max-w-[425px]">
+                                <DialogContent className="sm:max-w-[425px] bg-slate-50 dark:bg-zinc-900 dark:text-white">
                                     <DialogHeader>
                                         <DialogTitle>Delete Coin</DialogTitle>
                                         <DialogDescription>

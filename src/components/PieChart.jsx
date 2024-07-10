@@ -42,7 +42,7 @@ export default function PieChartComponent() {
             color: "hsl(var(--chart-5))",
         },
     }
-    console.log(dataChart);
+    
     return (
         <Card className="col-span-2">
             <CardHeader className="items-center pb-0">
@@ -51,7 +51,7 @@ export default function PieChartComponent() {
             <CardContent className="flex-1 pb-0">
                 <ChartContainer
                     config={chartConfig}
-                    className="mx-auto aspect-square max-h-[250px]"
+                    className="mx-auto aspect-square max-h-[400px]"
                 >
                     <PieChart>
                         <ChartTooltip
