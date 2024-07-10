@@ -237,13 +237,13 @@ export default function SignUp() {
         </div> : !verified && isExist ? <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
             <div className="flex items-center justify-center py-12 h-screen bg-gray-100 dark:bg-zinc-950">
                 <div className="flex flex-col space-y-6 items-center p-8 bg-white rounded-lg shadow-xl">
-                    <h1 className="font-bold text-4xl">Vérifiez votre boîte mail.</h1>
-                    <h2 className="text-lg text-gray-700">Vous avez 15 minutes pour valider votre compte.</h2>
+                    <h1 className="font-bold text-4xl">Check your email.</h1>
+                    <h2 className="text-lg text-gray-700">You have 15 minutes to verify your account.</h2>
                     <p className="text-slate-500 text-center">
-                        Si vous n'avez pas reçu de mail ou que vous n'arrivez pas à valider votre compte
+                        If you haven't received an email or are unable to verify your account
                     </p>
                     {!sendMail ? <Button className="dark:bg-black dark:text-white dark:hover:bg-zinc-700" onClick={resendMail}>
-                        Cliquez ici
+                        Click here
                     </Button> : <Button className="dark:bg-black dark:text-white dark:hover:bg-zinc-700" disabled={true}>
                         <svg className="animate-spin h-5 w-5 mr-3 border-gray-200 border-2 border-t-blue-600 rounded-full" viewBox="0 0 24 24">
                             ...
