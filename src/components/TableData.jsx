@@ -47,7 +47,7 @@ export default function TableData({ data }) {
 
     const { toast } = useToast()
 
-    const {  removeDataChart } = useChartStore()
+    const { setDataChart, removeDataChart } = useChartStore()
     
     const deleteTransaction = async (id) => {
         try {
@@ -137,6 +137,23 @@ export default function TableData({ data }) {
         // Mettre à jour l'état aggregatedData avec les valeurs agrégées
         addTransaction(Object.values(aggregated))
     }, [data, addTransaction]); // Exécuter l'effet à chaque fois que data change
+
+    useEffect(() => {
+        const portfolioPercentage = async () => {
+            const colors = ["var(--color-chrome)", "var(--color-safari)", "var(--color-firefox)", "var(--color-edge)", "var(--color-other)"]; // Liste de couleurs
+
+            const total = transactions.reduce((acc, coin) => acc + coin.actualValue, 0);
+
+            const updatedCoins = transactions.map((coin, index) => {
+                const percentage = (coin.actualValue / total) * 100;
+                const color = colors[index % colors.length];
+                return { _id: coin.coin._id, name: coin.name, portfolioPercentage: percentage, fill: color };
+            });
+
+            setDataChart(updatedCoins);
+        }
+        portfolioPercentage()
+    }, [data, transactions])
 
     return (
         <>
