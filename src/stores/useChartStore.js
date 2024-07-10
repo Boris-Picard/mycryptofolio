@@ -1,8 +1,10 @@
 import { create } from "zustand";
 
 export const useChartStore = create((set) => ({
-  data: [],
-  setData: (newData) => set({ data: newData }),
-  addData: (newData) =>
-    set((state) => ({ transactions: [...state.data, newData] })),
+  dataChart: [],
+  setDataChart: (newData) => set({ dataChart: newData }),
+  removeDataChart: (dataId) =>
+    set((state) => ({
+      dataChart: state.dataChart.filter((data) => data._id !== dataId),
+    })),
 }));

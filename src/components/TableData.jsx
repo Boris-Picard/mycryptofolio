@@ -38,6 +38,7 @@ import { useDeleteTransaction } from "@/stores/delete-transaction"
 import { useToast } from "./ui/use-toast"
 
 import { Button } from "./ui/button"
+import { useChartStore } from "@/stores/useChartStore"
 
 export default function TableData({ data }) {
     const navigate = useNavigate()
@@ -46,12 +47,15 @@ export default function TableData({ data }) {
 
     const { toast } = useToast()
 
+    const {  removeDataChart } = useChartStore()
+    
     const deleteTransaction = async (id) => {
         try {
             await axios.delete(`${import.meta.env.VITE_API_SERVER}/api/transaction/${id}`, {
                 withCredentials: true
             })
             removeTransaction(id)
+            removeDataChart(id)
             toast({
                 variant: "success",
                 title: "Deleted coin & transactions successfully",

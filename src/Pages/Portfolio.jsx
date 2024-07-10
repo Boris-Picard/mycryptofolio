@@ -14,12 +14,14 @@ import CardsData from "@/components/CardsData";
 import CsvButton from "@/components/CsvButton";
 import { useToast } from "@/components/ui/use-toast";
 import PieChartComponent from "@/components/PieChart";
+import { useChartStore } from "@/stores/useChartStore";
 
 export default function Portfolio() {
     const [transactions, setTransactions] = useState([])
     const [transactionsName, setTransactionsName] = useState([])
     const [dataTransactionApi, setDataTransactionApi] = useState([])
     const [error, setError] = useState(null)
+    const { dataChart, setDataChart } = useChartStore()
 
     const { toast } = useToast()
 
@@ -61,7 +63,6 @@ export default function Portfolio() {
         fetchCryptoCoin()
     }, [transactionsName])
 
-
     useEffect(() => {
         const getCoinsValue = () => {
             // Itère sur les transactions
@@ -93,6 +94,26 @@ export default function Portfolio() {
         };
         getCoinsValue();
     }, [dataTransactionApi]); // S'exécute lorsque dataTransactionApi change
+
+    console.log(transactions);
+
+    useEffect(() => {
+        const portfolioPercentage = async () => {
+            const colors = ["var(--color-chrome)", "var(--color-safari)", "var(--color-firefox)", "var(--color-edge)", "var(--color-other)"]; // Liste de couleurs
+
+            const total = transactions.reduce((acc, coin) => acc + coin.actualValue, 0);
+
+            const updatedCoins = transactions.map((coin, index) => {
+                const percentage = (coin.actualValue / total) * 100;
+                const color = colors[index % colors.length];
+                return { _id: coin.coin._id, name: coin.name, portfolioPercentage: percentage, fill: color };
+            });
+
+            setDataChart(updatedCoins);
+        }
+        portfolioPercentage()
+    }, [transactions])
+
 
     return (<div className="container min-h-full p-10">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 mb-3 gap-3">
