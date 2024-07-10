@@ -42,7 +42,7 @@ export default function PieChartComponent() {
             color: "hsl(var(--chart-5))",
         },
     }
-    console.log(dataChart);
+    
     return (
         <Card className="col-span-2">
             <CardHeader className="items-center pb-0">
