@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, redirect } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HomePage from './Pages/HomePage';
 import Portfolio from "./Pages/Portfolio"
@@ -44,6 +44,7 @@ function App() {
           description: error.response.data.error || error.message || "Unknown error occurred",
         })
         clearUser();
+        return redirect("/signin")
       }
     };
 
@@ -60,6 +61,7 @@ function App() {
           description: error.response.data.error || error.message || "Unknown error occurred",
         })
         clearUser();
+        return redirect("signin")
       }
     };
 
@@ -82,6 +84,7 @@ function App() {
     }
     initalize()
 
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
