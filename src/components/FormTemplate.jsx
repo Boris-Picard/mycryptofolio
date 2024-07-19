@@ -43,6 +43,8 @@ import { useToast } from "./ui/use-toast"
 
 import useFetchCoins from "@/hooks/useFetchCoins"
 
+import TransactionService from "@/services/TransactionService"
+
 export default function FormTemplate() {
 
     const [steps, setSteps] = useState(1)
@@ -60,6 +62,8 @@ export default function FormTemplate() {
     const { toast } = useToast()
 
     const { data: data, error: errorList } = useFetchCoins()
+
+    const transactionService = new TransactionService()
 
     useEffect(() => {
         const fetchTransaction = async () => {
@@ -219,15 +223,7 @@ export default function FormTemplate() {
                     withCredentials: true,
                 })
             } else {
-                await axios.post(`${import.meta.env.VITE_API_SERVER}/api/coin/createTransaction`, {
-                    name: dataStep.step1.coin,
-                    quantity: parsedData.quantity,
-                    price: parsedData.price,
-                    spent: parsedData.spent,
-                    date: parsedData.date,
-                }, {
-                    withCredentials: true,
-                });
+                transactionService.createCoin(dataStep.step1.coin, parsedData)
             }
 
             if (id) {
