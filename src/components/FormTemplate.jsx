@@ -203,47 +203,42 @@ export default function FormTemplate() {
         try {
             const parsedData = FormSchemaSecondStep.parse(data);
             setDataStep((prev) => ({ ...prev, step2: parsedData }));
+
+            let response;
             if (id) {
-                await axios.put(`${import.meta.env.VITE_API_SERVER}/api/transaction/id/${transaction._id}`, {
-                    quantity: parsedData.quantity,
-                    price: parsedData.price,
-                    spent: parsedData.spent,
-                    date: parsedData.date,
-                }, {
-                    withCredentials: true,
-                })
+                response = await transactionService.updateTransaction(transaction._id, parsedData)
             } else if (name) {
                 transactionService.createTransactionName(transaction.name, coinId, parsedData)
             } else {
                 transactionService.createCoin(dataStep.step1.coin, parsedData)
             }
 
-            if (id) {
+            if (response.status === 200) {
                 toast({
                     variant: "success",
-                    title: "Transaction updated successfully",
-                })
+                    title: id ? "Transaction updated successfully" : "Added transaction successfully",
+                });
+
+                setTimeout(() => {
+                    navigate('/portfolio');
+                }, 2000);
+
+                setSteps(3);
             } else {
                 toast({
-                    variant: "success",
-                    title: "Added transaction successfully",
-                })
+                    variant: "destructive",
+                    title: response.message || "An error occurred",
+                    description: response.error?.message || "An unexpected error occurred",
+                });
             }
-
-            setTimeout(() => {
-                navigate('/portfolio');
-            }, 2000);
-
-            setSteps(3);
         } catch (error) {
-
             toast({
                 variant: "destructive",
-                title: error?.message,
-                description: error?.response?.data?.message,
-            })
+                title: error?.message || "An error occurred",
+                description: error?.response?.data?.message || "An unexpected error occurred",
+            });
 
-            setError(error.response.data.error)
+            setError(error?.response?.data?.message || error.message || "An error occurred");
         }
     };
 

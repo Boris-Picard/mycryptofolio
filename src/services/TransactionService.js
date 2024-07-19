@@ -6,40 +6,58 @@ const axiosInstance = axios.create({
 });
 
 class TransactionService {
+  //create a new coin with transaction
   async createCoin(step, data) {
-    const axiosResponse = await axiosInstance
-      .post(`${import.meta.env.VITE_API_SERVER}/api/coin/createTransaction`, {
-        name: step,
-        quantity: data.quantity,
-        price: data.price,
-        spent: data.spent,
-        date: data.date,
-      })
-      .then((response) => {
-        return response;
-      })
-      .catch((error) => {
-        return error;
-      });
-    return axiosResponse;
+    try {
+      const axiosResponse = await axiosInstance.post(
+        `${import.meta.env.VITE_API_SERVER}/api/coin/createTransaction`,
+        {
+          name: step,
+          quantity: data.quantity,
+          price: data.price,
+          spent: data.spent,
+          date: data.date,
+        }
+      );
+      return axiosResponse;
+    } catch (error) {
+      return error;
+    }
   }
-
+  //add a transaction to a coin
   async createTransactionName(name, id, data) {
-    const axiosResponse = await axiosInstance
-      .post(`${import.meta.env.VITE_API_SERVER}/api/transaction/name/${name}`, {
-        quantity: data.quantity,
-        price: data.price,
-        spent: data.spent,
-        date: data.date,
-        coinId: id,
-      })
-      .then((response) => {
-        return response;
-      })
-      .catch((error) => {
-        return error;
-      });
-    return axiosResponse;
+    try {
+      const axiosResponse = await axiosInstance.post(
+        `${import.meta.env.VITE_API_SERVER}/api/transaction/name/${name}`,
+        {
+          quantity: data.quantity,
+          price: data.price,
+          spent: data.spent,
+          date: data.date,
+          coinId: id,
+        }
+      );
+      return axiosResponse;
+    } catch (error) {
+      return error;
+    }
+  }
+  //update a transaction
+  async updateTransaction(id, data) {
+    try {
+      const axiosResponse = await axiosInstance.put(
+        `${import.meta.env.VITE_API_SERVER}/api/transaction/id/${id}`,
+        {
+          quantity: data.quantity,
+          price: data.price,
+          spent: data.spent,
+          date: data.date,
+        }
+      );
+      return axiosResponse;
+    } catch (error) {
+      return error;
+    }
   }
 }
 
