@@ -178,22 +178,18 @@ export default function FormTemplate() {
             const parsedData = FormSchemaFirstStep.parse(data);
             // Store the parsed data
             setDataStep((prev) => ({ ...prev, step1: parsedData }));
-            let response
-            if (id && transaction && transaction.coin.name) {
-                response = await axios.put(`${import.meta.env.VITE_API_SERVER}/api/coin/${transaction.coin._id}`, {
-                    name: parsedData.coin
-                }, {
-                    withCredentials: true,
-                })
-                setCoinId(response.data._id)
-            }
+            // let response
+            // if (id && transaction && transaction.coin.name) {
+            //     response = await transactionService.updateCoin(transaction.coin._id, parsedData.coin)
+            //     setCoinId(response.data._id)
+            //     console.log(response);
+            // }
             setSteps(2);
         } catch (error) {
-            setError(error.response.data.error)
+            setError(error)
             toast({
                 variant: "destructive",
-                title: error?.message,
-                description: error?.response?.data?.error,
+                title: error,
             })
         }
     };
@@ -208,9 +204,9 @@ export default function FormTemplate() {
             if (id) {
                 response = await transactionService.updateTransaction(transaction._id, parsedData)
             } else if (name) {
-                transactionService.createTransactionName(transaction.name, coinId, parsedData)
+                response = await transactionService.createTransactionName(transaction.name, coinId, parsedData)
             } else {
-                transactionService.createCoin(dataStep.step1.coin, parsedData)
+                response = await transactionService.createCoinAndTransaction(dataStep.step1.coin, parsedData)
             }
 
             if (response.status === 200) {

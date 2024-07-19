@@ -6,8 +6,23 @@ const axiosInstance = axios.create({
 });
 
 class TransactionService {
+  //first step to add a coin
+  async updateCoin(id, name) {
+    try {
+      const axiosResponse = await axiosInstance.put(
+        `${import.meta.env.VITE_API_SERVER}/api/coin/${id}`,
+        {
+          name: name,
+        }
+      );
+      return axiosResponse;
+    } catch (error) {
+      return error;
+    }
+  }
+
   //create a new coin with transaction
-  async createCoin(step, data) {
+  async createCoinAndTransaction(step, data) {
     try {
       const axiosResponse = await axiosInstance.post(
         `${import.meta.env.VITE_API_SERVER}/api/coin/createTransaction`,
