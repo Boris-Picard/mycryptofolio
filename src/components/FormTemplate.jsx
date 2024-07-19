@@ -213,15 +213,7 @@ export default function FormTemplate() {
                     withCredentials: true,
                 })
             } else if (name) {
-                await axios.post(`${import.meta.env.VITE_API_SERVER}/api/transaction/name/${transaction.name}`, {
-                    quantity: parsedData.quantity,
-                    price: parsedData.price,
-                    spent: parsedData.spent,
-                    date: parsedData.date,
-                    coinId: coinId,
-                }, {
-                    withCredentials: true,
-                })
+                transactionService.createTransactionName(transaction.name, coinId, parsedData)
             } else {
                 transactionService.createCoin(dataStep.step1.coin, parsedData)
             }

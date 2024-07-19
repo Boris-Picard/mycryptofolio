@@ -23,6 +23,24 @@ class TransactionService {
       });
     return axiosResponse;
   }
+
+  async createTransactionName(name, id, data) {
+    const axiosResponse = await axiosInstance
+      .post(`${import.meta.env.VITE_API_SERVER}/api/transaction/name/${name}`, {
+        quantity: data.quantity,
+        price: data.price,
+        spent: data.spent,
+        date: data.date,
+        coinId: id,
+      })
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+    return axiosResponse;
+  }
 }
 
 export default TransactionService;
