@@ -43,6 +43,8 @@ import { useToast } from "./ui/use-toast"
 
 import useFetchCoins from "@/hooks/useFetchCoins"
 
+import TransactionService from "@/services/TransactionService"
+
 export default function FormTemplate() {
 
     const [steps, setSteps] = useState(1)
@@ -60,6 +62,8 @@ export default function FormTemplate() {
     const { toast } = useToast()
 
     const { data: data, error: errorList } = useFetchCoins()
+
+    const transactionService = new TransactionService()
 
     useEffect(() => {
         const fetchTransaction = async () => {
@@ -174,22 +178,18 @@ export default function FormTemplate() {
             const parsedData = FormSchemaFirstStep.parse(data);
             // Store the parsed data
             setDataStep((prev) => ({ ...prev, step1: parsedData }));
-            let response
-            if (id && transaction && transaction.coin.name) {
-                response = await axios.put(`${import.meta.env.VITE_API_SERVER}/api/coin/${transaction.coin._id}`, {
-                    name: parsedData.coin
-                }, {
-                    withCredentials: true,
-                })
-                setCoinId(response.data._id)
-            }
+            // let response
+            // if (id && transaction && transaction.coin.name) {
+            //     response = await transactionService.updateCoin(transaction.coin._id, parsedData.coin)
+            //     setCoinId(response.data._id)
+            //     console.log(response);
+            // }
             setSteps(2);
         } catch (error) {
-            setError(error.response.data.error)
+            setError(error)
             toast({
                 variant: "destructive",
-                title: error?.message,
-                description: error?.response?.data?.error,
+                title: error,
             })
         }
     };
@@ -199,63 +199,42 @@ export default function FormTemplate() {
         try {
             const parsedData = FormSchemaSecondStep.parse(data);
             setDataStep((prev) => ({ ...prev, step2: parsedData }));
+
+            let response;
             if (id) {
-                await axios.put(`${import.meta.env.VITE_API_SERVER}/api/transaction/id/${transaction._id}`, {
-                    quantity: parsedData.quantity,
-                    price: parsedData.price,
-                    spent: parsedData.spent,
-                    date: parsedData.date,
-                }, {
-                    withCredentials: true,
-                })
+                response = await transactionService.updateTransaction(transaction._id, parsedData)
             } else if (name) {
-                await axios.post(`${import.meta.env.VITE_API_SERVER}/api/transaction/name/${transaction.name}`, {
-                    quantity: parsedData.quantity,
-                    price: parsedData.price,
-                    spent: parsedData.spent,
-                    date: parsedData.date,
-                    coinId: coinId,
-                }, {
-                    withCredentials: true,
-                })
+                response = await transactionService.createTransactionName(transaction.name, coinId, parsedData)
             } else {
-                await axios.post(`${import.meta.env.VITE_API_SERVER}/api/coin/createTransaction`, {
-                    name: dataStep.step1.coin,
-                    quantity: parsedData.quantity,
-                    price: parsedData.price,
-                    spent: parsedData.spent,
-                    date: parsedData.date,
-                }, {
-                    withCredentials: true,
+                response = await transactionService.createCoinAndTransaction(dataStep.step1.coin, parsedData)
+            }
+
+            if (response.status === 200) {
+                toast({
+                    variant: "success",
+                    title: id ? "Transaction updated successfully" : "Added transaction successfully",
+                });
+
+                setTimeout(() => {
+                    navigate('/portfolio');
+                }, 2000);
+
+                setSteps(3);
+            } else {
+                toast({
+                    variant: "destructive",
+                    title: response.message || "An error occurred",
+                    description: response.error?.message || "An unexpected error occurred",
                 });
             }
-
-            if (id) {
-                toast({
-                    variant: "success",
-                    title: "Transaction updated successfully",
-                })
-            } else {
-                toast({
-                    variant: "success",
-                    title: "Added transaction successfully",
-                })
-            }
-
-            setTimeout(() => {
-                navigate('/portfolio');
-            }, 2000);
-
-            setSteps(3);
         } catch (error) {
-
             toast({
                 variant: "destructive",
-                title: error?.message,
-                description: error?.response?.data?.message,
-            })
+                title: error?.message || "An error occurred",
+                description: error?.response?.data?.message || "An unexpected error occurred",
+            });
 
-            setError(error.response.data.error)
+            setError(error?.response?.data?.message || error.message || "An error occurred");
         }
     };
 
