@@ -178,12 +178,6 @@ export default function FormTemplate() {
             const parsedData = FormSchemaFirstStep.parse(data);
             // Store the parsed data
             setDataStep((prev) => ({ ...prev, step1: parsedData }));
-            // let response
-            // if (id && transaction && transaction.coin.name) {
-            //     response = await transactionService.updateCoin(transaction.coin._id, parsedData.coin)
-            //     setCoinId(response.data._id)
-            //     console.log(response);
-            // }
             setSteps(2);
         } catch (error) {
             setError(error)
